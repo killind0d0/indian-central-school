@@ -1,0 +1,90 @@
+[
+  {
+    "id": "ach-1",
+    "title": "Institutional Merit & Milestone Honors Board",
+    "category": "Hall of Fame",
+    "image": "assets/achievements/halloffame1.jpg",
+    "description": "Institutional Merit & Milestone Honors Board",
+    "date": "2026"
+  },
+  {
+    "id": "ach-2",
+    "title": "Academic Board Toppers & Olympiad Roll of Honor",
+    "category": "Hall of Fame",
+    "image": "assets/achievements/halloffame2.jpg",
+    "description": "Academic Board Toppers & Olympiad Roll of Honor",
+    "date": "2026"
+  },
+  {
+    "id": "ach-3",
+    "title": "Athletics, Drill & Co-Curricular Champions",
+    "category": "Hall of Fame",
+    "image": "assets/achievements/halloffame3.jpg",
+    "description": "Athletics, Drill & Co-Curricular Champions",
+    "date": "2026"
+  },
+  {
+    "id": "ach-4",
+    "title": "State Leadership Citation & Memento",
+    "category": "Leadership",
+    "image": "assets/achievements/principal-awards/6109600019926160573.jpg",
+    "description": "State Leadership Citation & Memento",
+    "date": "2026"
+  },
+  {
+    "id": "ach-5",
+    "title": "Excellence in School Education Commendation",
+    "category": "Leadership",
+    "image": "assets/achievements/principal-awards/IMG_20260903_111033_1.jpg",
+    "description": "Excellence in School Education Commendation",
+    "date": "2026"
+  },
+  {
+    "id": "ach-6",
+    "title": "Institutional Merit & Community Patron Award",
+    "category": "Leadership",
+    "image": "assets/achievements/principal-awards/IMG_20260903_111237_1.jpg",
+    "description": "Institutional Merit & Community Patron Award",
+    "date": "2026"
+  },
+  {
+    "id": "ach-7",
+    "title": "Silver Jubilee Educational Leadership Cup",
+    "category": "Leadership",
+    "image": "assets/achievements/principal-awards/IMG_20260903_111355_1.jpg",
+    "description": "Silver Jubilee Educational Leadership Cup",
+    "date": "2026"
+  },
+  {
+    "id": "ach-8",
+    "title": "District Inter-School Championship Cup",
+    "category": "Student Award",
+    "image": "assets/achievements/student-awards/IMG_20260903_121520.jpg",
+    "description": "District Inter-School Championship Cup",
+    "date": "2026"
+  },
+  {
+    "id": "ach-9",
+    "title": "Athletic Meet Victory & Relay Laurels",
+    "category": "Student Award",
+    "image": "assets/achievements/student-awards/IMG_20260903_121528.jpg",
+    "description": "Athletic Meet Victory & Relay Laurels",
+    "date": "2026"
+  },
+  {
+    "id": "ach-10",
+    "title": "National Talent & Olympiad Laurels",
+    "category": "Student Award",
+    "image": "assets/achievements/student-awards/IMG_20260903_121543.jpg",
+    "description": "National Talent & Olympiad Laurels",
+    "date": "2026"
+  },
+  {
+    "id": "ach-11",
+    "title": "Regional Debate & Cultural Fest Winner",
+    "category": "Student Award",
+    "image": "assets/achievements/student-awards/IMG_20260903_121556.jpg",
+    "description": "Regional Debate & Cultural Fest Winner",
+    "date": "2026"
+  }
+]

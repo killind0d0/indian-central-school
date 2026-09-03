@@ -1,0 +1,92 @@
+[
+  {
+    "id": "adv-1",
+    "name": "Prof. Dr. Bikarma Singh",
+    "institution": "Magadh University (M.U.), Bodhgaya",
+    "bio": "Ex. Head of Department (Economics &amp; Social Welfare), Magadh University, Bodhgaya; Former Dean. Guiding Indian Central School in curriculum enrichment and socio-educational excellence.",
+    "role": "Chief Academic Advisor &amp; Patron",
+    "badge": "Ex-Dean &amp; HOD",
+    "image": "assets/committee/bikarma-singh.jpg",
+    "initials": "BS"
+  },
+  {
+    "id": "adv-2",
+    "name": "Prof. Dr. Ashok Kumar",
+    "institution": "Magadh University (M.U.), Bodhgaya",
+    "bio": "Distinguished professor from Magadh University, Bodhgaya, providing pedagogical direction and strengthening higher academic pathways for students.",
+    "role": "Senior Academic Advisor",
+    "badge": "Magadh University",
+    "image": "assets/committee/ashok-kumar.jpg",
+    "initials": "AK"
+  },
+  {
+    "id": "adv-3",
+    "name": "Dr. Renuka Palit",
+    "institution": "",
+    "bio": "Eminent social reformer, visionary educator, and honored recipient of the President's Award of India, championing community welfare, inclusion, and moral foundations.",
+    "role": "Social Welfare &amp; Community Patron",
+    "badge": "President Awardee of India",
+    "image": "assets/committee/renuka-palit.jpg",
+    "initials": "RP"
+  },
+  {
+    "id": "adv-4",
+    "name": "Dr. Renu Singh",
+    "institution": "M.B.B.S. (Gynaecologist), AIIMS, Gaya",
+    "bio": "Specialist medical consultant at AIIMS, advising the school on student health protocols, adolescent wellness, nutritional awareness, and campus hygiene benchmarks.",
+    "role": "Chief Health &amp; Student Wellness Advisor",
+    "badge": "AIIMS Gaya",
+    "image": "assets/committee/renu-singh.jpg",
+    "initials": "RS"
+  },
+  {
+    "id": "adv-5",
+    "name": "Dr. R. Kumar",
+    "institution": "D.H.M.S., Gaya",
+    "bio": "Experienced medical practitioner in Gaya, supervising preventive health screening, first-aid preparedness, and seasonal healthcare drives for students.",
+    "role": "Healthcare Consultant",
+    "badge": "D.H.M.S.",
+    "image": "assets/committee/r-kumar.jpg",
+    "initials": "RK"
+  },
+  {
+    "id": "adv-6",
+    "name": "Er. Ranjeet Kumar",
+    "institution": "Engineer &amp; Technology Leader (USA)",
+    "bio": "US-based engineering leader providing international perspectives on STEM curriculum, modern digital learning tools, coding awareness, and future-ready technology skills.",
+    "role": "Global STEM &amp; Technology Advisor",
+    "badge": "Global STEM &bull; USA",
+    "image": "assets/committee/ranjeet-kumar.jpg",
+    "initials": "RK"
+  },
+  {
+    "id": "adv-7",
+    "name": "Dr. Ankita",
+    "institution": "Ph.D. Awarded (Dehradun), NET Qualified",
+    "bio": "Doctorate scholar and UGC-NET qualified academician bringing research-backed pedagogical methods and teacher mentorship programs to school faculties.",
+    "role": "Research &amp; Higher Education Mentor",
+    "badge": "Ph.D. &amp; UGC-NET",
+    "image": "assets/committee/ankita.jpg",
+    "initials": "DA"
+  },
+  {
+    "id": "adv-8",
+    "name": "Capt. B.K. Singh",
+    "institution": "Defence Colony, Gaya",
+    "bio": "Veteran officer of the Indian Armed Forces, guiding the school in cadet discipline, physical fitness standards, parade drills, and instilling patriotic duty in youth.",
+    "role": "Cadre Discipline &amp; Youth Advisor",
+    "badge": "Defence &amp; Discipline",
+    "image": "assets/committee/bk-singh.jpg",
+    "initials": "BS"
+  },
+  {
+    "id": "adv-9",
+    "name": "Dr. Vijay Kumar",
+    "institution": "Gaya",
+    "bio": "Prominent community advisor and medical consultant in Gaya, assisting the school administration in local governance, community partnerships, and student welfare programs.",
+    "role": "Senior Institutional Advisor",
+    "badge": "Institutional Advisor",
+    "image": "assets/committee/vijay-kumar.jpg",
+    "initials": "VK"
+  }
+]

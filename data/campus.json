@@ -1,0 +1,44 @@
+[
+  {
+    "id": "camp-1",
+    "title": "Indian Central School Main Campus Entrance Gate at A.T. Gate, Gaya Ji",
+    "category": "Infrastructure",
+    "image": "assets/entrance/IMG_20260903_122626.jpg",
+    "description": "Indian Central School Main Campus Entrance Gate at A.T. Gate, Gaya Ji"
+  },
+  {
+    "id": "camp-2",
+    "title": "Educational Wall Murals & Motivational Quotes Inspiring Curiosity",
+    "category": "Infrastructure",
+    "image": "assets/corridorsandwalls/IMG_20260903_121037_1.jpg",
+    "description": "Educational Wall Murals & Motivational Quotes Inspiring Curiosity"
+  },
+  {
+    "id": "camp-3",
+    "title": "Spacious School Hallways & Classroom Corridors",
+    "category": "Infrastructure",
+    "image": "assets/corridorsandwalls/IMG_20260903_121107_1.jpg",
+    "description": "Spacious School Hallways & Classroom Corridors"
+  },
+  {
+    "id": "camp-4",
+    "title": "Institutional Heritage & Tribute Walls",
+    "category": "Infrastructure",
+    "image": "assets/corridorsandwalls/IMG_20260903_111426.jpg",
+    "description": "Institutional Heritage & Tribute Walls"
+  },
+  {
+    "id": "camp-5",
+    "title": "Foundational Wing Learning Environments & Creative Murals",
+    "category": "Infrastructure",
+    "image": "assets/corridorsandwalls/IMG_20260903_123028_1.jpg",
+    "description": "Foundational Wing Learning Environments & Creative Murals"
+  },
+  {
+    "id": "camp-6",
+    "title": "Student Activity & Assembly Quadrangle",
+    "category": "Infrastructure",
+    "image": "assets/corridorsandwalls/IMG_20260903_145207.jpg",
+    "description": "Student Activity & Assembly Quadrangle"
+  }
+]

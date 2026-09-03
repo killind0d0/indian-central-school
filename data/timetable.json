@@ -1,0 +1,38 @@
+[
+  {
+    "id": "tt-1",
+    "title": "Mid-Term Examination Schedule 2026-27",
+    "examType": "Mid-Term",
+    "classes": "Classes 1 to 10",
+    "session": "Session 2026-27",
+    "startDate": "2026-09-15",
+    "endDate": "2026-09-24",
+    "description": "Comprehensive subject-wise date sheet with reporting timing 07:45 AM. Admit cards compulsory.",
+    "pdfUrl": "assets/notices/noticeforexamdatepastexam.jpg",
+    "status": "Active"
+  },
+  {
+    "id": "tt-2",
+    "title": "Pre-Board Examination Schedule (Class 10)",
+    "examType": "Pre-Board",
+    "classes": "Class 10 Only",
+    "session": "Session 2026-27",
+    "startDate": "2026-11-10",
+    "endDate": "2026-11-20",
+    "description": "Mock Board standard assessment following strict CBSE pattern and external invigilation.",
+    "pdfUrl": "assets/notices/noticeforexamdatepastexam.jpg",
+    "status": "Upcoming"
+  },
+  {
+    "id": "tt-3",
+    "title": "Annual Final Examination 2027",
+    "examType": "Annual",
+    "classes": "Nursery to Class 9 & 11",
+    "session": "Session 2026-27",
+    "startDate": "2027-02-20",
+    "endDate": "2027-03-05",
+    "description": "End-of-year comprehensive evaluation and promotion assessments.",
+    "pdfUrl": "assets/notices/noticeforexamdatepastexam.jpg",
+    "status": "Scheduled"
+  }
+]

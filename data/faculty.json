@@ -1,0 +1,262 @@
+[
+  {
+    "id": "fac-1",
+    "name": "Dr. Mirdula Kumari",
+    "role": "9th & 10th Mentor",
+    "subject": "Biology",
+    "category": "senior",
+    "qualification": "M.Sc. (Zoology) & Ph.D.",
+    "image": "assets/faculty/mirdula-kumari.jpg",
+    "initials": "MK"
+  },
+  {
+    "id": "fac-2",
+    "name": "Dr. Binod Prasad Karan",
+    "role": "Assembly Incharge",
+    "subject": "Social Studies (S.St.)",
+    "category": "senior",
+    "qualification": "M.A., B.Ed. & Ph.D.",
+    "image": "assets/faculty/binod-prasad-karan.jpg",
+    "initials": "BK"
+  },
+  {
+    "id": "fac-3",
+    "name": "Mr. Abhay Kumar Singh",
+    "role": "9th & 10th Mentor",
+    "subject": "Mathematics",
+    "category": "senior",
+    "qualification": "M.Sc. (Math) & B.Ed.",
+    "image": "assets/faculty/abhay-kumar-singh.jpg",
+    "initials": "AS"
+  },
+  {
+    "id": "fac-4",
+    "name": "Mr. Deepak Sharma",
+    "role": "Sub Coordinator & Discipline Incharge",
+    "subject": "Maths & Science",
+    "category": "senior",
+    "qualification": "M.Sc. (Phy.) & B.Ed.",
+    "image": "assets/faculty/deepak-sharma.jpg",
+    "initials": "DS"
+  },
+  {
+    "id": "fac-5",
+    "name": "Mr. Sashikant Kumar",
+    "role": "9th & 10th Secondary Teacher",
+    "subject": "Physics",
+    "category": "senior",
+    "qualification": "B.Ed. & M.Ed.",
+    "image": "assets/faculty/sashikant-kumar.jpg",
+    "initials": "SK"
+  },
+  {
+    "id": "fac-6",
+    "name": "Mr. Sashikant Kumar",
+    "role": "Exam Controller & Asst. Coordinator",
+    "subject": "Information Technology",
+    "category": "senior",
+    "qualification": "M.Sc., MCA & B.Ed.",
+    "image": "assets/faculty/sashikant-kumar.jpg",
+    "initials": "SK"
+  },
+  {
+    "id": "fac-7",
+    "name": "Anuj Kumar Singh",
+    "role": "Management & Admin Incharge",
+    "subject": "Transport & Admissions",
+    "category": "admin",
+    "qualification": "B.A. & Dip. in Music (Allahabad)",
+    "image": "assets/faculty/anuj-kumar-singh.jpg",
+    "initials": "AS"
+  },
+  {
+    "id": "fac-8",
+    "name": "Heena Kausar",
+    "role": "Senior Accountant & Head Clerk",
+    "subject": "Accounts & Finance",
+    "category": "admin",
+    "qualification": "M.Com. (M.U. Bodhgaya)",
+    "image": "assets/faculty/heena-kausar.jpg",
+    "initials": "HK"
+  },
+  {
+    "id": "fac-9",
+    "name": "Ankit Kumar",
+    "role": "P.T. Yoga & Activity Incharge",
+    "subject": "Mathematics & Yoga",
+    "category": "senior",
+    "qualification": "B.Sc.",
+    "image": "assets/faculty/ankit-kumar.jpg",
+    "initials": "AK"
+  },
+  {
+    "id": "fac-10",
+    "name": "Shalini Singh",
+    "role": "Female & Girls Wing Incharge",
+    "subject": "English Literature",
+    "category": "senior",
+    "qualification": "B.A. (English) & B.Ed.",
+    "image": "assets/faculty/shalini-singh.jpg",
+    "initials": "SS"
+  },
+  {
+    "id": "fac-11",
+    "name": "Phelomina Tete",
+    "role": "Female & Girls Discipline Incharge",
+    "subject": "English Language",
+    "category": "senior",
+    "qualification": "B.A. (Odisha) & TGT",
+    "image": "assets/faculty/phelomina-tete.jpg",
+    "initials": "PT"
+  },
+  {
+    "id": "fac-12",
+    "name": "Varsha Kumari",
+    "role": "Manner & Etiquette Incharge (Junior)",
+    "subject": "Class II Class Incharge",
+    "category": "junior",
+    "qualification": "M.A. & B.Ed.",
+    "image": "assets/faculty/varsha-kumari.jpg",
+    "initials": "VK"
+  },
+  {
+    "id": "fac-13",
+    "name": "Mita Chakarwarty",
+    "role": "Junior Coordinator & Female Incharge",
+    "subject": "Class U.K.G. Incharge",
+    "category": "junior",
+    "qualification": "B.A & PRT (West Bengal)",
+    "image": "assets/faculty/mita-chakarwarty.jpg",
+    "initials": "MC"
+  },
+  {
+    "id": "fac-14",
+    "name": "Shipra Sharma",
+    "role": "Asst. Junior Coordinator",
+    "subject": "Senior Nursery Incharge",
+    "category": "junior",
+    "qualification": "B.Sc. (Physics)",
+    "image": "assets/faculty/shipra-sharma.jpg",
+    "initials": "SS"
+  },
+  {
+    "id": "fac-15",
+    "name": "Priya Verma",
+    "role": "Kindergarten Mentor",
+    "subject": "L.K.G. Class Incharge",
+    "category": "junior",
+    "qualification": "B.Sc.",
+    "image": "assets/faculty/priya-verma.jpg",
+    "initials": "PV"
+  },
+  {
+    "id": "fac-16",
+    "name": "Nisha Kumari",
+    "role": "Assistant Kids Incharge",
+    "subject": "Pre-Nursery Incharge",
+    "category": "junior",
+    "qualification": "B.Ed.",
+    "image": "assets/faculty/nisha-kumari.jpg",
+    "initials": "NK"
+  },
+  {
+    "id": "fac-17",
+    "name": "Riya Kumari",
+    "role": "Music Incharge (Singing)",
+    "subject": "Music & Vocals",
+    "category": "admin",
+    "qualification": "Diploma Music (Allahabad)",
+    "image": "assets/faculty/riya-kumari.jpg",
+    "initials": "RK"
+  },
+  {
+    "id": "fac-18",
+    "name": "Sneha Kumari",
+    "role": "Cultural Affairs Incharge",
+    "subject": "Music, Dance & Drawing",
+    "category": "admin",
+    "qualification": "M.A.",
+    "image": "assets/faculty/sneha-kumari.jpg",
+    "initials": "SK"
+  },
+  {
+    "id": "fac-19",
+    "name": "J.P. Mishra",
+    "role": "Press & Media Incharge",
+    "subject": "Hindi Sahitya",
+    "category": "senior",
+    "qualification": "PGT (Hindi)",
+    "image": "assets/faculty/jp-mishra.jpg",
+    "initials": "JM"
+  },
+  {
+    "id": "fac-20",
+    "name": "Ajeet Kumar",
+    "role": "Indoor & Outdoor Games Incharge",
+    "subject": "Sports & Athletics",
+    "category": "sports",
+    "qualification": "B.P.Ed.",
+    "image": "assets/faculty/ajeet-kumar.jpg",
+    "initials": "AK"
+  },
+  {
+    "id": "fac-21",
+    "name": "Rajendra Verma",
+    "role": "Annual Sports & Tournament Incharge",
+    "subject": "Senior Sports Incharge",
+    "category": "sports",
+    "qualification": "B.P.Ed.",
+    "image": "assets/faculty/rajendra-verma.jpg",
+    "initials": "RV"
+  },
+  {
+    "id": "fac-22",
+    "name": "Pawan Kumar",
+    "role": "P.T. Incharge & Scouts Officer",
+    "subject": "Physical Training (P.T.)",
+    "category": "sports",
+    "qualification": "Scouts & Guide, M.A. (M.U.)",
+    "image": "assets/faculty/pawan-kumar.jpg",
+    "initials": "PK"
+  },
+  {
+    "id": "fac-23",
+    "name": "Neelam Kumari",
+    "role": "Campus & Building Incharge",
+    "subject": "Office Administration",
+    "category": "admin",
+    "qualification": "B.A. (History)",
+    "image": "assets/faculty/neelam-kumari.jpg",
+    "initials": "NK"
+  },
+  {
+    "id": "fac-24",
+    "name": "Sita Singh",
+    "role": "Early Childhood Kids Incharge",
+    "subject": "Play Group",
+    "category": "junior",
+    "qualification": "B.A. (Hons.) & PRT",
+    "image": "assets/faculty/sita-singh.jpg",
+    "initials": "SS"
+  },
+  {
+    "id": "fac-25",
+    "name": "Prity Kumari",
+    "role": "Kids Music & Primary Mentor",
+    "subject": "Standard I Incharge",
+    "category": "junior",
+    "qualification": "B.Ed.",
+    "image": "assets/faculty/prity-kumari.jpg",
+    "initials": "PK"
+  },
+  {
+    "id": "fac-26",
+    "name": "Mr. Binay Srivastav",
+    "role": "NCC Cadet Branch Incharge (Coming Soon)",
+    "subject": "Sports & NCC",
+    "category": "sports",
+    "qualification": "Sports Specialist",
+    "image": "assets/faculty/binay-srivastav.jpg",
+    "initials": "BS"
+  }
+]
