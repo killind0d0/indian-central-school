@@ -1,3 +1,7 @@
 # Development update staging folder
 update/
 .DS_Store
+
+# Android APK binaries
+*.apk
+apk/
