@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teaching Faculty & Staff Directory | Indian Central School, Gaya Ji</title>
+  <meta name="description" content="Meet the 27 dedicated teachers, academic mentors, subject coordinators, and sports trainers at Indian Central School, Gaya Ji." />
+  
+  <!-- Official School Favicon -->
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#07162C',
+              navyLight: '#0E2648',
+              blue: '#1B3B6F',
+              accent: '#F59E0B',
+              accentDark: '#D97706',
+              gold: '#E5A93C',
+              goldLight: '#FEF9C3',
+              cream: '#FAF8F5',
+              creamDark: '#F3EFE6',
+              warmBorder: '#E6DFC9',
+              warmCard: '#FFFFFF'
+            }
+          },
+          fontFamily: {
+            sans: ['"Outfit"', '"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            crest: ['"Cinzel"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    .hero-gradient {
+      background: radial-gradient(circle at top right, #1b3b6f 0%, #07162c 60%, #030a14 100%);
+    }
+    .academic-dots {
+      background-color: #FAF8F5;
+      background-image: radial-gradient(rgba(7, 22, 44, 0.075) 1px, transparent 1px);
+      background-size: 26px 26px;
+    }
+    .academic-grid-warm {
+      background-color: #F3EFE6;
+      background-image: 
+        linear-gradient(rgba(7, 22, 44, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(7, 22, 44, 0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .academic-subtle-mesh {
+      background-color: #FAF7F2;
+      background-image: radial-gradient(at 0% 0%, rgba(245, 158, 11, 0.05) 0px, transparent 50%),
+                        radial-gradient(at 100% 100%, rgba(27, 59, 111, 0.05) 0px, transparent 50%);
+    }
+    .review-card-fade {
+      animation: fadeInReview 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes fadeInReview {
+      from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.985);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+  </style>
+</head>
+<body class="bg-[#FAF8F5] text-slate-800 font-sans antialiased selection:bg-brand-accent selection:text-brand-navy pb-16 lg:pb-0">
+  <!-- 1. TOP ANNOUNCEMENT TICKER -->
+  <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-slate-950 py-2.5 px-4 sm:px-6 lg:px-8 text-xs font-semibold shadow-inner border-b border-amber-400/40">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5 mx-auto sm:mx-0">
+        <span class="inline-flex items-center gap-1 bg-brand-navy text-amber-300 text-[11px] font-extrabold px-3 py-0.5 rounded-full uppercase tracking-wider shadow-xs">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+          Admissions 2026–27
+        </span>
+        <span class="font-medium text-slate-900">Enrolments Open from Kindergarten (Nursery) to Class X</span>
+      </div>
+      <div class="hidden md:flex items-center gap-5 text-xs font-bold">
+        <a href="tel:+919431207791" class="hover:text-brand-navy transition flex items-center gap-1.5">
+          <i data-lucide="phone-call" class="w-3.5 h-3.5 text-brand-navy"></i> +91 94312 07791
+        </a>
+        <span class="opacity-40">|</span>
+        <a href="mailto:indiancentralschool@gmail.com" class="hover:text-brand-navy transition flex items-center gap-1.5">
+          <i data-lucide="mail" class="w-3.5 h-3.5 text-brand-navy"></i> indiancentralschool@gmail.com
+        </a>
+        <span class="opacity-40">|</span>
+        <a href="https://play.google.com/store/apps/details?id=indian.schoolapp.indian" target="_blank" class="hover:bg-brand-navy hover:text-amber-300 text-brand-navy bg-white/50 px-3 py-0.5 rounded-full transition flex items-center gap-1.5 shadow-xs">
+          <i data-lucide="smartphone" class="w-3 h-3 text-emerald-800"></i> Parent App
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. MAIN NAVIGATION HEADER -->
+  <header class="sticky top-0 z-50 bg-[#FAF8F5]/95 backdrop-blur-md border-b border-[#E8E1D5] shadow-xs transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-3.5">
+      <div class="flex items-center justify-between gap-4">
+        
+        <!-- School Crest & Brand Name -->
+        <a href="index.html" class="flex items-center gap-3.5 sm:gap-4 group shrink-0">
+          <div class="relative w-14 h-14 sm:w-16 sm:h-16 shrink-0 group-hover:scale-105 transition-all">
+            <img src="assets/logo.png" alt="Indian Central School Crest Logo" class="w-full h-full object-contain drop-shadow-md" />
+          </div>
+          <div class="flex flex-col">
+            <span class="font-serif font-black text-lg sm:text-xl lg:text-[23px] text-brand-navy tracking-tight leading-none group-hover:text-brand-blue transition">
+              INDIAN CENTRAL SCHOOL
+            </span>
+            <span class="font-sans text-[10px] sm:text-xs font-bold text-slate-500 tracking-[0.16em] uppercase mt-1 flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              A.T. Gate, Gaya Ji &bull; Estd. 2000
+            </span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden lg:flex items-center gap-0.5 xl:gap-1 text-[13px] font-medium text-slate-700">
+          <a href="index.html" class="px-3 py-2 rounded-xl text-slate-700 hover:text-brand-navy hover:bg-[#EFE9DD] transition font-medium">Home</a>
+          <a href="about.html" class="px-3 py-2 rounded-xl text-slate-700 hover:text-brand-navy hover:bg-[#EFE9DD] transition font-medium">About Us</a>
+          <a href="notices.html" class="px-3 py-2 rounded-xl text-slate-700 hover:text-brand-navy hover:bg-[#EFE9DD] transition font-medium">Notice Board</a>
+          <a href="academics.html" class="px-3 py-2 rounded-xl text-slate-700 hover:text-brand-navy hover:bg-[#EFE9DD] transition font-medium">Academics</a>
+          <a href="facilities.html" class="px-3 py-2 rounded-xl text-slate-700 hover:text-brand-navy hover:bg-[#EFE9DD] transition font-medium">Campus</a>
+          <a href="achievements.html" class="px-3 py-2 rounded-xl text-slate-700 hover:text-brand-navy hover:bg-[#EFE9DD] transition font-medium">Achievements</a>
+          <a href="faculty.html" class="px-3 py-2 rounded-xl text-brand-navy bg-[#EFE9DD] font-bold transition">Faculty</a>
+          <a href="admissions.html" class="px-3 py-2 rounded-xl text-slate-700 hover:text-brand-navy hover:bg-[#EFE9DD] transition font-medium">Admissions</a>
+          <a href="contact.html" class="px-3 py-2 rounded-xl text-slate-700 hover:text-brand-navy hover:bg-[#EFE9DD] transition font-medium">Contact</a>
+        </nav>
+
+        <!-- Header Action Buttons -->
+        <div class="hidden sm:flex items-center gap-2.5 shrink-0">
+          <a href="admissions.html" class="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-brand-navy font-extrabold text-xs sm:text-sm px-4 py-2.5 rounded-xl shadow-md hover:shadow-amber-500/25 transition transform hover:-translate-y-0.5">
+            <i data-lucide="file-pen" class="w-4 h-4 text-brand-navy"></i>
+            Enquire Now
+          </a>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="menu-btn" aria-label="Toggle Navigation" class="lg:hidden p-2 rounded-xl text-slate-700 hover:text-brand-navy hover:bg-[#EFE9DD] transition border border-[#E8E1D5]">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu" class="hidden lg:hidden border-t border-[#E8E1D5] bg-[#FAF8F5] px-4 pt-3 pb-6 space-y-2 shadow-xl">
+      <a href="index.html" class="mobile-link block px-3.5 py-2.5 rounded-xl font-semibold text-slate-800 hover:bg-[#EFE9DD]">Home</a>
+      <a href="about.html" class="mobile-link block px-3.5 py-2.5 rounded-xl font-semibold text-slate-800 hover:bg-[#EFE9DD]">About Us</a>
+      <a href="notices.html" class="mobile-link block px-3.5 py-2.5 rounded-xl font-semibold text-slate-800 hover:bg-[#EFE9DD]">Notice Board</a>
+      <a href="academics.html" class="mobile-link block px-3.5 py-2.5 rounded-xl font-semibold text-slate-800 hover:bg-[#EFE9DD]">Academics</a>
+      <a href="facilities.html" class="mobile-link block px-3.5 py-2.5 rounded-xl font-semibold text-slate-800 hover:bg-[#EFE9DD]">Campus</a>
+      <a href="achievements.html" class="mobile-link block px-3.5 py-2.5 rounded-xl font-semibold text-slate-800 hover:bg-[#EFE9DD]">Achievements</a>
+      <a href="faculty.html" class="mobile-link block px-3.5 py-2.5 rounded-xl font-bold text-brand-navy bg-[#EFE9DD]">Faculty</a>
+      <a href="admissions.html" class="mobile-link block px-3.5 py-2.5 rounded-xl font-semibold text-slate-800 hover:bg-[#EFE9DD]">Admissions</a>
+      <a href="contact.html" class="mobile-link block px-3.5 py-2.5 rounded-xl font-semibold text-slate-800 hover:bg-[#EFE9DD]">Contact</a>
+      <a href="https://play.google.com/store/apps/details?id=indian.schoolapp.indian" target="_blank" class="mobile-link flex items-center justify-between px-3.5 py-2.5 rounded-xl font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 mt-2">
+        <span class="flex items-center gap-2"><i data-lucide="smartphone" class="w-4 h-4"></i> "Indian Central School, Gaya" App</span>
+        <span class="text-[11px] bg-emerald-600 text-white px-2 py-0.5 rounded-full font-bold">Google Play</span>
+      </a>
+      <div class="pt-2">
+        <a href="admissions.html" class="mobile-link flex items-center justify-center gap-2 w-full bg-gradient-to-r from-amber-500 to-amber-600 text-brand-navy font-extrabold py-3.5 rounded-xl shadow-md">
+          <i data-lucide="file-pen" class="w-5 h-5"></i>
+          Apply for Admission Online
+        </a>
+      </div>
+    </div>
+  </header>
+  <!-- PAGE BANNER -->
+  <section class="hero-gradient text-white py-14 lg:py-20 border-b border-[#E8E1D5] relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl mx-auto space-y-3.5">
+      <span class="inline-flex items-center gap-1.5 text-amber-300 font-extrabold text-xs uppercase tracking-[0.2em] bg-white/10 px-4 py-1.5 rounded-full border border-amber-400/30 backdrop-blur-md shadow-xs">
+        <i data-lucide="users" class="w-3.5 h-3.5 text-amber-400"></i>
+        Educators & Mentors
+      </span>
+      <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
+        Our Teaching Faculty & Staff Directory
+      </h1>
+      <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+        A passionate team of 27 educators, doctoral mentors, sports coaches, and creative faculty dedicated to nurturing academic brilliance, discipline, and character.
+      </p>
+    </div>
+  </section>
+
+<section id="faculty" class="py-24 academic-dots border-b border-[#E8E1D5] relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+        <span class="inline-flex items-center gap-1.5 text-brand-blue font-bold text-xs uppercase tracking-[0.2em] bg-white px-4 py-1.5 rounded-full border border-blue-200/80 shadow-xs">
+          <i data-lucide="users" class="w-3.5 h-3.5 text-brand-blue"></i>
+          Educators &amp; Mentors
+        </span>
+        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-extrabold text-brand-navy tracking-tight">
+          Our Teaching Faculty &amp; Staff
+        </h2>
+        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+          A passionate team of 27 educators, doctoral mentors, sports coaches, and creative faculty dedicated to nurturing academic brilliance, discipline, and character at Indian Central School.
+        </p>
+      </div>
+
+      <!-- Filter Controls & Live Search Bar -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 border border-[#E6DFC9] shadow-xs mb-10 space-y-4">
+        <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+          
+          <!-- Category Pills -->
+          <div class="flex flex-wrap items-center gap-2" id="faculty-filter-pills">
+            <button data-cat="all" class="faculty-pill active px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-brand-navy text-amber-300 border border-brand-navy shadow-xs">
+              All Staff (27)
+            </button>
+            <button data-cat="senior" class="faculty-pill px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-[#FAF8F5] text-slate-700 hover:text-brand-navy hover:bg-[#EFE9DD] border border-[#E6DFC9]">
+              Secondary &amp; Mentors (9th-10th)
+            </button>
+            <button data-cat="junior" class="faculty-pill px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-[#FAF8F5] text-slate-700 hover:text-brand-navy hover:bg-[#EFE9DD] border border-[#E6DFC9]">
+              Junior &amp; Pre-Primary Wing
+            </button>
+            <button data-cat="sports" class="faculty-pill px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-[#FAF8F5] text-slate-700 hover:text-brand-navy hover:bg-[#EFE9DD] border border-[#E6DFC9]">
+              Sports, NCC &amp; Scouts
+            </button>
+            <button data-cat="admin" class="faculty-pill px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-[#FAF8F5] text-slate-700 hover:text-brand-navy hover:bg-[#EFE9DD] border border-[#E6DFC9]">
+              Admin, Accounts &amp; Arts
+            </button>
+          </div>
+
+          <!-- Search Input -->
+          <div class="relative min-w-[240px] sm:min-w-[280px]">
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+            <input id="faculty-search-input" type="text" placeholder="Search teacher, subject, qualification..." class="w-full pl-10 pr-4 py-2 bg-[#FAF8F5] border border-[#E6DFC9] rounded-xl text-xs text-slate-800 focus:outline-none focus:border-brand-navy focus:bg-white transition placeholder:text-slate-400 font-medium" />
+          </div>
+
+        </div>
+
+        <!-- Result count bar -->
+        <div class="flex items-center justify-between text-[11px] text-slate-500 pt-1 border-t border-[#F0EAE1]">
+          <span>Interactive Staff Directory</span>
+          <span id="faculty-count-text" class="font-bold text-brand-navy">Showing 27 Members</span>
+        </div>
+      </div>
+
+      <!-- Faculty Cards Grid -->
+      <div id="faculty-cards-grid" class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="senior" data-search="dr. mirdula kumari biology 9th & 10th mentor m.sc. (zoology) & ph.d.">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/mirdula-kumari.jpg" alt="Dr. Mirdula Kumari" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>MK</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-emerald-50 text-emerald-800 border-emerald-200">
+                  <i data-lucide="book-open" class="w-2.5 h-2.5"></i> Biology
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Dr. Mirdula Kumari
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  9th & 10th Mentor
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="M.Sc. (Zoology) & Ph.D.">M.Sc. (Zoology) & Ph.D.</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="senior" data-search="dr. binod prasad karan social studies (s.st.) assembly incharge m.a., b.ed. & ph.d.">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/binod-prasad-karan.jpg" alt="Dr. Binod Prasad Karan" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>BK</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-amber-50 text-amber-800 border-amber-200">
+                  <i data-lucide="globe" class="w-2.5 h-2.5"></i> Social Studies (S.St.)
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Dr. Binod Prasad Karan
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  Assembly Incharge
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="M.A., B.Ed. & Ph.D.">M.A., B.Ed. & Ph.D.</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="senior" data-search="mr. abhay kumar singh mathematics 9th & 10th mentor m.sc. (math) & b.ed.">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/abhay-kumar-singh.jpg" alt="Mr. Abhay Kumar Singh" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>AS</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-blue-50 text-blue-800 border-blue-200">
+                  <i data-lucide="binary" class="w-2.5 h-2.5"></i> Mathematics
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Mr. Abhay Kumar Singh
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  9th & 10th Mentor
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="M.Sc. (Math) & B.Ed.">M.Sc. (Math) & B.Ed.</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="senior" data-search="mr. deepak sharma maths & science sub coordinator & discipline incharge m.sc. (phy.) & b.ed.">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/deepak-sharma.jpg" alt="Mr. Deepak Sharma" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>DS</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-indigo-50 text-indigo-800 border-indigo-200">
+                  <i data-lucide="sparkles" class="w-2.5 h-2.5"></i> Maths & Science
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Mr. Deepak Sharma
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  Sub Coordinator & Discipline Incharge
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="M.Sc. (Phy.) & B.Ed.">M.Sc. (Phy.) & B.Ed.</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="senior" data-search="mr. sashikant kumar physics 9th & 10th secondary teacher b.ed. & m.ed.">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/sashikant-kumar.jpg" alt="Mr. Sashikant Kumar" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>SK</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-cyan-50 text-cyan-800 border-cyan-200">
+                  <i data-lucide="atom" class="w-2.5 h-2.5"></i> Physics
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Mr. Sashikant Kumar
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  9th & 10th Secondary Teacher
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="B.Ed. & M.Ed.">B.Ed. & M.Ed.</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="senior" data-search="mr. sashikant kumar information technology exam controller & asst. coordinator m.sc., mca & b.ed.">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/sashikant-kumar.jpg" alt="Mr. Sashikant Kumar" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>SK</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-purple-50 text-purple-800 border-purple-200">
+                  <i data-lucide="cpu" class="w-2.5 h-2.5"></i> Information Technology
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Mr. Sashikant Kumar
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  Exam Controller & Asst. Coordinator
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="M.Sc., MCA & B.Ed.">M.Sc., MCA & B.Ed.</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="admin" data-search="anuj kumar singh transport & admissions management & admin incharge b.a. & dip. in music (allahabad)">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/anuj-kumar-singh.jpg" alt="Anuj Kumar Singh" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>AS</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-slate-100 text-slate-800 border-slate-200">
+                  <i data-lucide="bus" class="w-2.5 h-2.5"></i> Transport & Admissions
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Anuj Kumar Singh
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  Management & Admin Incharge
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="B.A. & Dip. in Music (Allahabad)">B.A. & Dip. in Music (Allahabad)</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="admin" data-search="heena kausar accounts & finance senior accountant & head clerk m.com. (m.u. bodhgaya)">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/heena-kausar.jpg" alt="Heena Kausar" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>HK</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-slate-100 text-slate-800 border-slate-200">
+                  <i data-lucide="calculator" class="w-2.5 h-2.5"></i> Accounts & Finance
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Heena Kausar
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  Senior Accountant & Head Clerk
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="M.Com. (M.U. Bodhgaya)">M.Com. (M.U. Bodhgaya)</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="senior" data-search="ankit kumar mathematics & yoga p.t. yoga & activity incharge b.sc.">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/ankit-kumar.jpg" alt="Ankit Kumar" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>AK</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-blue-50 text-blue-800 border-blue-200">
+                  <i data-lucide="activity" class="w-2.5 h-2.5"></i> Mathematics & Yoga
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Ankit Kumar
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  P.T. Yoga & Activity Incharge
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="B.Sc.">B.Sc.</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="senior" data-search="shalini singh english literature female & girls wing incharge b.a. (english) & b.ed.">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/shalini-singh.jpg" alt="Shalini Singh" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>SS</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-rose-50 text-rose-800 border-rose-200">
+                  <i data-lucide="book-marked" class="w-2.5 h-2.5"></i> English Literature
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Shalini Singh
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  Female & Girls Wing Incharge
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="B.A. (English) & B.Ed.">B.A. (English) & B.Ed.</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="senior" data-search="phelomina tete english language female & girls discipline incharge b.a. (odisha) & tgt">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/phelomina-tete.jpg" alt="Phelomina Tete" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>PT</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-rose-50 text-rose-800 border-rose-200">
+                  <i data-lucide="shield" class="w-2.5 h-2.5"></i> English Language
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Phelomina Tete
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  Female & Girls Discipline Incharge
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="B.A. (Odisha) & TGT">B.A. (Odisha) & TGT</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="junior" data-search="varsha kumari class ii class incharge manner & etiquette incharge (junior) m.a. & b.ed.">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/varsha-kumari.jpg" alt="Varsha Kumari" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>VK</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-amber-50 text-amber-800 border-amber-200">
+                  <i data-lucide="smile" class="w-2.5 h-2.5"></i> Class II Class Incharge
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Varsha Kumari
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  Manner & Etiquette Incharge (Junior)
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="M.A. & B.Ed.">M.A. & B.Ed.</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="junior" data-search="mita chakarwarty class u.k.g. incharge junior coordinator & female incharge b.a & prt (west bengal)">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/mita-chakarwarty.jpg" alt="Mita Chakarwarty" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>MC</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-orange-50 text-orange-800 border-orange-200">
+                  <i data-lucide="shapes" class="w-2.5 h-2.5"></i> Class U.K.G. Incharge
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Mita Chakarwarty
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  Junior Coordinator & Female Incharge
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="B.A & PRT (West Bengal)">B.A & PRT (West Bengal)</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="junior" data-search="shipra sharma senior nursery incharge asst. junior coordinator b.sc. (physics)">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/shipra-sharma.jpg" alt="Shipra Sharma" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>SS</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-orange-50 text-orange-800 border-orange-200">
+                  <i data-lucide="sparkle" class="w-2.5 h-2.5"></i> Senior Nursery Incharge
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Shipra Sharma
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  Asst. Junior Coordinator
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="B.Sc. (Physics)">B.Sc. (Physics)</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="junior" data-search="priya verma l.k.g. class incharge kindergarten mentor b.sc.">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/priya-verma.jpg" alt="Priya Verma" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>PV</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-orange-50 text-orange-800 border-orange-200">
+                  <i data-lucide="heart" class="w-2.5 h-2.5"></i> L.K.G. Class Incharge
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Priya Verma
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  Kindergarten Mentor
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="B.Sc.">B.Sc.</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="junior" data-search="nisha kumari pre-nursery incharge assistant kids incharge b.ed.">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/nisha-kumari.jpg" alt="Nisha Kumari" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>NK</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-orange-50 text-orange-800 border-orange-200">
+                  <i data-lucide="smile-plus" class="w-2.5 h-2.5"></i> Pre-Nursery Incharge
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Nisha Kumari
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  Assistant Kids Incharge
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="B.Ed.">B.Ed.</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="admin" data-search="riya kumari music & vocals music incharge (singing) diploma music (allahabad)">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/riya-kumari.jpg" alt="Riya Kumari" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>RK</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-pink-50 text-pink-800 border-pink-200">
+                  <i data-lucide="music" class="w-2.5 h-2.5"></i> Music & Vocals
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Riya Kumari
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  Music Incharge (Singing)
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="Diploma Music (Allahabad)">Diploma Music (Allahabad)</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="admin" data-search="sneha kumari music, dance & drawing cultural affairs incharge m.a.">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/sneha-kumari.jpg" alt="Sneha Kumari" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>SK</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-pink-50 text-pink-800 border-pink-200">
+                  <i data-lucide="palette" class="w-2.5 h-2.5"></i> Music, Dance & Drawing
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Sneha Kumari
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  Cultural Affairs Incharge
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="M.A.">M.A.</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="senior" data-search="j.p. mishra hindi sahitya press & media incharge pgt (hindi)">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/jp-mishra.jpg" alt="J.P. Mishra" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>JM</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-red-50 text-red-800 border-red-200">
+                  <i data-lucide="newspaper" class="w-2.5 h-2.5"></i> Hindi Sahitya
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  J.P. Mishra
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  Press & Media Incharge
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="PGT (Hindi)">PGT (Hindi)</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="sports" data-search="ajeet kumar sports & athletics indoor & outdoor games incharge b.p.ed.">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/ajeet-kumar.jpg" alt="Ajeet Kumar" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>AK</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-emerald-50 text-emerald-800 border-emerald-200">
+                  <i data-lucide="trophy" class="w-2.5 h-2.5"></i> Sports & Athletics
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Ajeet Kumar
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  Indoor & Outdoor Games Incharge
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="B.P.Ed.">B.P.Ed.</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="sports" data-search="rajendra verma senior sports incharge annual sports & tournament incharge b.p.ed.">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/rajendra-verma.jpg" alt="Rajendra Verma" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>RV</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-emerald-50 text-emerald-800 border-emerald-200">
+                  <i data-lucide="medal" class="w-2.5 h-2.5"></i> Senior Sports Incharge
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Rajendra Verma
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  Annual Sports & Tournament Incharge
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="B.P.Ed.">B.P.Ed.</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="sports" data-search="pawan kumar physical training (p.t.) p.t. incharge & scouts officer scouts & guide, m.a. (m.u.)">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/pawan-kumar.jpg" alt="Pawan Kumar" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>PK</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-emerald-50 text-emerald-800 border-emerald-200">
+                  <i data-lucide="flag" class="w-2.5 h-2.5"></i> Physical Training (P.T.)
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Pawan Kumar
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  P.T. Incharge & Scouts Officer
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="Scouts & Guide, M.A. (M.U.)">Scouts & Guide, M.A. (M.U.)</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="admin" data-search="neelam kumari office administration campus & building incharge b.a. (history)">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/neelam-kumari.jpg" alt="Neelam Kumari" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>NK</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-slate-100 text-slate-800 border-slate-200">
+                  <i data-lucide="building-2" class="w-2.5 h-2.5"></i> Office Administration
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Neelam Kumari
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  Campus & Building Incharge
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="B.A. (History)">B.A. (History)</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="junior" data-search="sita singh play group early childhood kids incharge b.a. (hons.) & prt">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/sita-singh.jpg" alt="Sita Singh" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>SS</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-orange-50 text-orange-800 border-orange-200">
+                  <i data-lucide="baby" class="w-2.5 h-2.5"></i> Play Group
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Sita Singh
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  Early Childhood Kids Incharge
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="B.A. (Hons.) & PRT">B.A. (Hons.) & PRT</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="junior" data-search="prity kumari standard i incharge kids music & primary mentor b.ed.">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/prity-kumari.jpg" alt="Prity Kumari" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>PK</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-amber-50 text-amber-800 border-amber-200">
+                  <i data-lucide="award" class="w-2.5 h-2.5"></i> Standard I Incharge
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Prity Kumari
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  Kids Music & Primary Mentor
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="B.Ed.">B.Ed.</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="sports" data-search="mr. binay srivastav sports & ncc ncc cadet branch incharge (coming soon) sports specialist">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/binay-srivastav.jpg" alt="Mr. Binay Srivastav" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>BS</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-teal-50 text-teal-800 border-teal-200">
+                  <i data-lucide="shield-alert" class="w-2.5 h-2.5"></i> Sports & NCC
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Mr. Binay Srivastav
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  NCC Cadet Branch Incharge (Coming Soon)
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="Sports Specialist">Sports Specialist</span>
+            </div>
+          </div>
+        </div>
+        <div class="faculty-card group bg-white rounded-2xl p-5 border border-[#E6DFC9] hover:border-amber-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" data-category="sports" data-search="mr. sambhu kumar scouts & guides school brass band & parade incharge scouts & guide certified">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3.5">
+              <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-[#E6DFC9] bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-amber-300 font-serif font-black text-lg shadow-inner group-hover:scale-105 transition relative">
+                <img src="assets/faculty/sambhu-kumar.jpg" alt="Mr. Sambhu Kumar" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden');" onerror="this.remove();" />
+                <span>SK</span>
+              </div>
+              <div class="min-w-0 flex-1 space-y-0.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-teal-50 text-teal-800 border-teal-200">
+                  <i data-lucide="music-2" class="w-2.5 h-2.5"></i> Scouts & Guides
+                </span>
+                <h3 class="font-serif text-[15px] sm:text-base font-bold text-brand-navy group-hover:text-brand-blue transition truncate">
+                  Mr. Sambhu Kumar
+                </h3>
+                <p class="text-[11.5px] font-medium text-slate-600 line-clamp-1">
+                  School Brass Band & Parade Incharge
+                </p>
+              </div>
+            </div>
+            <div class="border-t border-[#F0EAE1] pt-2.5 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400 font-medium">Qualification</span>
+              <span class="font-semibold text-brand-navy text-right line-clamp-1" title="Scouts & Guide Certified">Scouts & Guide Certified</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty state if search has no results -->
+      <div id="faculty-empty-state" class="hidden text-center py-16 bg-white rounded-2xl border border-dashed border-[#E6DFC9] p-8 space-y-3">
+        <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mx-auto text-slate-400">
+          <i data-lucide="search-x" class="w-6 h-6"></i>
+        </div>
+        <h4 class="font-serif font-bold text-lg text-brand-navy">No faculty members found</h4>
+        <p class="text-xs text-slate-500 max-w-sm mx-auto">No teacher matches your search query. Try typing another subject or clearing your filter.</p>
+        <button id="faculty-reset-filter" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-brand-navy text-amber-300 hover:bg-brand-blue transition">
+          Reset Filter
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    // TEACHING FACULTY FILTER & SEARCH ENGINE
+    const facultyCards = document.querySelectorAll('.faculty-card');
+    const facultyPills = document.querySelectorAll('.faculty-pill');
+    const facultySearchInput = document.getElementById('faculty-search-input');
+    const facultyCountText = document.getElementById('faculty-count-text');
+    const facultyEmptyState = document.getElementById('faculty-empty-state');
+    const facultyResetBtn = document.getElementById('faculty-reset-filter');
+
+    let activeFacultyCat = 'all';
+    let facultySearchQuery = '';
+
+    function filterFaculty() {
+      let visibleCount = 0;
+      facultyCards.forEach(card => {
+        const cardCat = card.getAttribute('data-category');
+        const cardSearch = (card.getAttribute('data-search') || '').toLowerCase();
+
+        const matchesCat = (activeFacultyCat === 'all' || cardCat === activeFacultyCat);
+        const matchesSearch = !facultySearchQuery || cardSearch.includes(facultySearchQuery);
+
+        if (matchesCat && matchesSearch) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      if (facultyCountText) {
+        facultyCountText.textContent = 'Showing ' + visibleCount + ' Member' + (visibleCount === 1 ? '' : 's');
+      }
+
+      if (facultyEmptyState) {
+        if (visibleCount === 0) {
+          facultyEmptyState.classList.remove('hidden');
+        } else {
+          facultyEmptyState.classList.add('hidden');
+        }
+      }
+    }
+
+    if (facultyPills.length > 0) {
+      facultyPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          facultyPills.forEach(p => {
+            p.classList.remove('active', 'bg-brand-navy', 'text-amber-300', 'border-brand-navy', 'shadow-xs');
+            p.classList.add('bg-[#FAF8F5]', 'text-slate-700', 'border-[#E6DFC9]');
+          });
+          pill.classList.add('active', 'bg-brand-navy', 'text-amber-300', 'border-brand-navy', 'shadow-xs');
+          pill.classList.remove('bg-[#FAF8F5]', 'text-slate-700', 'border-[#E6DFC9]');
+
+          activeFacultyCat = pill.getAttribute('data-cat');
+          filterFaculty();
+        });
+      });
+    }
+
+    if (facultySearchInput) {
+      facultySearchInput.addEventListener('input', (e) => {
+        facultySearchQuery = e.target.value.toLowerCase().trim();
+        filterFaculty();
+      });
+    }
+
+    if (facultyResetBtn) {
+      facultyResetBtn.addEventListener('click', () => {
+        activeFacultyCat = 'all';
+        facultySearchQuery = '';
+        if (facultySearchInput) facultySearchInput.value = '';
+        if (facultyPills.length > 0) {
+          facultyPills.forEach((p, idx) => {
+            if (idx === 0) {
+              p.classList.add('active', 'bg-brand-navy', 'text-amber-300', 'border-brand-navy', 'shadow-xs');
+              p.classList.remove('bg-[#FAF8F5]', 'text-slate-700', 'border-[#E6DFC9]');
+            } else {
+              p.classList.remove('active', 'bg-brand-navy', 'text-amber-300', 'border-brand-navy', 'shadow-xs');
+              p.classList.add('bg-[#FAF8F5]', 'text-slate-700', 'border-[#E6DFC9]');
+            }
+          });
+        }
+        filterFaculty();
+      });
+    }
+  </script>
+  <!-- FOOTER -->
+  <footer class="bg-brand-navy text-white pt-16 pb-12 border-t border-[#E6DFC9]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/10">
+        
+        <!-- Col 1: School Identity -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-3.5">
+            <div class="w-14 h-14 p-1.5 rounded-2xl bg-white border border-amber-400/50 shadow-md">
+              <img src="assets/logo.png" alt="Indian Central School Crest" class="w-full h-full object-contain" />
+            </div>
+            <div>
+              <div class="font-serif font-black text-lg text-amber-300 tracking-tight leading-tight">INDIAN CENTRAL SCHOOL</div>
+              <div class="text-[11px] text-slate-300 uppercase tracking-widest mt-0.5">A.T. Gate, Gaya Ji</div>
+            </div>
+          </div>
+          <p class="text-slate-300 text-xs leading-relaxed">
+            Premier CBSE-pattern English medium institution established in 2000. Providing holistic education, moral discipline, and modern facilities for 25+ years.
+          </p>
+          <div class="inline-flex items-center gap-2 text-xs text-amber-400 font-bold bg-white/5 px-3 py-1 rounded-full border border-amber-400/20">
+            <i data-lucide="award" class="w-3.5 h-3.5"></i> Estd. 2000 &bull; 25+ Years of Legacy
+          </div>
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div class="space-y-3">
+          <h4 class="font-serif font-bold text-sm tracking-wider uppercase text-amber-400">Quick Navigation</h4>
+          <ul class="space-y-2 text-xs text-slate-300">
+            <li><a href="about.html" class="hover:text-amber-400 transition flex items-center gap-1.5"><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i> About Our Institution</a></li>
+            <li><a href="about.html#advisory" class="hover:text-amber-400 transition flex items-center gap-1.5"><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i> Advisory Committee</a></li>
+            <li><a href="notices.html" class="hover:text-amber-400 transition flex items-center gap-1.5"><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i> Digital Notice Board</a></li>
+            <li><a href="academics.html" class="hover:text-amber-400 transition flex items-center gap-1.5"><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i> CBSE Curriculum</a></li>
+            <li><a href="facilities.html" class="hover:text-amber-400 transition flex items-center gap-1.5"><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i> Campus Facilities</a></li>
+            <li><a href="achievements.html" class="hover:text-amber-400 transition flex items-center gap-1.5"><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i> Hall of Fame &amp; Awards</a></li>
+            <li><a href="faculty.html" class="hover:text-amber-400 transition flex items-center gap-1.5"><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i> Faculty Directory (27)</a></li>
+            <li><a href="admissions.html" class="hover:text-amber-400 transition flex items-center gap-1.5"><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i> Admissions 2026–27</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Official Mobile App & Admission Desk -->
+        <div class="space-y-3">
+          <h4 class="font-serif font-bold text-sm tracking-wider uppercase text-amber-400">School Portals</h4>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Parents can track daily attendance, home assignments, fee slips, and live GPS bus tracking on our official Android app.
+          </p>
+          <a href="https://play.google.com/store/apps/details?id=indian.schoolapp.indian" target="_blank" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition shadow">
+            <i data-lucide="smartphone" class="w-4 h-4"></i> Download Parent App
+          </a>
+          <div class="pt-2">
+            <div class="text-[11px] text-slate-400">Admission Enquiries:</div>
+            <div class="text-xs font-bold text-amber-300 mt-0.5">+91 94312 07791</div>
+          </div>
+        </div>
+
+        <!-- Col 4: Campus Address & Location -->
+        <div class="space-y-3">
+          <h4 class="font-serif font-bold text-sm tracking-wider uppercase text-amber-400">Campus Address</h4>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            <strong>Indian Central School</strong><br />
+            A.T. Gate, Gaya Ji<br />
+            (Situated on Gaya - Sherghati Road)<br />
+            Bihar – 824211, India
+          </p>
+          <ul class="space-y-1.5 text-xs text-slate-300">
+            <li>
+              <a href="mailto:indiancentralschool@gmail.com" class="flex items-center gap-2 hover:text-amber-400 transition">
+                <i data-lucide="mail" class="w-4 h-4"></i> indiancentralschool@gmail.com
+              </a>
+            </li>
+            <li>
+              <a href="https://maps.google.com/?q=24.765139,84.953472" target="_blank" class="flex items-center gap-2 hover:text-amber-400 transition">
+                <i data-lucide="map-pin" class="w-4 h-4"></i> View Campus on Google Maps
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Copyright & HitWebCounter -->
+      <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-slate-400 text-xs border-t border-white/5">
+        <div class="flex flex-wrap items-center justify-center md:justify-start gap-2">
+          <span>&copy; 2026 Indian Central School. All Rights Reserved.</span>
+          <span class="opacity-30 hidden sm:inline">&bull;</span>
+          <span class="hidden sm:inline">A.T. Gate, Gaya - Sherghati Road, Gaya Ji, Bihar 824211</span>
+          <span class="opacity-30 hidden sm:inline">&bull;</span>
+          <span class="hidden sm:inline">Powered by <a href="https://sjdigitals.vercel.app" target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:underline font-bold">SJ Digitals</a></span>
+        </div>
+
+        <!-- Total Visitors Badge -->
+        <div class="flex items-center gap-2.5 bg-white/5 px-3 py-1.5 rounded-xl border border-white/10 shadow-inner shrink-0">
+          <span class="flex items-center gap-1.5 text-[11px] text-slate-400 font-medium">
+            <i data-lucide="eye" class="w-3.5 h-3.5 text-amber-400"></i>
+            Total Visitors:
+          </span>
+          <a href="https://www.hitwebcounter.com" target="_blank" rel="noopener noreferrer" title="Total Visitors" class="inline-flex items-center hover:opacity-90 transition rounded overflow-hidden">
+            <img src="https://www.hitwebcounter.com/counter/counter.php?page=21517488&style=0009&nbdigits=5&type=ip" alt="Total Visitors" class="h-6 w-auto inline-block rounded-xs" />
+          </a>
+        </div>
+      </div>
+
+      <!-- SJ DIGITALS PROMO BANNER -->
+      <div class="mt-8 pt-6 border-t border-white/10">
+        <a href="https://sjdigitals.vercel.app" target="_blank" rel="noopener noreferrer" title="Visit SJ Digitals" class="group block relative overflow-hidden rounded-2xl bg-gradient-to-r from-brand-navy via-slate-900 to-brand-blue/90 border-2 border-amber-400/30 hover:border-amber-400 p-4 sm:p-5 shadow-xl hover:shadow-2xl hover:shadow-amber-500/10 transition-all transform hover:-translate-y-0.5">
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+            <div class="flex items-center gap-3.5">
+              <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 text-brand-navy font-black text-base flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 transition-transform">
+                SJ
+              </div>
+              <div>
+                <div class="flex items-center justify-center sm:justify-start gap-2 text-white font-bold text-sm sm:text-base">
+                  <span>Website Designed & Developed by <span class="text-amber-400 group-hover:text-amber-300 underline decoration-amber-400/50 decoration-2 underline-offset-4 transition">SJ Digitals</span></span>
+                  <span class="hidden sm:inline-flex items-center gap-1 text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Available for Projects
+                  </span>
+                </div>
+                <p class="text-xs text-slate-300/90 mt-0.5">
+                  Need a modern, fast, and high-converting website for your school, college, or business?
+                </p>
+              </div>
+            </div>
+            
+            <div class="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 group-hover:from-amber-400 group-hover:to-amber-500 text-brand-navy font-extrabold text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-md transition-all shrink-0">
+              <span>Get Your Website Built</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+            </div>
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- 11. MOBILE STICKY BOTTOM ACTION BAR -->
+  <div class="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 p-2.5 z-40 lg:hidden flex items-center justify-around gap-2 shadow-2xl">
+    <a href="tel:+919431207791" class="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-brand-navy text-white text-xs font-bold shadow">
+      <i data-lucide="phone" class="w-4 h-4 text-amber-400"></i>
+      Call School
+    </a>
+    <a href="https://wa.me/918877592738?text=Hello,%20I%20am%20enquiring%20about%20admissions%20at%20Indian%20Central%20School" target="_blank" class="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-emerald-600 text-white text-xs font-bold shadow">
+      <i data-lucide="message-circle" class="w-4 h-4"></i>
+      WhatsApp
+    </a>
+    <a href="admissions.html" class="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-amber-500 text-brand-navy text-xs font-bold shadow">
+      <i data-lucide="file-pen" class="w-4 h-4"></i>
+      Apply Now
+    </a>
+  </div>
+
+
+
+  <!-- CORE SCRIPTS -->
+  <script>
+    if (window.lucide) lucide.createIcons();
+
+    // Mobile Hamburger Toggle
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    if (menuBtn && mobileMenu) {
+      menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+        });
+      });
+    }
+
+    // Lightbox Controller
+    const lightboxModal = document.getElementById('image-lightbox-modal');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const lightboxCloseBtn = document.getElementById('lightbox-close-btn');
+
+    function openLightbox(src, caption) {
+      if (!lightboxModal || !lightboxImg) return;
+      lightboxImg.src = src;
+      if (lightboxCaption) lightboxCaption.textContent = caption || '';
+      lightboxModal.classList.remove('hidden');
+      lightboxModal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closeLightbox() {
+      if (!lightboxModal) return;
+      lightboxModal.classList.add('hidden');
+      lightboxModal.classList.remove('flex');
+      if (lightboxImg) lightboxImg.src = '';
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('click', (e) => {
+      const trigger = e.target.closest('.lightbox-trigger');
+      if (trigger) {
+        e.preventDefault();
+        const src = trigger.getAttribute('data-img-src') || trigger.getAttribute('src');
+        const caption = trigger.getAttribute('data-caption') || trigger.getAttribute('alt') || '';
+        if (src) openLightbox(src, caption);
+      }
+    });
+
+    if (lightboxCloseBtn) {
+      lightboxCloseBtn.addEventListener('click', closeLightbox);
+    }
+
+    if (lightboxModal) {
+      lightboxModal.addEventListener('click', (e) => {
+        if (e.target === lightboxModal || e.target.id === 'lightbox-close-btn') {
+          closeLightbox();
+        }
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightboxModal && !lightboxModal.classList.contains('hidden')) {
+        closeLightbox();
+      }
+    });
+  
+    // Call School Working Hours Restriction (Mon-Sat, 8:00 AM to 3:30 PM IST)
+    function isSchoolCallAllowed() {
+      try {
+        const now = new Date();
+        const istStr = now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
+        const istDate = new Date(istStr);
+        const day = istDate.getDay(); // 0 = Sun, 1 = Mon, ..., 6 = Sat
+        const hours = istDate.getHours();
+        const minutes = istDate.getMinutes();
+        const timeMinutes = hours * 60 + minutes;
+
+        // Working hours: Monday (1) to Saturday (6), 08:00 (480 min) to 15:30 (930 min)
+        if (day >= 1 && day <= 6 && timeMinutes >= 480 && timeMinutes <= 930) {
+          return true;
+        }
+        return false;
+      } catch (err) {
+        return false;
+      }
+    }
+
+    const callHoursModal = document.getElementById('calling-hours-modal');
+    const closeCallHoursBtn = document.getElementById('close-calling-hours-btn');
+
+    document.addEventListener('click', (e) => {
+      const telLink = e.target.closest('a[href^="tel:"]');
+      if (telLink) {
+        if (!isSchoolCallAllowed()) {
+          e.preventDefault();
+          if (callHoursModal) {
+            callHoursModal.classList.remove('hidden');
+            callHoursModal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            if (window.lucide) lucide.createIcons();
+          }
+        }
+      }
+    });
+
+    if (closeCallHoursBtn) {
+      closeCallHoursBtn.addEventListener('click', () => {
+        if (callHoursModal) {
+          callHoursModal.classList.add('hidden');
+          callHoursModal.classList.remove('flex');
+          document.body.style.overflow = '';
+        }
+      });
+    }
+
+    if (callHoursModal) {
+      callHoursModal.addEventListener('click', (e) => {
+        if (e.target === callHoursModal) {
+          callHoursModal.classList.add('hidden');
+          callHoursModal.classList.remove('flex');
+          document.body.style.overflow = '';
+        }
+      });
+
+      // Auto-close modal when clicking WhatsApp or Admission buttons inside it
+      callHoursModal.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          callHoursModal.classList.add('hidden');
+          callHoursModal.classList.remove('flex');
+          document.body.style.overflow = '';
+        });
+      });
+    }
+</script>
+  <!-- CALLING HOURS RESTRICTION MODAL -->
+  <div id="calling-hours-modal" class="fixed inset-0 z-[120] bg-black/75 backdrop-blur-sm hidden items-center justify-center p-4 sm:p-6 transition-all">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full border border-amber-300 shadow-2xl relative text-center space-y-5 animate-in fade-in zoom-in duration-200">
+      <button id="close-calling-hours-btn" aria-label="Close" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 p-1.5 rounded-full hover:bg-slate-100 transition">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="w-16 h-16 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center mx-auto shadow-inner border border-amber-200">
+        <i data-lucide="clock" class="w-8 h-8"></i>
+      </div>
+
+      <div class="space-y-2">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-extrabold bg-rose-50 text-rose-800 border border-rose-200">
+          <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+          Phone Lines Currently Closed
+        </span>
+        <h3 class="font-serif text-2xl font-extrabold text-brand-navy">
+          School Calling Hours
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+          Our administrative phone lines are active <strong>Monday to Saturday, from 8:00 AM to 3:30 PM (IST)</strong>.
+        </p>
+      </div>
+
+      <div class="p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200/80 text-xs text-amber-950 text-left space-y-1">
+        <div class="font-bold flex items-center gap-1.5">
+          <i data-lucide="info" class="w-4 h-4 text-amber-700 shrink-0"></i>
+          <span>Want to reach us outside calling hours?</span>
+        </div>
+        <p class="text-[11.5px] text-slate-600 pl-5 leading-relaxed">
+          You can leave a WhatsApp message anytime. Our admission desk will attend to your query promptly when school opens.
+        </p>
+      </div>
+
+      <div class="space-y-2.5 pt-1">
+        <a href="https://wa.me/918877592738?text=Hello,%20I%20am%20calling%20outside%20office%20hours%20and%20would%20like%20information%20regarding%20Indian%20Central%20School" target="_blank" class="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-md transition">
+          <i data-lucide="message-circle" class="w-4 h-4"></i> Send Message on WhatsApp
+        </a>
+        <a href="admissions.html" class="w-full py-2.5 px-4 rounded-xl bg-brand-navy hover:bg-brand-blue text-amber-300 text-xs font-bold flex items-center justify-center gap-2 transition">
+          <i data-lucide="file-pen" class="w-4 h-4"></i> Submit Admission Enquiry Online
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
