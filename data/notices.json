@@ -1,0 +1,22 @@
+[
+  {
+    "id": "not-1788453972280",
+    "title": "Test",
+    "category": "academic",
+    "session": "Session 2026-27",
+    "description": "Abcd",
+    "image": "assets/notices/indiantalent-olympiad-enroll-notice.jpg",
+    "urgent": true,
+    "date": "2026-09-03"
+  },
+  {
+    "id": "not-1788453467321",
+    "title": "Mid term exam",
+    "category": "academic",
+    "session": "Session 2026-27",
+    "description": "Test1",
+    "image": "assets/notices/indiantalent-olympiad-enroll-notice.jpg",
+    "urgent": true,
+    "date": "2026-09-03"
+  }
+]
