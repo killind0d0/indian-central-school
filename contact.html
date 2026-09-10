@@ -267,21 +267,66 @@
               </div>
             </div>
 
-            <!-- Address -->
-            <div class="bg-white rounded-2xl p-5 border border-[#E6DFC9] shadow-xs flex items-start gap-4">
-              <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center shrink-0">
-                <i data-lucide="map-pin" class="w-6 h-6"></i>
+            <!-- Campus Locations: Old Branch & New Branch -->
+            <div class="space-y-3 pt-1">
+              <div class="text-xs font-black text-slate-400 uppercase tracking-wider px-1 flex items-center gap-1.5">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-600"></i>
+                Our School Campuses in Gaya Ji
               </div>
-              <div class="space-y-1">
-                <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Campus Location</div>
-                <div class="font-serif font-bold text-sm sm:text-base text-brand-navy">
-                  Indian Central School
+
+              <!-- Old Branch Card -->
+              <div class="bg-white rounded-2xl p-5 border-2 border-amber-300/80 shadow-xs flex items-start gap-4 relative overflow-hidden group hover:border-amber-400 transition">
+                <div class="w-11 h-11 rounded-xl bg-brand-navy text-amber-300 flex items-center justify-center shrink-0 shadow-xs">
+                  <i data-lucide="building-2" class="w-5 h-5"></i>
                 </div>
-                <p class="text-xs text-slate-600 leading-relaxed">
-                  A.T. Gate, Gaya - Sherghati Road, Gaya Ji, Bihar – 824211, India
-                </p>
-                <div class="pt-1 text-xs font-semibold text-brand-blue flex items-center gap-1">
-                  <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-blue"></i> Official Campus Location on Google Maps
+                <div class="space-y-1.5 flex-1 min-w-0">
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="inline-block bg-amber-100 text-amber-900 text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full border border-amber-200">
+                      Original Campus
+                    </span>
+                    <button type="button" onclick="setBranchMap('old')" class="text-[11px] font-bold text-brand-blue hover:text-amber-600 transition flex items-center gap-1">
+                      Show on Map &rarr;
+                    </button>
+                  </div>
+                  <div class="font-serif font-bold text-sm sm:text-base text-brand-navy">
+                    Old Branch (A.T. Gate)
+                  </div>
+                  <p class="text-xs text-slate-600 leading-relaxed">
+                    A.T. Gate, Gaya - Sherghati Road, Gaya Ji, Bihar – 824211
+                  </p>
+                  <div class="pt-1 flex items-center gap-3 text-xs">
+                    <a href="https://maps.google.com/?q=24.765139,84.953472" target="_blank" class="font-bold text-brand-blue hover:text-amber-600 transition inline-flex items-center gap-1">
+                      <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Open in Google Maps
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- New Branch Card -->
+              <div class="bg-white rounded-2xl p-5 border border-[#E6DFC9] shadow-xs flex items-start gap-4 relative overflow-hidden group hover:border-amber-400 transition">
+                <div class="w-11 h-11 rounded-xl bg-amber-500 text-brand-navy flex items-center justify-center shrink-0 shadow-xs">
+                  <i data-lucide="sparkles" class="w-5 h-5"></i>
+                </div>
+                <div class="space-y-1.5 flex-1 min-w-0">
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="inline-block bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full border border-emerald-200">
+                      New Branch
+                    </span>
+                    <button type="button" onclick="setBranchMap('new')" class="text-[11px] font-bold text-brand-blue hover:text-amber-600 transition flex items-center gap-1">
+                      Show on Map &rarr;
+                    </button>
+                  </div>
+                  <div class="font-serif font-bold text-sm sm:text-base text-brand-navy">
+                    New Branch (Gaya - Sherghati Road)
+                  </div>
+                  <p class="text-xs text-slate-600 leading-relaxed">
+                    Gaya - Sherghati Road, Gaya Ji, Bihar (Near A.T. Gate)
+                  </p>
+                  <div class="pt-1 flex items-center gap-3 text-xs">
+                    <a href="https://maps.app.goo.gl/P4QRgraptaU9kjC27?g_st=ac" target="_blank" class="font-bold text-brand-blue hover:text-amber-600 transition inline-flex items-center gap-1">
+                      <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Open in Google Maps
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -290,11 +335,35 @@
 
         </div>
 
-        <!-- Right: Interactive Google Maps Embed -->
+        <!-- Right: Interactive Google Maps Embed with Branch Switcher -->
         <div class="lg:col-span-7 space-y-4">
-          <div class="bg-white rounded-3xl p-4 border border-[#E6DFC9] shadow-xl overflow-hidden">
-            <div class="relative w-full h-[480px] rounded-2xl overflow-hidden bg-slate-100 border border-[#E8E1D5]">
+          <div class="bg-white rounded-3xl p-4 sm:p-5 border border-[#E6DFC9] shadow-xl overflow-hidden">
+            <!-- Branch Switcher Header -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 mb-3 border-b border-[#E8E1D5]">
+              <div class="flex items-center gap-2">
+                <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-800 flex items-center justify-center font-bold">
+                  <i data-lucide="map" class="w-4 h-4"></i>
+                </span>
+                <div>
+                  <h4 class="font-serif font-bold text-sm text-brand-navy">Interactive Campus Locator</h4>
+                  <p class="text-[11px] text-slate-500">Select branch below to view map coordinates</p>
+                </div>
+              </div>
+              <!-- Branch Buttons -->
+              <div class="inline-flex rounded-xl bg-slate-100 p-1 border border-slate-200 self-start sm:self-auto" id="branchMapToggle">
+                <button type="button" id="btnBranchOld" onclick="setBranchMap('old')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-brand-navy text-amber-300 shadow-xs">
+                  <i data-lucide="building-2" class="w-3.5 h-3.5"></i> Old Branch
+                </button>
+                <button type="button" id="btnBranchNew" onclick="setBranchMap('new')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-slate-600 hover:text-brand-navy">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i> New Branch
+                </button>
+              </div>
+            </div>
+
+            <!-- Map Iframe Container -->
+            <div class="relative w-full h-[450px] rounded-2xl overflow-hidden bg-slate-100 border border-[#E8E1D5]">
               <iframe 
+                id="campusMapIframe"
                 src="https://maps.google.com/maps?q=24.765139,84.953472&amp;hl=en&amp;z=16&amp;output=embed" 
                 width="100%" 
                 height="100%" 
@@ -306,13 +375,14 @@
                 title="Indian Central School Google Map Location">
               </iframe>
             </div>
-            <div class="p-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-              <span class="text-slate-600 flex items-center gap-1.5">
-                <i data-lucide="navigation" class="w-4 h-4 text-brand-blue"></i>
-                Conveniently accessible from Gaya Town, Cherki, and Bodhgaya Bypass.
+
+            <div class="p-3 sm:p-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs bg-[#FAF8F5] rounded-xl mt-3 border border-[#E6DFC9]">
+              <span id="branchMapCaption" class="text-slate-700 flex items-center gap-1.5 font-medium">
+                <i data-lucide="navigation" class="w-4 h-4 text-brand-blue shrink-0"></i>
+                <span id="branchCaptionText"><strong>Old Branch</strong>: A.T. Gate, Gaya - Sherghati Road, Gaya Ji</span>
               </span>
-              <a href="https://maps.google.com/?q=24.765139,84.953472" target="_blank" class="inline-flex items-center gap-1 text-xs font-bold text-brand-navy hover:text-amber-600 transition bg-[#FAF8F5] px-3 py-1.5 rounded-xl border border-[#E6DFC9]">
-                Open in Google Maps <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+              <a id="branchMapExternalLink" href="https://maps.google.com/?q=24.765139,84.953472" target="_blank" class="inline-flex items-center gap-1 text-xs font-bold text-brand-navy hover:text-amber-600 transition bg-white px-3.5 py-1.5 rounded-lg border border-[#E6DFC9] shadow-xs shrink-0">
+                Open in Google Maps App <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
               </a>
             </div>
           </div>
@@ -394,14 +464,18 @@
 
         <!-- Col 4: Campus Address & Location -->
         <div class="space-y-3">
-          <h4 class="font-serif font-bold text-sm tracking-wider uppercase text-amber-400">Campus Address</h4>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            <strong>Indian Central School</strong><br />
-            A.T. Gate, Gaya Ji<br />
-            (Situated on Gaya - Sherghati Road)<br />
-            Bihar – 824211, India
-          </p>
-          <ul class="space-y-1.5 text-xs text-slate-300">
+          <h4 class="font-serif font-bold text-sm tracking-wider uppercase text-amber-400">Campus Addresses</h4>
+          <div class="text-xs text-slate-300 leading-relaxed space-y-2">
+            <div>
+              <span class="font-bold text-amber-300">Old Branch (Main Campus):</span><br />
+              A.T. Gate, Gaya - Sherghati Road, Gaya Ji, Bihar – 824211
+            </div>
+            <div>
+              <span class="font-bold text-emerald-400">New Branch:</span><br />
+              Gaya - Sherghati Road, Gaya Ji, Bihar
+            </div>
+          </div>
+          <ul class="space-y-1.5 text-xs text-slate-300 pt-1">
             <li>
               <a href="mailto:indiancentralschool@gmail.com" class="flex items-center gap-2 hover:text-amber-400 transition">
                 <i data-lucide="mail" class="w-4 h-4"></i> indiancentralschool@gmail.com
@@ -409,7 +483,12 @@
             </li>
             <li>
               <a href="https://maps.google.com/?q=24.765139,84.953472" target="_blank" class="flex items-center gap-2 hover:text-amber-400 transition">
-                <i data-lucide="map-pin" class="w-4 h-4"></i> View Campus on Google Maps
+                <i data-lucide="map-pin" class="w-4 h-4 text-amber-400"></i> Old Branch (A.T. Gate Map)
+              </a>
+            </li>
+            <li>
+              <a href="https://maps.app.goo.gl/P4QRgraptaU9kjC27?g_st=ac" target="_blank" class="flex items-center gap-2 hover:text-amber-400 transition">
+                <i data-lucide="map-pin" class="w-4 h-4 text-emerald-400"></i> New Branch (Google Maps)
               </a>
             </li>
           </ul>
@@ -561,8 +640,34 @@
         closeLightbox();
       }
     });
+
+    // Interactive Dual-Branch Map Switcher
+    function setBranchMap(branch) {
+      const iframe = document.getElementById('campusMapIframe');
+      const extLink = document.getElementById('branchMapExternalLink');
+      const captionText = document.getElementById('branchCaptionText');
+      const btnOld = document.getElementById('btnBranchOld');
+      const btnNew = document.getElementById('btnBranchNew');
+
+      if (!iframe || !extLink || !btnOld || !btnNew) return;
+
+      if (branch === 'new') {
+        iframe.src = "https://maps.google.com/maps?q=24.765545,84.951975&hl=en&z=16&output=embed";
+        extLink.href = "https://maps.app.goo.gl/P4QRgraptaU9kjC27?g_st=ac";
+        captionText.innerHTML = "<strong>New Branch</strong>: Gaya - Sherghati Road, Gaya Ji, Bihar";
+        btnNew.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-brand-navy text-amber-300 shadow-xs";
+        btnOld.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-slate-600 hover:text-brand-navy";
+      } else {
+        iframe.src = "https://maps.google.com/maps?q=24.765139,84.953472&hl=en&z=16&output=embed";
+        extLink.href = "https://maps.google.com/?q=24.765139,84.953472";
+        captionText.innerHTML = "<strong>Old Branch</strong>: A.T. Gate, Gaya - Sherghati Road, Gaya Ji";
+        btnOld.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-brand-navy text-amber-300 shadow-xs";
+        btnNew.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-slate-600 hover:text-brand-navy";
+      }
+      if (window.lucide) lucide.createIcons();
+    }
   
-        // Call School Working Hours Restriction (Mon-Sat, 8:00 AM to 3:30 PM IST)
+    // Call School Working Hours Restriction (Mon-Sat, 8:00 AM to 3:30 PM IST)
     function isSchoolCallAllowed() {
       try {
         const now = new Date();
