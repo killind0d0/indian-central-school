@@ -3,6 +3,7 @@
 A responsive web portal designed for **Indian Central School** (A.T. Gate, Gaya Ji, on Gaya - Sherghati Road, Bihar).
 
 ## Live Website
+- **Official Domain**: [https://icsgayaji.org](https://icsgayaji.org)
 - **GitHub Pages**: [https://killind0d0.github.io/indian-central-school/](https://killind0d0.github.io/indian-central-school/)
 
 ## Key Features Built
