@@ -110,19 +110,5 @@
     "caption": "Institutional Spotlight in Regional Daily",
     "urgent": false,
     "date": "2026-08-10"
-  },
-  {
-    "id": "not-9",
-    "title": "Academic Excellence & Community Recognition",
-    "category": "press",
-    "badge": "Media Press",
-    "badgeIcon": "newspaper",
-    "badgeColor": "purple",
-    "session": "News Print",
-    "description": "Special editorial report profiling the educational impact and disciplined learning culture at Indian Central School, A.T. Gate.",
-    "image": "assets/notices/schoolpapercutout2.jpg",
-    "caption": "Academic Excellence & Community Recognition",
-    "urgent": false,
-    "date": "2026-08-12"
   }
 ]
