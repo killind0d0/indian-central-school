@@ -5,3 +5,7 @@ update/
 # Android APK binaries
 *.apk
 apk/
+
+# Python cache
+__pycache__/
+*.pyc

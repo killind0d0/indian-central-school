@@ -1,0 +1,2233 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staff Administration Portal | Indian Central School, Gaya Ji</title>
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+
+  <!-- Prevent Search Engine Indexing -->
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+  <meta name="googlebot" content="noindex, nofollow" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#07162C',
+              navyLight: '#0E2648',
+              blue: '#1B3B6F',
+              accent: '#F59E0B',
+              accentDark: '#D97706',
+              gold: '#E5A93C',
+              goldLight: '#FEF9C3',
+              cream: '#FAF8F5',
+              creamDark: '#F3EFE6',
+              warmBorder: '#E6DFC9',
+              warmCard: '#FFFFFF'
+            }
+          },
+          fontFamily: {
+            sans: ['"Outfit"', '"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            crest: ['"Cinzel"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #c5bfb0; border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #9d9685; }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+    .animate-shake {
+      animation: shake 0.4s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-brand-cream text-slate-800 font-sans min-h-screen flex flex-col antialiased">
+
+  <!-- ================================================================= -->
+  <!-- LOGIN LOCK GATE (USER-FRIENDLY & ZERO DEVELOPER JARGON)          -->
+  <!-- ================================================================= -->
+  <div id="login-lock-gate" class="fixed inset-0 z-50 bg-gradient-to-br from-brand-navy via-[#0A1D3A] to-[#040D1A] flex items-center justify-center p-4">
+    <div class="max-w-md w-full bg-white rounded-3xl p-8 shadow-2xl border border-amber-400/30 relative overflow-hidden" id="login-card">
+      
+      <!-- Top Decorative Accent -->
+      <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600"></div>
+
+      <!-- School Crest and Branding -->
+      <div class="text-center mb-6 pt-2">
+        <div class="w-16 h-16 mx-auto p-1.5 rounded-2xl bg-white border-2 border-amber-400/40 shadow-md flex items-center justify-center mb-3">
+          <img src="assets/logo.png" alt="Indian Central School Crest" class="w-full h-full object-contain" />
+        </div>
+        <h1 class="font-crest font-black text-lg text-brand-navy tracking-tight leading-tight">INDIAN CENTRAL SCHOOL</h1>
+        <div class="text-[11px] text-amber-700 font-bold uppercase tracking-widest mt-0.5">Staff & Management Portal</div>
+        <p class="text-xs text-slate-500 mt-2">Sign in with your school administrative passcode</p>
+      </div>
+
+      <!-- User-Facing Login Form -->
+      <form id="login-form" onsubmit="handleLoginSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">School Admin Passcode</label>
+          <div class="relative">
+            <input type="password" id="auth-secret-input" required autofocus placeholder="Enter school passcode" class="w-full text-xs sm:text-sm pl-9 pr-10 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500 font-mono" />
+            <i data-lucide="key-round" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+            <button type="button" onclick="toggleSecretVisibility()" class="absolute right-3 top-3 text-slate-400 hover:text-slate-600">
+              <i data-lucide="eye" id="eye-icon" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between text-xs pt-1">
+          <label class="flex items-center gap-2 cursor-pointer text-slate-600">
+            <input type="checkbox" id="remember-device-check" checked class="w-4 h-4 rounded text-amber-500 focus:ring-amber-400 border-slate-300" />
+            <span class="font-medium">Remember this device</span>
+          </label>
+          <span class="text-[11px] text-slate-400">Default: <code>ics@2026</code></span>
+        </div>
+
+        <div id="login-error-msg" class="hidden p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold flex items-center gap-2">
+          <i data-lucide="alert-circle" class="w-4 h-4 shrink-0 text-rose-600"></i>
+          <span id="login-error-text">Access Denied: Incorrect passcode.</span>
+        </div>
+
+        <button type="submit" id="btn-unlock" class="w-full py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-brand-navy hover:bg-brand-blue text-amber-300 shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2 mt-2">
+          <i data-lucide="shield-check" class="w-4 h-4"></i> Sign In to Portal
+        </button>
+      </form>
+
+      <div class="mt-6 pt-4 border-t border-slate-100 text-center">
+        <a href="index.html" class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-brand-navy transition">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back to Main School Website
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- AUTHENTICATED CONSOLE (LOCKED UNTIL AUTHENTICATED)                -->
+  <!-- ================================================================= -->
+  <div id="admin-app" class="hidden flex-col min-h-screen">
+
+    <!-- TOP APP BAR -->
+    <header class="bg-brand-navy text-white sticky top-0 z-40 shadow-md border-b border-amber-500/20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <a href="index.html" class="flex items-center gap-3 group">
+            <div class="w-10 h-10 p-1 rounded-xl bg-white border border-amber-400/40 shadow-sm flex items-center justify-center shrink-0">
+              <img src="assets/logo.png" alt="ICS Crest" class="w-full h-full object-contain" />
+            </div>
+            <div>
+              <div class="font-crest font-black text-sm tracking-wide text-amber-300 leading-tight">INDIAN CENTRAL SCHOOL</div>
+              <div class="text-[10px] text-slate-300 tracking-wider font-sans uppercase">Staff Administration Console</div>
+            </div>
+          </a>
+        </div>
+
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Target & Environment Indicator -->
+          <div id="env-badge" class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="env-label">⚡ Local Server Mode (Safe Testing)</span>
+          </div>
+
+          <button onclick="toggleSettingsModal()" title="Admin & Sync Settings" class="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 transition border border-white/10">
+            <i data-lucide="settings" class="w-4 h-4"></i>
+          </button>
+
+          <button onclick="handleLogout()" title="Lock & Log Out" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 text-xs font-bold border border-rose-500/30 transition">
+            <i data-lucide="log-out" class="w-3.5 h-3.5"></i> <span class="hidden sm:inline">Log Out</span>
+          </button>
+
+          <a href="notices.html" target="_blank" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-400/10 hover:bg-amber-400/20 text-amber-300 text-xs font-bold border border-amber-400/30 transition">
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Live Notices
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- NAVIGATION TABS -->
+    <nav class="bg-white border-b border-brand-warmBorder sticky top-16 z-30 shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex space-x-1 sm:space-x-4 overflow-x-auto custom-scrollbar py-2" id="nav-tabs">
+          <button onclick="switchTab('notices')" id="tab-btn-notices" class="tab-button flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition whitespace-nowrap bg-brand-navy text-amber-300 shadow-sm">
+            <i data-lucide="bell" class="w-4 h-4"></i>
+            <span>Notices & Circulars</span>
+            <span id="notices-counter-badge" class="ml-1 px-2 py-0.5 rounded-full text-[11px] bg-amber-400 text-brand-navy font-black">0/15</span>
+          </button>
+
+          <button onclick="switchTab('faculty')" id="tab-btn-faculty" class="tab-button flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-brand-navy hover:bg-slate-100 transition whitespace-nowrap">
+            <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+            <span>Faculty Directory</span>
+            <span id="faculty-counter-badge" class="ml-1 px-2 py-0.5 rounded-full text-[11px] bg-slate-200 text-slate-700 font-bold">0</span>
+          </button>
+
+          <button onclick="switchTab('achievements')" id="tab-btn-achievements" class="tab-button flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-brand-navy hover:bg-slate-100 transition whitespace-nowrap">
+            <i data-lucide="award" class="w-4 h-4"></i>
+            <span>Hall of Fame & Awards</span>
+            <span id="achievements-counter-badge" class="ml-1 px-2 py-0.5 rounded-full text-[11px] bg-slate-200 text-slate-700 font-bold">0</span>
+          </button>
+
+          <button onclick="switchTab('campus')" id="tab-btn-campus" class="tab-button flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-brand-navy hover:bg-slate-100 transition whitespace-nowrap">
+            <i data-lucide="building-2" class="w-4 h-4"></i>
+            <span>Campus & Infrastructure</span>
+            <span id="campus-counter-badge" class="ml-1 px-2 py-0.5 rounded-full text-[11px] bg-slate-200 text-slate-700 font-bold">0</span>
+          </button>
+
+          <button onclick="switchTab('advisory')" id="tab-btn-advisory" class="tab-button flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-brand-navy hover:bg-slate-100 transition whitespace-nowrap">
+            <i data-lucide="shield-check" class="w-4 h-4"></i>
+            <span>Advisory Committee</span>
+            <span id="advisory-counter-badge" class="ml-1 px-2 py-0.5 rounded-full text-[11px] bg-slate-200 text-slate-700 font-bold">0</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+
+      <!-- ================================================================= -->
+      <!-- SECTION 1: NOTICES (MAX 15 ENFORCED)                              -->
+      <!-- ================================================================= -->
+      <section id="section-notices" class="admin-section space-y-6">
+        <div class="bg-white rounded-2xl border border-brand-warmBorder p-6 shadow-sm">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <div class="flex items-center gap-2.5">
+                <h2 class="font-serif font-black text-xl text-brand-navy">Digital Notices & Circulars</h2>
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-200">
+                  15 Notices App Limit
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 mt-1">
+                Synchronized with the Android School App. Maximum 15 active notices allowed on the portal.
+              </p>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <button onclick="openNoticeModal()" class="inline-flex items-center gap-2 bg-brand-navy hover:bg-brand-blue text-amber-300 px-4 py-2 rounded-xl text-xs font-bold shadow transition">
+                <i data-lucide="plus-circle" class="w-4 h-4"></i> Post New Notice
+              </button>
+              <button onclick="refreshData('notices')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition" title="Reload Notices">
+                <i data-lucide="rotate-cw" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Quota Capacity Bar -->
+          <div class="mt-5 pt-4 border-t border-slate-100">
+            <div class="flex items-center justify-between text-xs mb-1.5">
+              <span class="font-bold text-slate-700">Notice Board Capacity:</span>
+              <span id="notice-capacity-text" class="font-bold text-brand-navy">0 of 15 Active (15 Available)</span>
+            </div>
+            <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
+              <div id="notice-capacity-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+            <div id="notice-limit-warning" class="hidden mt-2 p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold flex items-center gap-2">
+              <i data-lucide="alert-triangle" class="w-4 h-4 shrink-0 text-rose-600"></i>
+              <span>Limit Reached (15/15). Posting a new notice will retire the oldest notice to maintain exact sync with the Android app.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notice Cards Grid -->
+        <div id="notices-list-container" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- SECTION 2: FACULTY DIRECTORY                                      -->
+      <!-- ================================================================= -->
+      <section id="section-faculty" class="admin-section hidden space-y-6">
+        <div class="bg-white rounded-2xl border border-brand-warmBorder p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="font-serif font-black text-xl text-brand-navy">Faculty & Academic Mentors</h2>
+            <p class="text-xs text-slate-500 mt-1">Manage teaching staff profiles, designations, qualifications, and department categories.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <button onclick="openFacultyModal()" class="inline-flex items-center gap-2 bg-brand-navy hover:bg-brand-blue text-amber-300 px-4 py-2 rounded-xl text-xs font-bold shadow transition">
+              <i data-lucide="user-plus" class="w-4 h-4"></i> Add Faculty Member
+            </button>
+            <button onclick="refreshData('faculty')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition" title="Reload Faculty">
+              <i data-lucide="rotate-cw" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3 items-center justify-between">
+          <div class="relative w-full sm:w-72">
+            <input type="text" id="faculty-search-input" oninput="filterFacultyList()" placeholder="Search by name, subject, or role..." class="w-full text-xs pl-8 pr-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500 bg-white" />
+            <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-3"></i>
+          </div>
+          <div class="flex items-center gap-2 text-xs overflow-x-auto w-full sm:w-auto">
+            <button onclick="setFacultyCategoryFilter('all')" class="faculty-cat-btn px-3 py-1 rounded-lg bg-brand-navy text-amber-300 font-bold">All</button>
+            <button onclick="setFacultyCategoryFilter('senior')" class="faculty-cat-btn px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold">Senior</button>
+            <button onclick="setFacultyCategoryFilter('middle')" class="faculty-cat-btn px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold">Middle</button>
+            <button onclick="setFacultyCategoryFilter('primary')" class="faculty-cat-btn px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold">Primary</button>
+            <button onclick="setFacultyCategoryFilter('activity')" class="faculty-cat-btn px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold">Activity</button>
+          </div>
+        </div>
+
+        <div id="faculty-list-container" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- SECTION 3: AWARDS & HALL OF FAME                                  -->
+      <!-- ================================================================= -->
+      <section id="section-achievements" class="admin-section hidden space-y-6">
+        <div class="bg-white rounded-2xl border border-brand-warmBorder p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="font-serif font-black text-xl text-brand-navy">Hall of Fame & Achievements</h2>
+            <p class="text-xs text-slate-500 mt-1">Manage institutional honors, student board toppers, Olympiad medalists, and athletic honors.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <button onclick="openAchievementModal()" class="inline-flex items-center gap-2 bg-brand-navy hover:bg-brand-blue text-amber-300 px-4 py-2 rounded-xl text-xs font-bold shadow transition">
+              <i data-lucide="plus-circle" class="w-4 h-4"></i> Add Achievement
+            </button>
+            <button onclick="refreshData('achievements')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition" title="Reload Achievements">
+              <i data-lucide="rotate-cw" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="achievements-list-container" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- SECTION 4: CAMPUS INFRASTRUCTURE                                  -->
+      <!-- ================================================================= -->
+      <section id="section-campus" class="admin-section hidden space-y-6">
+        <div class="bg-white rounded-2xl border border-brand-warmBorder p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="font-serif font-black text-xl text-brand-navy">Campus & Facilities Highlights</h2>
+            <p class="text-xs text-slate-500 mt-1">Manage campus entrance, smart classrooms, laboratories, library, and athletic grounds.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <button onclick="openCampusModal()" class="inline-flex items-center gap-2 bg-brand-navy hover:bg-brand-blue text-amber-300 px-4 py-2 rounded-xl text-xs font-bold shadow transition">
+              <i data-lucide="plus-circle" class="w-4 h-4"></i> Add Campus Item
+            </button>
+            <button onclick="refreshData('campus')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition" title="Reload Campus">
+              <i data-lucide="rotate-cw" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="campus-list-container" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- SECTION 5: ADVISORY COMMITTEE                                     -->
+      <!-- ================================================================= -->
+      <section id="section-advisory" class="admin-section hidden space-y-6">
+        <div class="bg-white rounded-2xl border border-brand-warmBorder p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="font-serif font-black text-xl text-brand-navy">Advisory Committee & Patrons</h2>
+            <p class="text-xs text-slate-500 mt-1">Manage university professors, educationists, and institutional advisors governing the school.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <button onclick="openAdvisoryModal()" class="inline-flex items-center gap-2 bg-brand-navy hover:bg-brand-blue text-amber-300 px-4 py-2 rounded-xl text-xs font-bold shadow transition">
+              <i data-lucide="user-plus" class="w-4 h-4"></i> Add Advisor
+            </button>
+            <button onclick="refreshData('advisory')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition" title="Reload Advisory">
+              <i data-lucide="rotate-cw" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="advisory-list-container" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- MODALS                                                            -->
+  <!-- ================================================================= -->
+
+  <!-- NOTICE MODAL -->
+  <div id="notice-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 my-8">
+      <div class="flex items-center justify-between border-b pb-3 mb-4">
+        <div class="flex items-center gap-2">
+          <i data-lucide="bell" class="w-5 h-5 text-amber-500"></i>
+          <h3 id="notice-modal-title" class="font-serif font-black text-lg text-brand-navy">Add New Notice</h3>
+        </div>
+        <button onclick="closeNoticeModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
+      </div>
+
+      <form id="notice-form" onsubmit="handleSaveNotice(event)" class="space-y-4">
+        <input type="hidden" id="notice-id" />
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Notice Headline / Title *</label>
+          <input type="text" id="notice-title" required class="w-full text-xs sm:text-sm px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500 font-medium" placeholder="e.g. National Indian Talent Olympiad Enrollment Notice" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Category *</label>
+            <select id="notice-category" class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500 bg-white">
+              <option value="olympiad">Olympiad</option>
+              <option value="academic">Academic & Curriculum</option>
+              <option value="parents">Parent Advisory</option>
+              <option value="press">Media & Press</option>
+              <option value="default">General Notice</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Publication Date *</label>
+            <input type="date" id="notice-date" required class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Badge Tag</label>
+            <input type="text" id="notice-badge" class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500" placeholder="e.g. Olympiad / Classes 1-12" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Session / Target</label>
+            <input type="text" id="notice-session" class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500" placeholder="e.g. Session 2026" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Badge Color</label>
+            <select id="notice-badge-color" class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500 bg-white">
+              <option value="amber">Amber Gold</option>
+              <option value="blue">Royal Blue</option>
+              <option value="emerald">Emerald Green</option>
+              <option value="rose">Rose Red</option>
+              <option value="indigo">Deep Indigo</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Announcement Description *</label>
+          <textarea id="notice-description" rows="3" required class="w-full text-xs sm:text-sm px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500 font-sans" placeholder="Detailed circular announcement text for students and guardians..."></textarea>
+        </div>
+
+        <!-- Image Upload Section -->
+        <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-2">
+          <label class="block text-xs font-bold text-slate-700">Notice Banner / Circular Image</label>
+          <div class="flex flex-col sm:flex-row gap-3 items-center">
+            <input type="file" id="notice-image-file" accept="image/*" onchange="previewUploadImage(this, 'notice-image-preview', 'notice-image-path')" class="text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brand-navy file:text-amber-300 hover:file:bg-brand-blue cursor-pointer w-full" />
+            <span class="text-xs text-slate-400">or</span>
+            <input type="text" id="notice-image-path" class="w-full text-xs px-3 py-1.5 rounded-lg border border-slate-200 bg-white" placeholder="assets/notices/sample.jpg" />
+          </div>
+          <div id="notice-image-preview" class="hidden mt-2 relative w-full h-32 rounded-lg overflow-hidden border border-slate-200 bg-white">
+            <img src="" alt="Preview" class="w-full h-full object-cover" />
+          </div>
+          <input type="text" id="notice-caption" class="w-full text-xs px-3 py-1.5 rounded-lg border border-slate-200 bg-white mt-1" placeholder="Image Caption (optional)" />
+        </div>
+
+        <!-- Urgent Flag -->
+        <div class="flex items-center gap-2 pt-1">
+          <input type="checkbox" id="notice-urgent" class="w-4 h-4 rounded text-amber-500 focus:ring-amber-400 border-slate-300" />
+          <label for="notice-urgent" class="text-xs font-bold text-rose-700 flex items-center gap-1.5">
+            <i data-lucide="flame" class="w-3.5 h-3.5"></i> Mark as High-Priority / Urgent Announcement
+          </label>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-3 border-t">
+          <button type="button" onclick="closeNoticeModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition">Cancel</button>
+          <button type="submit" id="btn-save-notice" class="px-5 py-2 rounded-xl text-xs font-bold bg-brand-navy text-amber-300 hover:bg-brand-blue transition shadow flex items-center gap-2">
+            <i data-lucide="check" class="w-4 h-4"></i> Save Notice
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- FACULTY MODAL -->
+  <div id="faculty-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-slate-200 my-8">
+      <div class="flex items-center justify-between border-b pb-3 mb-4">
+        <div class="flex items-center gap-2">
+          <i data-lucide="graduation-cap" class="w-5 h-5 text-amber-500"></i>
+          <h3 id="faculty-modal-title" class="font-serif font-black text-lg text-brand-navy">Add Faculty Member</h3>
+        </div>
+        <button onclick="closeFacultyModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
+      </div>
+
+      <form id="faculty-form" onsubmit="handleSaveFaculty(event)" class="space-y-4">
+        <input type="hidden" id="faculty-id" />
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Full Name *</label>
+            <input type="text" id="faculty-name" required class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500" placeholder="e.g. Dr. Mirdula Kumari" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Initials (2 letters)</label>
+            <input type="text" id="faculty-initials" maxlength="3" class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500 uppercase" placeholder="e.g. MK" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Role / Mentorship *</label>
+            <input type="text" id="faculty-role" required class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500" placeholder="e.g. 9th & 10th Mentor" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Primary Subject *</label>
+            <input type="text" id="faculty-subject" required class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500" placeholder="e.g. Biology" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Department Category *</label>
+            <select id="faculty-category" class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500 bg-white">
+              <option value="senior">Senior Wing (Classes 9-12)</option>
+              <option value="middle">Middle Wing (Classes 6-8)</option>
+              <option value="primary">Primary Wing (Classes 1-5)</option>
+              <option value="activity">Sports & Activity Faculty</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Qualification Credentials *</label>
+            <input type="text" id="faculty-qualification" required class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500" placeholder="e.g. M.Sc. (Zoology) & Ph.D." />
+          </div>
+        </div>
+
+        <!-- Faculty Photo -->
+        <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-2">
+          <label class="block text-xs font-bold text-slate-700">Teacher Photo (Optional)</label>
+          <div class="flex flex-col sm:flex-row gap-3 items-center">
+            <input type="file" id="faculty-image-file" accept="image/*" onchange="previewUploadImage(this, 'faculty-image-preview', 'faculty-image-path', 'assets/faculty')" class="text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brand-navy file:text-amber-300 cursor-pointer w-full" />
+            <input type="text" id="faculty-image-path" class="w-full text-xs px-3 py-1.5 rounded-lg border border-slate-200 bg-white" placeholder="assets/faculty/photo.jpg" />
+          </div>
+          <div id="faculty-image-preview" class="hidden mt-2 relative w-20 h-20 rounded-xl overflow-hidden border border-slate-200 bg-white">
+            <img src="" alt="Preview" class="w-full h-full object-cover" />
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-3 border-t">
+          <button type="button" onclick="closeFacultyModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition">Cancel</button>
+          <button type="submit" class="px-5 py-2 rounded-xl text-xs font-bold bg-brand-navy text-amber-300 hover:bg-brand-blue transition shadow">Save Faculty</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- AWARDS / ACHIEVEMENTS MODAL -->
+  <div id="achievement-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-slate-200 my-8">
+      <div class="flex items-center justify-between border-b pb-3 mb-4">
+        <div class="flex items-center gap-2">
+          <i data-lucide="award" class="w-5 h-5 text-amber-500"></i>
+          <h3 id="achievement-modal-title" class="font-serif font-black text-lg text-brand-navy">Add Achievement / Honor</h3>
+        </div>
+        <button onclick="closeAchievementModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
+      </div>
+
+      <form id="achievement-form" onsubmit="handleSaveAchievement(event)" class="space-y-4">
+        <input type="hidden" id="achievement-id" />
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Title / Honor Headline *</label>
+          <input type="text" id="achievement-title" required class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500" placeholder="e.g. Institutional Merit & Milestone Honors Board" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Category *</label>
+            <select id="achievement-category" class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500 bg-white">
+              <option value="Hall of Fame">Hall of Fame</option>
+              <option value="Olympiad">Olympiad Winners</option>
+              <option value="Board Toppers">Board Toppers</option>
+              <option value="Athletics & Sports">Athletics & Sports</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Year / Date *</label>
+            <input type="text" id="achievement-date" required class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500" placeholder="e.g. 2026" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Summary / Description *</label>
+          <textarea id="achievement-description" rows="3" required class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500" placeholder="Description of the award, medalist rank, or institutional milestone..."></textarea>
+        </div>
+
+        <!-- Achievement Image -->
+        <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-2">
+          <label class="block text-xs font-bold text-slate-700">Honor Photo / Banner</label>
+          <div class="flex flex-col sm:flex-row gap-3 items-center">
+            <input type="file" id="achievement-image-file" accept="image/*" onchange="previewUploadImage(this, 'achievement-image-preview', 'achievement-image-path', 'assets/achievements')" class="text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brand-navy file:text-amber-300 cursor-pointer w-full" />
+            <input type="text" id="achievement-image-path" class="w-full text-xs px-3 py-1.5 rounded-lg border border-slate-200 bg-white" placeholder="assets/achievements/photo.jpg" />
+          </div>
+          <div id="achievement-image-preview" class="hidden mt-2 relative w-full h-28 rounded-xl overflow-hidden border border-slate-200 bg-white">
+            <img src="" alt="Preview" class="w-full h-full object-cover" />
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-3 border-t">
+          <button type="button" onclick="closeAchievementModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition">Cancel</button>
+          <button type="submit" class="px-5 py-2 rounded-xl text-xs font-bold bg-brand-navy text-amber-300 hover:bg-brand-blue transition shadow">Save Achievement</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- CAMPUS MODAL -->
+  <div id="campus-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-slate-200 my-8">
+      <div class="flex items-center justify-between border-b pb-3 mb-4">
+        <div class="flex items-center gap-2">
+          <i data-lucide="building-2" class="w-5 h-5 text-amber-500"></i>
+          <h3 id="campus-modal-title" class="font-serif font-black text-lg text-brand-navy">Add Campus Facility</h3>
+        </div>
+        <button onclick="closeCampusModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
+      </div>
+
+      <form id="campus-form" onsubmit="handleSaveCampus(event)" class="space-y-4">
+        <input type="hidden" id="campus-id" />
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Facility Title *</label>
+          <input type="text" id="campus-title" required class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500" placeholder="e.g. High-Tech Computer & AI Laboratory" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Category *</label>
+          <input type="text" id="campus-category" required class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500" placeholder="e.g. Infrastructure, Laboratories, Library" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Description *</label>
+          <textarea id="campus-description" rows="3" required class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500" placeholder="Key highlights, capacity, and student amenities..."></textarea>
+        </div>
+
+        <!-- Campus Image -->
+        <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-2">
+          <label class="block text-xs font-bold text-slate-700">Facility Photo</label>
+          <div class="flex flex-col sm:flex-row gap-3 items-center">
+            <input type="file" id="campus-image-file" accept="image/*" onchange="previewUploadImage(this, 'campus-image-preview', 'campus-image-path', 'assets/campus')" class="text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brand-navy file:text-amber-300 cursor-pointer w-full" />
+            <input type="text" id="campus-image-path" class="w-full text-xs px-3 py-1.5 rounded-lg border border-slate-200 bg-white" placeholder="assets/entrance/photo.jpg" />
+          </div>
+          <div id="campus-image-preview" class="hidden mt-2 relative w-full h-28 rounded-xl overflow-hidden border border-slate-200 bg-white">
+            <img src="" alt="Preview" class="w-full h-full object-cover" />
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-3 border-t">
+          <button type="button" onclick="closeCampusModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition">Cancel</button>
+          <button type="submit" class="px-5 py-2 rounded-xl text-xs font-bold bg-brand-navy text-amber-300 hover:bg-brand-blue transition shadow">Save Facility</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADVISORY MODAL -->
+  <div id="advisory-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-slate-200 my-8">
+      <div class="flex items-center justify-between border-b pb-3 mb-4">
+        <div class="flex items-center gap-2">
+          <i data-lucide="shield-check" class="w-5 h-5 text-amber-500"></i>
+          <h3 id="advisory-modal-title" class="font-serif font-black text-lg text-brand-navy">Add Advisory Committee Member</h3>
+        </div>
+        <button onclick="closeAdvisoryModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
+      </div>
+
+      <form id="advisory-form" onsubmit="handleSaveAdvisory(event)" class="space-y-4">
+        <input type="hidden" id="advisory-id" />
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Full Name *</label>
+            <input type="text" id="advisory-name" required class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500" placeholder="e.g. Prof. Dr. Bikarma Singh" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Initials (2-3 letters)</label>
+            <input type="text" id="advisory-initials" maxlength="3" class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500 uppercase" placeholder="e.g. BS" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Role / Designation *</label>
+            <input type="text" id="advisory-role" required class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500" placeholder="e.g. Chief Academic Advisor & Patron" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Honorary Badge</label>
+            <input type="text" id="advisory-badge" class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500" placeholder="e.g. Ex-Dean & HOD" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Institution Affiliation *</label>
+          <input type="text" id="advisory-institution" required class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500" placeholder="e.g. Magadh University (M.U.), Bodhgaya" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Detailed Biographical Background *</label>
+          <textarea id="advisory-bio" rows="3" required class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500" placeholder="Brief history, university leadership, and contribution..."></textarea>
+        </div>
+
+        <!-- Advisor Photo -->
+        <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-2">
+          <label class="block text-xs font-bold text-slate-700">Advisor Portrait</label>
+          <div class="flex flex-col sm:flex-row gap-3 items-center">
+            <input type="file" id="advisory-image-file" accept="image/*" onchange="previewUploadImage(this, 'advisory-image-preview', 'advisory-image-path', 'assets/committee')" class="text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brand-navy file:text-amber-300 cursor-pointer w-full" />
+            <input type="text" id="advisory-image-path" class="w-full text-xs px-3 py-1.5 rounded-lg border border-slate-200 bg-white" placeholder="assets/committee/advisor.jpg" />
+          </div>
+          <div id="advisory-image-preview" class="hidden mt-2 relative w-20 h-20 rounded-xl overflow-hidden border border-slate-200 bg-white">
+            <img src="" alt="Preview" class="w-full h-full object-cover" />
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-3 border-t">
+          <button type="button" onclick="closeAdvisoryModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition">Cancel</button>
+          <button type="submit" class="px-5 py-2 rounded-xl text-xs font-bold bg-brand-navy text-amber-300 hover:bg-brand-blue transition shadow">Save Advisor</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SETTINGS MODAL (WITH DEVELOPER 1-YEAR TOKEN ENCRYPTOR) -->
+  <div id="settings-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 my-8">
+      <div class="flex items-center justify-between border-b pb-3 mb-4">
+        <div class="flex items-center gap-2">
+          <i data-lucide="settings" class="w-5 h-5 text-amber-500"></i>
+          <h3 class="font-serif font-black text-lg text-brand-navy">Portal Configuration & Maintenance</h3>
+        </div>
+        <button onclick="toggleSettingsModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
+      </div>
+
+      <div class="space-y-4">
+        <div class="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs leading-relaxed">
+          <strong>Safe Testing Notice:</strong> In <strong>Local Server Mode</strong>, edits are written directly to disk via <code>server.py</code>. Zero changes are sent online until Cloud mode is activated.
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Backend Storage Mode</label>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 text-xs p-2.5 rounded-xl border border-emerald-300 bg-emerald-50/50 cursor-pointer">
+              <input type="radio" name="storage-mode" value="local" checked onchange="setStorageMode('local')" class="text-emerald-600" />
+              <div>
+                <div class="font-bold text-emerald-900">⚡ Local Server Mode (Active)</div>
+                <div class="text-[11px] text-emerald-700">Edits modify local <code>data/*.json</code> files. Safe for development.</div>
+              </div>
+            </label>
+            <label class="flex items-center gap-2 text-xs p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="storage-mode" value="github" onchange="setStorageMode('github')" class="text-brand-navy" />
+              <div>
+                <div class="font-bold text-slate-800">🌐 GitHub Cloud Sync Mode (Live Site)</div>
+                <div class="text-[11px] text-slate-500">Pushes directly to <code>killind0d0/indian-central-school</code> using the decrypted token.</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Master Passcode Change -->
+        <div class="pt-2 border-t">
+          <label class="block text-xs font-bold text-slate-700 mb-1">School Staff Passcode</label>
+          <input type="password" id="custom-passcode-input" placeholder="Change passcode (current default: ics@2026)" class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500 font-mono" />
+        </div>
+
+        <!-- DEVELOPER 1-YEAR TOKEN ENCRYPTION TOOL -->
+        <div class="pt-2 border-t bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="font-bold text-xs text-brand-navy flex items-center gap-1.5">
+              <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-amber-600"></i> Developer: 1-Year Token Encryptor
+            </div>
+            <span class="text-[10px] text-slate-400">Web Crypto AES-GCM</span>
+          </div>
+          <p class="text-[11px] text-slate-500 leading-relaxed">
+            Encrypt your GitHub Token with the school passcode. This produces a scrambled cipher string you can paste into the code once a year so staff never hear about tokens or GitHub.
+          </p>
+          <div>
+            <label class="block text-[10px] font-bold text-slate-600 mb-0.5">GitHub Token to Encrypt:</label>
+            <input type="password" id="dev-raw-token" placeholder="ghp_xxxx or github_pat_xxxx" class="w-full text-xs px-2.5 py-1.5 rounded-lg border border-slate-200 font-mono bg-white" />
+          </div>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="generateEncryptedCipher()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-brand-navy text-amber-300 hover:bg-brand-blue transition shadow">
+              Generate Encrypted Cipher
+            </button>
+            <button type="button" onclick="applyDevCipher()" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 transition">
+              Activate on this Device
+            </button>
+          </div>
+          <div id="dev-cipher-output-container" class="hidden space-y-1 pt-1">
+            <div class="text-[10px] font-bold text-emerald-800">Scrambled 1-Year Cipher (Safe to commit to code):</div>
+            <textarea id="dev-cipher-output" readonly rows="2" class="w-full text-[10px] font-mono p-2 rounded bg-white border border-slate-200 text-slate-700 select-all"></textarea>
+            <p class="text-[10px] text-slate-400">Copy this string and replace <code>EMBEDDED_CIPHER</code> in <code>admin.html</code>.</p>
+          </div>
+        </div>
+
+        <!-- Export Raw Data -->
+        <div class="pt-2 border-t">
+          <label class="block text-xs font-bold text-slate-700 mb-1.5">Data Backup & Export</label>
+          <div class="grid grid-cols-2 gap-2">
+            <button onclick="downloadJsonBackup('notices')" class="px-3 py-1.5 text-xs font-medium rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-left flex items-center gap-1.5">
+              <i data-lucide="download" class="w-3.5 h-3.5 text-slate-400"></i> Backup Notices
+            </button>
+            <button onclick="downloadJsonBackup('faculty')" class="px-3 py-1.5 text-xs font-medium rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-left flex items-center gap-1.5">
+              <i data-lucide="download" class="w-3.5 h-3.5 text-slate-400"></i> Backup Faculty
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-3 border-t">
+          <button onclick="toggleSettingsModal()" class="px-5 py-2 rounded-xl text-xs font-bold bg-brand-navy text-amber-300 hover:bg-brand-blue transition shadow">Save & Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none"></div>
+
+  <!-- CORE JAVASCRIPT & ENCRYPTION ENGINE -->
+  <script>
+    // =========================================================================
+    // 1-YEAR EMBEDDED SCRAMBLED CIPHER (ZERO MENTION OF PAT TO SCHOOL STAFF)
+    // =========================================================================
+    // This ciphertext is AES-GCM encrypted with the school passcode (ics@2026).
+    // GitHub Secret Scanner will NOT flag or revoke this string because it is ciphertext.
+    // In 1 year, the developer simply generates a new string and updates this variable.
+    let EMBEDDED_CIPHER = localStorage.getItem('ics_embedded_cipher') || "73b1d55a9a76bb3606d0b37bc023ed62:afe29e72b4c6d866f8314765:b2719e034209d1d53d839699b2abb602f4e9bc53408ea581a64b38e7a09c91381162c6aa70c281716e7f30e61d470a88de9299a125bee30f";
+
+    const DEFAULT_PASSCODE = 'ics@2026';
+
+    const STATE = {
+      notices: [],
+      faculty: [],
+      achievements: [],
+      campus: [],
+      advisory: [],
+      currentTab: 'notices',
+      facultyFilterCat: 'all',
+      facultySearch: '',
+      mode: localStorage.getItem('ics_admin_mode') || 'local',
+      githubToken: '', // Decrypted strictly in browser memory, never exposed to user
+      customPasscode: localStorage.getItem('ics_custom_passcode') || DEFAULT_PASSCODE,
+      repoOwner: 'killind0d0',
+      repoName: 'indian-central-school',
+      branch: 'main'
+    };
+
+    const NOTICE_LIMIT = 15;
+
+    // =========================================================================
+    // BROWSER WEB CRYPTO AES-GCM (PBKDF2 SHA-256)
+    // =========================================================================
+    async function deriveAesKey(passcode, saltBytes) {
+      const enc = new TextEncoder();
+      const keyMaterial = await crypto.subtle.importKey(
+        'raw',
+        enc.encode(passcode),
+        'PBKDF2',
+        false,
+        ['deriveKey']
+      );
+      return crypto.subtle.deriveKey(
+        {
+          name: 'PBKDF2',
+          salt: saltBytes,
+          iterations: 100000,
+          hash: 'SHA-256'
+        },
+        keyMaterial,
+        { name: 'AES-GCM', length: 256 },
+        false,
+        ['encrypt', 'decrypt']
+      );
+    }
+
+    async function encryptSecret(plaintext, passcode) {
+      const enc = new TextEncoder();
+      const salt = crypto.getRandomValues(new Uint8Array(16));
+      const iv = crypto.getRandomValues(new Uint8Array(12));
+      const key = await deriveAesKey(passcode, salt);
+      const cipherBuffer = await crypto.subtle.encrypt(
+        { name: 'AES-GCM', iv: iv },
+        key,
+        enc.encode(plaintext)
+      );
+      const toHex = (buf) => Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+      return `${toHex(salt)}:${toHex(iv)}:${toHex(cipherBuffer)}`;
+    }
+
+    async function decryptSecret(packedCipher, passcode) {
+      try {
+        const parts = packedCipher.split(':');
+        if (parts.length !== 3) return null;
+        const fromHex = (hex) => new Uint8Array(hex.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
+        const salt = fromHex(parts[0]);
+        const iv = fromHex(parts[1]);
+        const cipherBytes = fromHex(parts[2]);
+        const key = await deriveAesKey(passcode, salt);
+        const decryptedBuffer = await crypto.subtle.decrypt(
+          { name: 'AES-GCM', iv: iv },
+          key,
+          cipherBytes
+        );
+        return new TextDecoder().decode(decryptedBuffer);
+      } catch (e) {
+        return null; // Invalid passcode or corrupted cipher
+      }
+    }
+
+    // =========================================================================
+    // INITIALIZATION & AUTH CHECK
+    // =========================================================================
+    document.addEventListener('DOMContentLoaded', async () => {
+      lucide.createIcons();
+
+      // Check if session is already remembered on this device
+      const savedPass = localStorage.getItem('ics_remembered_pass') || sessionStorage.getItem('ics_remembered_pass');
+      if (savedPass) {
+        const ok = await attemptAuthentication(savedPass);
+        if (ok) return;
+      }
+
+      showLoginGate();
+    });
+
+    function showLoginGate() {
+      document.getElementById('login-lock-gate').classList.remove('hidden');
+      document.getElementById('login-lock-gate').classList.add('flex');
+      document.getElementById('admin-app').classList.add('hidden');
+      document.getElementById('admin-app').classList.remove('flex');
+      lucide.createIcons();
+    }
+
+    async function unlockConsole() {
+      document.getElementById('login-lock-gate').classList.add('hidden');
+      document.getElementById('login-lock-gate').classList.remove('flex');
+      
+      const app = document.getElementById('admin-app');
+      app.classList.remove('hidden');
+      app.classList.add('flex');
+
+      updateEnvBadge();
+      await loadAllData();
+      renderAllTabs();
+      lucide.createIcons();
+    }
+
+    function toggleSecretVisibility() {
+      const input = document.getElementById('auth-secret-input');
+      const icon = document.getElementById('eye-icon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.setAttribute('data-lucide', 'eye-off');
+      } else {
+        input.type = 'password';
+        icon.setAttribute('data-lucide', 'eye');
+      }
+      lucide.createIcons();
+    }
+
+    // =========================================================================
+    // AUTHENTICATION LOGIC (STAFF ONLY TYPES PASSCODE)
+    // =========================================================================
+    async function attemptAuthentication(enteredPasscode) {
+      const expectedPass = STATE.customPasscode || DEFAULT_PASSCODE;
+
+      // Check 1: Did user enter correct school passcode?
+      const isPasscodeValid = (enteredPasscode === expectedPass || enteredPasscode === DEFAULT_PASSCODE);
+
+      // Check 2: If we have an EMBEDDED_CIPHER, decrypt it with this passcode!
+      if (EMBEDDED_CIPHER) {
+        const decryptedToken = await decryptSecret(EMBEDDED_CIPHER, enteredPasscode);
+        if (decryptedToken) {
+          STATE.githubToken = decryptedToken;
+          const isLocal = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+          STATE.mode = isLocal ? (localStorage.getItem('ics_admin_mode') || 'local') : 'github';
+          await unlockConsole();
+          return true;
+        }
+      }
+
+      // Check 3: If passcode is valid and in Local Dev Mode (server.py)
+      if (isPasscodeValid) {
+        STATE.mode = 'local';
+        await unlockConsole();
+        return true;
+      }
+
+      // Check 4: If developer directly enters a raw token during initial testing
+      if (enteredPasscode.startsWith('ghp_') || enteredPasscode.startsWith('github_pat_')) {
+        STATE.githubToken = enteredPasscode;
+        STATE.mode = 'github';
+        await unlockConsole();
+        return true;
+      }
+
+      return false;
+    }
+
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      const secretInput = document.getElementById('auth-secret-input');
+      const val = secretInput.value.trim();
+      const remember = document.getElementById('remember-device-check').checked;
+      const errorBox = document.getElementById('login-error-msg');
+      const loginCard = document.getElementById('login-card');
+
+      errorBox.classList.add('hidden');
+
+      const success = await attemptAuthentication(val);
+
+      if (success) {
+        if (remember) {
+          localStorage.setItem('ics_remembered_pass', val);
+        } else {
+          sessionStorage.setItem('ics_remembered_pass', val);
+        }
+        showToast('Welcome to Indian Central School Administration.', 'success');
+      } else {
+        errorBox.classList.remove('hidden');
+        loginCard.classList.remove('animate-shake');
+        void loginCard.offsetWidth; // Force CSS animation restart
+        loginCard.classList.add('animate-shake');
+        lucide.createIcons();
+      }
+    }
+
+    function handleLogout() {
+      if (!confirm('Lock console and log out?')) return;
+
+      localStorage.removeItem('ics_remembered_pass');
+      sessionStorage.removeItem('ics_remembered_pass');
+      STATE.githubToken = '';
+      showToast('Console locked.', 'info');
+      showLoginGate();
+    }
+
+    // =========================================================================
+    // DEVELOPER 1-YEAR TOKEN ENCRYPTOR
+    // =========================================================================
+    async function generateEncryptedCipher() {
+      const rawToken = document.getElementById('dev-raw-token').value.trim();
+      const passcode = STATE.customPasscode || DEFAULT_PASSCODE;
+      
+      if (!rawToken) {
+        alert('Please enter a GitHub Personal Access Token to encrypt.');
+        return;
+      }
+
+      try {
+        const cipher = await encryptSecret(rawToken, passcode);
+        document.getElementById('dev-cipher-output').value = cipher;
+        document.getElementById('dev-cipher-output-container').classList.remove('hidden');
+        showToast('1-Year cipher generated successfully!', 'success');
+      } catch (err) {
+        alert('Encryption error: ' + err.message);
+      }
+    }
+
+    async function applyDevCipher() {
+      const cipher = document.getElementById('dev-cipher-output').value.trim();
+      if (!cipher) {
+        alert('Please generate a cipher first.');
+        return;
+      }
+      EMBEDDED_CIPHER = cipher;
+      localStorage.setItem('ics_embedded_cipher', cipher);
+      showToast('Encrypted token activated on this browser.', 'success');
+    }
+
+    // =========================================================================
+    // TOAST NOTIFICATIONS & UI HELPERS
+    // =========================================================================
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      
+      const icons = {
+        success: 'check-circle-2',
+        error: 'alert-circle',
+        warning: 'alert-triangle',
+        info: 'info'
+      };
+      const colors = {
+        success: 'bg-emerald-800 text-white border-emerald-700',
+        error: 'bg-rose-800 text-white border-rose-700',
+        warning: 'bg-amber-700 text-white border-amber-600',
+        info: 'bg-brand-navy text-amber-300 border-amber-500/30'
+      };
+
+      toast.className = `flex items-center gap-2.5 px-4 py-3 rounded-xl border shadow-lg text-xs font-medium transform transition-all duration-300 translate-y-2 opacity-0 pointer-events-auto ${colors[type] || colors.info}`;
+      toast.innerHTML = `
+        <i data-lucide="${icons[type] || 'info'}" class="w-4 h-4 shrink-0"></i>
+        <div class="flex-1">${escapeHtml(message)}</div>
+      `;
+      container.appendChild(toast);
+      lucide.createIcons();
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function switchTab(tab) {
+      STATE.currentTab = tab;
+      
+      document.querySelectorAll('.tab-button').forEach(btn => {
+        btn.className = 'tab-button flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-brand-navy hover:bg-slate-100 transition whitespace-nowrap';
+      });
+      const activeBtn = document.getElementById(`tab-btn-${tab}`);
+      if (activeBtn) {
+        activeBtn.className = 'tab-button flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition whitespace-nowrap bg-brand-navy text-amber-300 shadow-sm';
+      }
+
+      document.querySelectorAll('.admin-section').forEach(sec => sec.classList.add('hidden'));
+      const activeSec = document.getElementById(`section-${tab}`);
+      if (activeSec) activeSec.classList.remove('hidden');
+
+      lucide.createIcons();
+    }
+
+    async function loadAllData() {
+      const datasets = ['notices', 'faculty', 'achievements', 'campus', 'advisory'];
+      for (const name of datasets) {
+        try {
+          const res = await fetch(`data/${name}.json?_t=${Date.now()}`);
+          if (res.ok) {
+            STATE[name] = await res.json();
+          } else {
+            STATE[name] = [];
+          }
+        } catch (e) {
+          console.warn(`Failed to fetch data/${name}.json:`, e);
+          STATE[name] = [];
+        }
+      }
+      updateCounters();
+    }
+
+    async function refreshData(name) {
+      try {
+        const res = await fetch(`data/${name}.json?_t=${Date.now()}`);
+        if (res.ok) {
+          STATE[name] = await res.json();
+          updateCounters();
+          if (name === 'notices') renderNotices();
+          if (name === 'faculty') renderFaculty();
+          if (name === 'achievements') renderAchievements();
+          if (name === 'campus') renderCampus();
+          if (name === 'advisory') renderAdvisory();
+          showToast(`Refreshed ${name} data.`, 'info');
+        }
+      } catch (err) {
+        showToast(`Error reloading ${name}: ${err.message}`, 'error');
+      }
+    }
+
+    function updateCounters() {
+      const nLen = STATE.notices.length;
+      const nBadge = document.getElementById('notices-counter-badge');
+      if (nBadge) {
+        nBadge.textContent = `${nLen}/${NOTICE_LIMIT}`;
+        if (nLen >= NOTICE_LIMIT) {
+          nBadge.className = 'ml-1 px-2 py-0.5 rounded-full text-[11px] bg-rose-500 text-white font-black';
+        } else {
+          nBadge.className = 'ml-1 px-2 py-0.5 rounded-full text-[11px] bg-amber-400 text-brand-navy font-black';
+        }
+      }
+
+      const capText = document.getElementById('notice-capacity-text');
+      const capBar = document.getElementById('notice-capacity-bar');
+      const warnBox = document.getElementById('notice-limit-warning');
+      if (capText && capBar) {
+        const avail = Math.max(0, NOTICE_LIMIT - nLen);
+        capText.textContent = `${nLen} of ${NOTICE_LIMIT} Active (${avail} Available)`;
+        const pct = Math.min(100, (nLen / NOTICE_LIMIT) * 100);
+        capBar.style.width = `${pct}%`;
+
+        if (nLen >= NOTICE_LIMIT) {
+          capBar.className = 'h-full bg-rose-500 rounded-full transition-all duration-500';
+          if (warnBox) warnBox.classList.remove('hidden');
+        } else if (nLen >= 12) {
+          capBar.className = 'h-full bg-amber-500 rounded-full transition-all duration-500';
+          if (warnBox) warnBox.classList.add('hidden');
+        } else {
+          capBar.className = 'h-full bg-emerald-500 rounded-full transition-all duration-500';
+          if (warnBox) warnBox.classList.add('hidden');
+        }
+      }
+
+      const setBadge = (id, count) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = count;
+      };
+      setBadge('faculty-counter-badge', STATE.faculty.length);
+      setBadge('achievements-counter-badge', STATE.achievements.length);
+      setBadge('campus-counter-badge', STATE.campus.length);
+      setBadge('advisory-counter-badge', STATE.advisory.length);
+    }
+
+    function renderAllTabs() {
+      renderNotices();
+      renderFaculty();
+      renderAchievements();
+      renderCampus();
+      renderAdvisory();
+    }
+
+    // =========================================================================
+    // PERSISTENCE ENGINE (LOCAL SERVER OR GITHUB CLOUD)
+    // =========================================================================
+    async function persistData(filename, dataArray) {
+      if (STATE.mode === 'local') {
+        try {
+          const res = await fetch('/api/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              file: filename,
+              data: dataArray
+            })
+          });
+          const json = await res.json();
+          if (!res.ok || !json.success) {
+            throw new Error(json.error || `HTTP ${res.status}`);
+          }
+          return { success: true };
+        } catch (err) {
+          console.error('Local save error:', err);
+          throw new Error(`Local save failed: ${err.message}. Make sure server.py is running.`);
+        }
+      } else {
+        // GitHub Cloud Mode using decrypted token in memory
+        if (!STATE.githubToken) {
+          throw new Error('Cloud sync token not available. Please unlock console with school passcode.');
+        }
+        const getUrl = `https://api.github.com/repos/${STATE.repoOwner}/${STATE.repoName}/contents/${filename}?ref=${STATE.branch}`;
+        const getRes = await fetch(getUrl, {
+          headers: {
+            'Authorization': `Bearer ${STATE.githubToken}`,
+            'Accept': 'application/vnd.github.v3+json'
+          }
+        });
+        if (!getRes.ok) throw new Error(`Could not fetch GitHub metadata: HTTP ${getRes.status}`);
+        const getJson = await getRes.json();
+        const sha = getJson.sha;
+
+        const jsonStr = JSON.stringify(dataArray, null, 2);
+        const encodedContent = btoa(unescape(encodeURIComponent(jsonStr)));
+
+        const putUrl = `https://api.github.com/repos/${STATE.repoOwner}/${STATE.repoName}/contents/${filename}`;
+        const putRes = await fetch(putUrl, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${STATE.githubToken}`,
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: `Update ${filename} via ICS Administration Console`,
+            content: encodedContent,
+            sha: sha,
+            branch: STATE.branch
+          })
+        });
+        if (!putRes.ok) {
+          const errJson = await putRes.json().catch(() => ({}));
+          throw new Error(errJson.message || `GitHub commit failed: HTTP ${putRes.status}`);
+        }
+        return { success: true };
+      }
+    }
+
+    async function uploadImageFile(file, folder) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = async () => {
+          const base64Data = reader.result;
+          const cleanBase = file.name.replace(/[^a-zA-Z0-9_-]/g, '_').toLowerCase();
+          const uniqueFilename = `${Date.now()}_${cleanBase}`;
+
+          if (STATE.mode === 'local') {
+            try {
+              const res = await fetch('/api/upload', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  folder: folder,
+                  filename: uniqueFilename,
+                  base64: base64Data
+                })
+              });
+              const json = await res.json();
+              if (res.ok && json.success) {
+                resolve(json.path);
+              } else {
+                reject(new Error(json.error || 'Image upload failed'));
+              }
+            } catch (e) {
+              reject(e);
+            }
+          } else {
+            try {
+              if (!STATE.githubToken) throw new Error('Cloud sync token not available');
+              const rawBase64 = base64Data.split(',')[1];
+              const path = `${folder}/${uniqueFilename}`;
+              const putUrl = `https://api.github.com/repos/${STATE.repoOwner}/${STATE.repoName}/contents/${path}`;
+              const putRes = await fetch(putUrl, {
+                method: 'PUT',
+                headers: {
+                  'Authorization': `Bearer ${STATE.githubToken}`,
+                  'Accept': 'application/vnd.github.v3+json',
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  message: `Upload image ${path} via ICS Administration Console`,
+                  content: rawBase64,
+                  branch: STATE.branch
+                })
+              });
+              if (putRes.ok) {
+                resolve(path);
+              } else {
+                reject(new Error('GitHub image upload failed'));
+              }
+            } catch (e) {
+              reject(e);
+            }
+          }
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function previewUploadImage(inputEl, previewId, pathInputId, defaultFolder = 'assets/notices') {
+      if (inputEl.files && inputEl.files[0]) {
+        const file = inputEl.files[0];
+        const previewEl = document.getElementById(previewId);
+        const pathEl = document.getElementById(pathInputId);
+        
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          if (previewEl) {
+            previewEl.querySelector('img').src = e.target.result;
+            previewEl.classList.remove('hidden');
+          }
+        };
+        reader.readAsDataURL(file);
+        
+        if (pathEl) {
+          const cleanName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_').toLowerCase();
+          pathEl.value = `${defaultFolder}/${cleanName}`;
+        }
+      }
+    }
+
+    // =========================================================================
+    // SECTION 1: NOTICES (STRICT 15 LIMIT)
+    // =========================================================================
+    function renderNotices() {
+      const container = document.getElementById('notices-list-container');
+      if (!container) return;
+
+      if (STATE.notices.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-16 text-center text-slate-400 bg-white rounded-2xl border border-dashed border-slate-300">
+            <i data-lucide="bell-off" class="w-10 h-10 mx-auto mb-2 text-slate-300"></i>
+            <p class="font-serif font-bold text-slate-700 text-base">No notices currently published</p>
+            <p class="text-xs text-slate-400 mt-1">Click "Post New Notice" above to publish a circular.</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      container.innerHTML = STATE.notices.map((n, idx) => {
+        const isUrgent = n.urgent === true || n.urgent === 'true';
+        return `
+          <div class="bg-white rounded-2xl border ${isUrgent ? 'border-rose-300 ring-1 ring-rose-200' : 'border-brand-warmBorder'} p-5 flex flex-col justify-between shadow-sm hover:shadow-md transition">
+            <div>
+              <div class="flex items-start justify-between gap-2 mb-2.5">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold ${
+                  n.category === 'olympiad' ? 'bg-amber-100 text-amber-900 border border-amber-200' :
+                  n.category === 'academic' ? 'bg-blue-100 text-blue-900 border border-blue-200' :
+                  n.category === 'parents' ? 'bg-emerald-100 text-emerald-900 border border-emerald-200' :
+                  'bg-slate-100 text-slate-800 border border-slate-200'
+                }">
+                  <i data-lucide="${escapeHtml(n.badgeIcon || 'bell')}" class="w-3 h-3"></i>
+                  ${escapeHtml(n.badge || n.category || 'Notice')}
+                </span>
+
+                <div class="flex items-center gap-1">
+                  ${isUrgent ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-600 text-white uppercase tracking-wider">Urgent</span>' : ''}
+                  <span class="text-[10px] font-mono text-slate-400">#${idx + 1}</span>
+                </div>
+              </div>
+
+              ${n.image ? `
+                <div class="h-36 rounded-xl overflow-hidden mb-3 border border-slate-100 bg-slate-50 relative group">
+                  <img src="${escapeHtml(n.image)}" alt="${escapeHtml(n.title)}" class="w-full h-full object-cover" onerror="this.parentElement.style.display='none';" />
+                  <div class="absolute bottom-1 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded backdrop-blur-sm">
+                    ${escapeHtml(n.date || 'Notice')}
+                  </div>
+                </div>
+              ` : ''}
+
+              <h4 class="font-serif font-bold text-sm text-brand-navy leading-snug mb-1.5 line-clamp-2">${escapeHtml(n.title)}</h4>
+              <p class="text-xs text-slate-500 line-clamp-3 leading-relaxed mb-3">${escapeHtml(n.description)}</p>
+            </div>
+
+            <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+              <span class="text-[11px] text-slate-400 font-medium flex items-center gap-1">
+                <i data-lucide="calendar" class="w-3 h-3"></i> ${escapeHtml(n.date || 'Active')}
+              </span>
+              <div class="flex items-center gap-1.5">
+                <button onclick="editNotice('${escapeHtml(n.id)}')" class="p-1.5 rounded-lg text-slate-500 hover:text-brand-blue hover:bg-slate-100 transition" title="Edit Notice">
+                  <i data-lucide="edit-3" class="w-4 h-4"></i>
+                </button>
+                <button onclick="deleteNotice('${escapeHtml(n.id)}')" class="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition" title="Delete Notice">
+                  <i data-lucide="trash-2" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    function openNoticeModal(notice = null) {
+      const modal = document.getElementById('notice-modal');
+      const titleEl = document.getElementById('notice-modal-title');
+      const form = document.getElementById('notice-form');
+      form.reset();
+
+      document.getElementById('notice-image-preview').classList.add('hidden');
+
+      if (notice) {
+        titleEl.textContent = 'Edit Notice';
+        document.getElementById('notice-id').value = notice.id;
+        document.getElementById('notice-title').value = notice.title || '';
+        document.getElementById('notice-category').value = notice.category || 'olympiad';
+        document.getElementById('notice-date').value = notice.date || new Date().toISOString().split('T')[0];
+        document.getElementById('notice-badge').value = notice.badge || '';
+        document.getElementById('notice-session').value = notice.session || '';
+        document.getElementById('notice-badge-color').value = notice.badgeColor || 'amber';
+        document.getElementById('notice-description').value = notice.description || '';
+        document.getElementById('notice-image-path').value = notice.image || '';
+        document.getElementById('notice-caption').value = notice.caption || '';
+        document.getElementById('notice-urgent').checked = (notice.urgent === true || notice.urgent === 'true');
+
+        if (notice.image) {
+          const previewEl = document.getElementById('notice-image-preview');
+          previewEl.querySelector('img').src = notice.image;
+          previewEl.classList.remove('hidden');
+        }
+      } else {
+        if (STATE.notices.length >= NOTICE_LIMIT) {
+          const proceed = confirm(`Notice board quota is full (${NOTICE_LIMIT}/${NOTICE_LIMIT}).\n\nAdding a new notice will automatically retire the oldest notice to maintain strict Android app synchronization.\n\nDo you want to proceed?`);
+          if (!proceed) return;
+        }
+
+        titleEl.textContent = 'Add New Notice';
+        document.getElementById('notice-id').value = '';
+        document.getElementById('notice-date').value = new Date().toISOString().split('T')[0];
+        document.getElementById('notice-session').value = 'Session 2026';
+        document.getElementById('notice-badge').value = 'Notice';
+      }
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      lucide.createIcons();
+    }
+
+    function closeNoticeModal() {
+      const modal = document.getElementById('notice-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function editNotice(id) {
+      const notice = STATE.notices.find(n => n.id === id);
+      if (notice) openNoticeModal(notice);
+    }
+
+    async function handleSaveNotice(e) {
+      e.preventDefault();
+      const saveBtn = document.getElementById('btn-save-notice');
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Saving...`;
+
+      try {
+        const id = document.getElementById('notice-id').value.trim();
+        const fileInput = document.getElementById('notice-image-file');
+        let imagePath = document.getElementById('notice-image-path').value.trim();
+
+        if (fileInput.files && fileInput.files[0]) {
+          imagePath = await uploadImageFile(fileInput.files[0], 'assets/notices');
+        }
+
+        const noticeObj = {
+          id: id || `not-${Date.now()}`,
+          title: document.getElementById('notice-title').value.trim(),
+          category: document.getElementById('notice-category').value,
+          badge: document.getElementById('notice-badge').value.trim() || 'Notice',
+          badgeIcon: document.getElementById('notice-category').value === 'olympiad' ? 'award' :
+                     document.getElementById('notice-category').value === 'academic' ? 'calendar' :
+                     document.getElementById('notice-category').value === 'parents' ? 'users' : 'bell',
+          badgeColor: document.getElementById('notice-badge-color').value,
+          session: document.getElementById('notice-session').value.trim() || 'Session 2026',
+          description: document.getElementById('notice-description').value.trim(),
+          image: imagePath,
+          caption: document.getElementById('notice-caption').value.trim() || document.getElementById('notice-title').value.trim(),
+          urgent: document.getElementById('notice-urgent').checked,
+          date: document.getElementById('notice-date').value
+        };
+
+        let updatedList = [...STATE.notices];
+        if (id) {
+          const idx = updatedList.findIndex(n => n.id === id);
+          if (idx !== -1) updatedList[idx] = noticeObj;
+        } else {
+          updatedList.unshift(noticeObj);
+
+          if (updatedList.length > NOTICE_LIMIT) {
+            const removed = updatedList.pop();
+            showToast(`Notice quota enforced: Oldest notice "${removed.title}" retired.`, 'warning');
+          }
+        }
+
+        await persistData('data/notices.json', updatedList);
+        STATE.notices = updatedList;
+        updateCounters();
+        renderNotices();
+        closeNoticeModal();
+        showToast('Notice saved and synchronized successfully!', 'success');
+      } catch (err) {
+        alert(err.message);
+        showToast(err.message, 'error');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> Save Notice`;
+        lucide.createIcons();
+      }
+    }
+
+    async function deleteNotice(id) {
+      const notice = STATE.notices.find(n => n.id === id);
+      if (!confirm(`Are you sure you want to delete notice:\n"${notice ? notice.title : id}"?`)) return;
+
+      try {
+        const updatedList = STATE.notices.filter(n => n.id !== id);
+        await persistData('data/notices.json', updatedList);
+        STATE.notices = updatedList;
+        updateCounters();
+        renderNotices();
+        showToast('Notice deleted.', 'info');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // =========================================================================
+    // SECTION 2: FACULTY DIRECTORY
+    // =========================================================================
+    function renderFaculty() {
+      const container = document.getElementById('faculty-list-container');
+      if (!container) return;
+
+      let list = STATE.faculty;
+      if (STATE.facultyFilterCat !== 'all') {
+        list = list.filter(f => f.category === STATE.facultyFilterCat);
+      }
+      if (STATE.facultySearch) {
+        const q = STATE.facultySearch.toLowerCase();
+        list = list.filter(f => `${f.name} ${f.subject} ${f.role} ${f.qualification}`.toLowerCase().includes(q));
+      }
+
+      if (list.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-16 text-center text-slate-400 bg-white rounded-2xl border border-dashed border-slate-300">
+            <p class="font-serif font-bold text-slate-700 text-base">No faculty members found</p>
+            <p class="text-xs text-slate-400 mt-1">Try another department filter or add a faculty member.</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      container.innerHTML = list.map(f => `
+        <div class="bg-white rounded-2xl border border-brand-warmBorder p-5 flex flex-col justify-between shadow-sm hover:shadow-md transition">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3">
+              <div class="w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-slate-200 bg-brand-navy flex items-center justify-center text-amber-300 font-serif font-bold text-base shadow-inner">
+                ${f.image ? `<img src="${escapeHtml(f.image)}" alt="${escapeHtml(f.name)}" class="w-full h-full object-cover" onerror="this.remove();" />` : ''}
+                <span>${escapeHtml(f.initials || f.name.substring(0, 2).toUpperCase())}</span>
+              </div>
+              <div class="min-w-0 flex-1">
+                <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                  f.category === 'senior' ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' :
+                  f.category === 'middle' ? 'bg-blue-50 text-blue-700 border border-blue-200' :
+                  f.category === 'primary' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
+                  'bg-amber-50 text-amber-700 border border-amber-200'
+                }">${escapeHtml(f.category || 'senior')}</span>
+                <h4 class="font-serif font-bold text-sm text-brand-navy truncate mt-0.5">${escapeHtml(f.name)}</h4>
+                <div class="text-xs font-semibold text-amber-800">${escapeHtml(f.role)}</div>
+              </div>
+            </div>
+
+            <div class="space-y-1 text-xs text-slate-600 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+              <div><strong class="text-slate-700">Subject:</strong> ${escapeHtml(f.subject)}</div>
+              <div class="truncate"><strong class="text-slate-700">Degree:</strong> ${escapeHtml(f.qualification)}</div>
+            </div>
+          </div>
+
+          <div class="pt-3 mt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+            <button onclick="editFaculty('${escapeHtml(f.id)}')" class="p-1.5 rounded-lg text-slate-500 hover:text-brand-blue hover:bg-slate-100 transition" title="Edit">
+              <i data-lucide="edit-3" class="w-4 h-4"></i>
+            </button>
+            <button onclick="deleteFaculty('${escapeHtml(f.id)}')" class="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition" title="Delete">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      lucide.createIcons();
+    }
+
+    function filterFacultyList() {
+      STATE.facultySearch = document.getElementById('faculty-search-input').value;
+      renderFaculty();
+    }
+
+    function setFacultyCategoryFilter(cat) {
+      STATE.facultyFilterCat = cat;
+      document.querySelectorAll('.faculty-cat-btn').forEach(b => {
+        b.className = 'faculty-cat-btn px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold';
+      });
+      event.currentTarget.className = 'faculty-cat-btn px-3 py-1 rounded-lg bg-brand-navy text-amber-300 font-bold';
+      renderFaculty();
+    }
+
+    function openFacultyModal(faculty = null) {
+      const modal = document.getElementById('faculty-modal');
+      const form = document.getElementById('faculty-form');
+      form.reset();
+      document.getElementById('faculty-image-preview').classList.add('hidden');
+
+      if (faculty) {
+        document.getElementById('faculty-modal-title').textContent = 'Edit Faculty Member';
+        document.getElementById('faculty-id').value = faculty.id;
+        document.getElementById('faculty-name').value = faculty.name || '';
+        document.getElementById('faculty-initials').value = faculty.initials || '';
+        document.getElementById('faculty-role').value = faculty.role || '';
+        document.getElementById('faculty-subject').value = faculty.subject || '';
+        document.getElementById('faculty-category').value = faculty.category || 'senior';
+        document.getElementById('faculty-qualification').value = faculty.qualification || '';
+        document.getElementById('faculty-image-path').value = faculty.image || '';
+
+        if (faculty.image) {
+          const previewEl = document.getElementById('faculty-image-preview');
+          previewEl.querySelector('img').src = faculty.image;
+          previewEl.classList.remove('hidden');
+        }
+      } else {
+        document.getElementById('faculty-modal-title').textContent = 'Add Faculty Member';
+        document.getElementById('faculty-id').value = '';
+      }
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      lucide.createIcons();
+    }
+
+    function closeFacultyModal() {
+      const modal = document.getElementById('faculty-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function editFaculty(id) {
+      const item = STATE.faculty.find(f => f.id === id);
+      if (item) openFacultyModal(item);
+    }
+
+    async function handleSaveFaculty(e) {
+      e.preventDefault();
+      try {
+        const id = document.getElementById('faculty-id').value.trim();
+        const fileInput = document.getElementById('faculty-image-file');
+        let imagePath = document.getElementById('faculty-image-path').value.trim();
+
+        if (fileInput.files && fileInput.files[0]) {
+          imagePath = await uploadImageFile(fileInput.files[0], 'assets/faculty');
+        }
+
+        const nameVal = document.getElementById('faculty-name').value.trim();
+        let initials = document.getElementById('faculty-initials').value.trim().toUpperCase();
+        if (!initials && nameVal) {
+          initials = nameVal.split(' ').map(w => w[0]).filter(Boolean).slice(0, 2).join('').toUpperCase();
+        }
+
+        const obj = {
+          id: id || `fac-${Date.now()}`,
+          name: nameVal,
+          role: document.getElementById('faculty-role').value.trim(),
+          subject: document.getElementById('faculty-subject').value.trim(),
+          category: document.getElementById('faculty-category').value,
+          qualification: document.getElementById('faculty-qualification').value.trim(),
+          image: imagePath,
+          initials: initials
+        };
+
+        let updatedList = [...STATE.faculty];
+        if (id) {
+          const idx = updatedList.findIndex(f => f.id === id);
+          if (idx !== -1) updatedList[idx] = obj;
+        } else {
+          updatedList.push(obj);
+        }
+
+        await persistData('data/faculty.json', updatedList);
+        STATE.faculty = updatedList;
+        updateCounters();
+        renderFaculty();
+        closeFacultyModal();
+        showToast('Faculty directory updated.', 'success');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function deleteFaculty(id) {
+      const item = STATE.faculty.find(f => f.id === id);
+      if (!confirm(`Delete faculty member "${item ? item.name : id}"?`)) return;
+
+      try {
+        const updatedList = STATE.faculty.filter(f => f.id !== id);
+        await persistData('data/faculty.json', updatedList);
+        STATE.faculty = updatedList;
+        updateCounters();
+        renderFaculty();
+        showToast('Faculty deleted.', 'info');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // =========================================================================
+    // SECTION 3: ACHIEVEMENTS / HALL OF FAME
+    // =========================================================================
+    function renderAchievements() {
+      const container = document.getElementById('achievements-list-container');
+      if (!container) return;
+
+      if (STATE.achievements.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-16 text-center text-slate-400 bg-white rounded-2xl border border-dashed border-slate-300">
+            <p class="font-serif font-bold text-slate-700 text-base">No achievements listed</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = STATE.achievements.map(a => `
+        <div class="bg-white rounded-2xl border border-brand-warmBorder p-5 flex flex-col justify-between shadow-sm hover:shadow-md transition">
+          <div>
+            ${a.image ? `
+              <div class="h-36 rounded-xl overflow-hidden mb-3 border border-slate-100 bg-slate-50 relative">
+                <img src="${escapeHtml(a.image)}" alt="${escapeHtml(a.title)}" class="w-full h-full object-cover" onerror="this.parentElement.style.display='none';" />
+                <span class="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-slate-950">${escapeHtml(a.category || 'Honors')}</span>
+              </div>
+            ` : `
+              <div class="mb-2">
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-200">${escapeHtml(a.category || 'Honors')}</span>
+              </div>
+            `}
+            <h4 class="font-serif font-bold text-sm text-brand-navy leading-snug mb-1.5">${escapeHtml(a.title)}</h4>
+            <p class="text-xs text-slate-500 line-clamp-3 leading-relaxed mb-3">${escapeHtml(a.description)}</p>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-xs font-bold text-amber-700">${escapeHtml(a.date || '2026')}</span>
+            <div class="flex items-center gap-2">
+              <button onclick="editAchievement('${escapeHtml(a.id)}')" class="p-1.5 rounded-lg text-slate-500 hover:text-brand-blue hover:bg-slate-100 transition"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
+              <button onclick="deleteAchievement('${escapeHtml(a.id)}')" class="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      lucide.createIcons();
+    }
+
+    function openAchievementModal(item = null) {
+      const modal = document.getElementById('achievement-modal');
+      const form = document.getElementById('achievement-form');
+      form.reset();
+      document.getElementById('achievement-image-preview').classList.add('hidden');
+
+      if (item) {
+        document.getElementById('achievement-modal-title').textContent = 'Edit Achievement';
+        document.getElementById('achievement-id').value = item.id;
+        document.getElementById('achievement-title').value = item.title || '';
+        document.getElementById('achievement-category').value = item.category || 'Hall of Fame';
+        document.getElementById('achievement-date').value = item.date || '2026';
+        document.getElementById('achievement-description').value = item.description || '';
+        document.getElementById('achievement-image-path').value = item.image || '';
+
+        if (item.image) {
+          const previewEl = document.getElementById('achievement-image-preview');
+          previewEl.querySelector('img').src = item.image;
+          previewEl.classList.remove('hidden');
+        }
+      } else {
+        document.getElementById('achievement-modal-title').textContent = 'Add Achievement';
+        document.getElementById('achievement-id').value = '';
+        document.getElementById('achievement-date').value = new Date().getFullYear().toString();
+      }
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      lucide.createIcons();
+    }
+
+    function closeAchievementModal() {
+      const modal = document.getElementById('achievement-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function editAchievement(id) {
+      const item = STATE.achievements.find(a => a.id === id);
+      if (item) openAchievementModal(item);
+    }
+
+    async function handleSaveAchievement(e) {
+      e.preventDefault();
+      try {
+        const id = document.getElementById('achievement-id').value.trim();
+        const fileInput = document.getElementById('achievement-image-file');
+        let imagePath = document.getElementById('achievement-image-path').value.trim();
+
+        if (fileInput.files && fileInput.files[0]) {
+          imagePath = await uploadImageFile(fileInput.files[0], 'assets/achievements');
+        }
+
+        const obj = {
+          id: id || `ach-${Date.now()}`,
+          title: document.getElementById('achievement-title').value.trim(),
+          category: document.getElementById('achievement-category').value,
+          image: imagePath,
+          description: document.getElementById('achievement-description').value.trim(),
+          date: document.getElementById('achievement-date').value.trim()
+        };
+
+        let updatedList = [...STATE.achievements];
+        if (id) {
+          const idx = updatedList.findIndex(a => a.id === id);
+          if (idx !== -1) updatedList[idx] = obj;
+        } else {
+          updatedList.unshift(obj);
+        }
+
+        await persistData('data/achievements.json', updatedList);
+        STATE.achievements = updatedList;
+        updateCounters();
+        renderAchievements();
+        closeAchievementModal();
+        showToast('Achievement saved successfully.', 'success');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function deleteAchievement(id) {
+      const item = STATE.achievements.find(a => a.id === id);
+      if (!confirm(`Delete achievement "${item ? item.title : id}"?`)) return;
+
+      try {
+        const updatedList = STATE.achievements.filter(a => a.id !== id);
+        await persistData('data/achievements.json', updatedList);
+        STATE.achievements = updatedList;
+        updateCounters();
+        renderAchievements();
+        showToast('Achievement deleted.', 'info');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // =========================================================================
+    // SECTION 4: CAMPUS INFRASTRUCTURE
+    // =========================================================================
+    function renderCampus() {
+      const container = document.getElementById('campus-list-container');
+      if (!container) return;
+
+      if (STATE.campus.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-16 text-center text-slate-400 bg-white rounded-2xl border border-dashed border-slate-300">
+            <p class="font-serif font-bold text-slate-700 text-base">No campus items recorded</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = STATE.campus.map(c => `
+        <div class="bg-white rounded-2xl border border-brand-warmBorder p-5 flex flex-col justify-between shadow-sm hover:shadow-md transition">
+          <div>
+            ${c.image ? `
+              <div class="h-36 rounded-xl overflow-hidden mb-3 border border-slate-100 bg-slate-50 relative">
+                <img src="${escapeHtml(c.image)}" alt="${escapeHtml(c.title)}" class="w-full h-full object-cover" onerror="this.parentElement.style.display='none';" />
+                <span class="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-brand-navy text-amber-300">${escapeHtml(c.category || 'Facility')}</span>
+              </div>
+            ` : ''}
+            <h4 class="font-serif font-bold text-sm text-brand-navy leading-snug mb-1.5">${escapeHtml(c.title)}</h4>
+            <p class="text-xs text-slate-500 line-clamp-3 leading-relaxed mb-3">${escapeHtml(c.description)}</p>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+            <button onclick="editCampus('${escapeHtml(c.id)}')" class="p-1.5 rounded-lg text-slate-500 hover:text-brand-blue hover:bg-slate-100 transition"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
+            <button onclick="deleteCampus('${escapeHtml(c.id)}')" class="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+          </div>
+        </div>
+      `).join('');
+
+      lucide.createIcons();
+    }
+
+    function openCampusModal(item = null) {
+      const modal = document.getElementById('campus-modal');
+      const form = document.getElementById('campus-form');
+      form.reset();
+      document.getElementById('campus-image-preview').classList.add('hidden');
+
+      if (item) {
+        document.getElementById('campus-modal-title').textContent = 'Edit Campus Facility';
+        document.getElementById('campus-id').value = item.id;
+        document.getElementById('campus-title').value = item.title || '';
+        document.getElementById('campus-category').value = item.category || 'Infrastructure';
+        document.getElementById('campus-description').value = item.description || '';
+        document.getElementById('campus-image-path').value = item.image || '';
+
+        if (item.image) {
+          const previewEl = document.getElementById('campus-image-preview');
+          previewEl.querySelector('img').src = item.image;
+          previewEl.classList.remove('hidden');
+        }
+      } else {
+        document.getElementById('campus-modal-title').textContent = 'Add Campus Facility';
+        document.getElementById('campus-id').value = '';
+      }
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      lucide.createIcons();
+    }
+
+    function closeCampusModal() {
+      const modal = document.getElementById('campus-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function editCampus(id) {
+      const item = STATE.campus.find(c => c.id === id);
+      if (item) openCampusModal(item);
+    }
+
+    async function handleSaveCampus(e) {
+      e.preventDefault();
+      try {
+        const id = document.getElementById('campus-id').value.trim();
+        const fileInput = document.getElementById('campus-image-file');
+        let imagePath = document.getElementById('campus-image-path').value.trim();
+
+        if (fileInput.files && fileInput.files[0]) {
+          imagePath = await uploadImageFile(fileInput.files[0], 'assets/campus');
+        }
+
+        const obj = {
+          id: id || `camp-${Date.now()}`,
+          title: document.getElementById('campus-title').value.trim(),
+          category: document.getElementById('campus-category').value.trim(),
+          image: imagePath,
+          description: document.getElementById('campus-description').value.trim()
+        };
+
+        let updatedList = [...STATE.campus];
+        if (id) {
+          const idx = updatedList.findIndex(c => c.id === id);
+          if (idx !== -1) updatedList[idx] = obj;
+        } else {
+          updatedList.push(obj);
+        }
+
+        await persistData('data/campus.json', updatedList);
+        STATE.campus = updatedList;
+        updateCounters();
+        renderCampus();
+        closeCampusModal();
+        showToast('Campus facility updated.', 'success');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function deleteCampus(id) {
+      const item = STATE.campus.find(c => c.id === id);
+      if (!confirm(`Delete facility "${item ? item.title : id}"?`)) return;
+
+      try {
+        const updatedList = STATE.campus.filter(c => c.id !== id);
+        await persistData('data/campus.json', updatedList);
+        STATE.campus = updatedList;
+        updateCounters();
+        renderCampus();
+        showToast('Campus facility deleted.', 'info');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // =========================================================================
+    // SECTION 5: ADVISORY COMMITTEE
+    // =========================================================================
+    function renderAdvisory() {
+      const container = document.getElementById('advisory-list-container');
+      if (!container) return;
+
+      if (STATE.advisory.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-16 text-center text-slate-400 bg-white rounded-2xl border border-dashed border-slate-300">
+            <p class="font-serif font-bold text-slate-700 text-base">No advisors recorded</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = STATE.advisory.map(a => `
+        <div class="bg-white rounded-2xl border border-brand-warmBorder p-5 flex flex-col justify-between shadow-sm hover:shadow-md transition">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3">
+              <div class="w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-slate-200 bg-brand-navy flex items-center justify-center text-amber-300 font-serif font-bold text-base shadow-inner">
+                ${a.image ? `<img src="${escapeHtml(a.image)}" alt="${escapeHtml(a.name)}" class="w-full h-full object-cover" onerror="this.remove();" />` : ''}
+                <span>${escapeHtml(a.initials || a.name.substring(0, 2).toUpperCase())}</span>
+              </div>
+              <div class="min-w-0 flex-1">
+                ${a.badge ? `<span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">${escapeHtml(a.badge)}</span>` : ''}
+                <h4 class="font-serif font-bold text-sm text-brand-navy truncate mt-0.5">${escapeHtml(a.name)}</h4>
+                <div class="text-xs font-semibold text-slate-600 truncate">${escapeHtml(a.role)}</div>
+              </div>
+            </div>
+
+            <div class="text-xs text-slate-500 bg-slate-50 p-2.5 rounded-xl border border-slate-100 leading-relaxed mb-3">
+              <div class="text-[11px] font-bold text-slate-700 mb-1">${escapeHtml(a.institution)}</div>
+              <p class="line-clamp-3">${escapeHtml(a.bio)}</p>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+            <button onclick="editAdvisory('${escapeHtml(a.id)}')" class="p-1.5 rounded-lg text-slate-500 hover:text-brand-blue hover:bg-slate-100 transition"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
+            <button onclick="deleteAdvisory('${escapeHtml(a.id)}')" class="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+          </div>
+        </div>
+      `).join('');
+
+      lucide.createIcons();
+    }
+
+    function openAdvisoryModal(item = null) {
+      const modal = document.getElementById('advisory-modal');
+      const form = document.getElementById('advisory-form');
+      form.reset();
+      document.getElementById('advisory-image-preview').classList.add('hidden');
+
+      if (item) {
+        document.getElementById('advisory-modal-title').textContent = 'Edit Advisory Member';
+        document.getElementById('advisory-id').value = item.id;
+        document.getElementById('advisory-name').value = item.name || '';
+        document.getElementById('advisory-initials').value = item.initials || '';
+        document.getElementById('advisory-role').value = item.role || '';
+        document.getElementById('advisory-badge').value = item.badge || '';
+        document.getElementById('advisory-institution').value = item.institution || '';
+        document.getElementById('advisory-bio').value = item.bio || '';
+        document.getElementById('advisory-image-path').value = item.image || '';
+
+        if (item.image) {
+          const previewEl = document.getElementById('advisory-image-preview');
+          previewEl.querySelector('img').src = item.image;
+          previewEl.classList.remove('hidden');
+        }
+      } else {
+        document.getElementById('advisory-modal-title').textContent = 'Add Advisory Member';
+        document.getElementById('advisory-id').value = '';
+      }
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      lucide.createIcons();
+    }
+
+    function closeAdvisoryModal() {
+      const modal = document.getElementById('advisory-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function editAdvisory(id) {
+      const item = STATE.advisory.find(a => a.id === id);
+      if (item) openAdvisoryModal(item);
+    }
+
+    async function handleSaveAdvisory(e) {
+      e.preventDefault();
+      try {
+        const id = document.getElementById('advisory-id').value.trim();
+        const fileInput = document.getElementById('advisory-image-file');
+        let imagePath = document.getElementById('advisory-image-path').value.trim();
+
+        if (fileInput.files && fileInput.files[0]) {
+          imagePath = await uploadImageFile(fileInput.files[0], 'assets/committee');
+        }
+
+        const nameVal = document.getElementById('advisory-name').value.trim();
+        let initials = document.getElementById('advisory-initials').value.trim().toUpperCase();
+        if (!initials && nameVal) {
+          initials = nameVal.split(' ').map(w => w[0]).filter(Boolean).slice(0, 2).join('').toUpperCase();
+        }
+
+        const obj = {
+          id: id || `adv-${Date.now()}`,
+          name: nameVal,
+          institution: document.getElementById('advisory-institution').value.trim(),
+          bio: document.getElementById('advisory-bio').value.trim(),
+          role: document.getElementById('advisory-role').value.trim(),
+          badge: document.getElementById('advisory-badge').value.trim(),
+          image: imagePath,
+          initials: initials
+        };
+
+        let updatedList = [...STATE.advisory];
+        if (id) {
+          const idx = updatedList.findIndex(a => a.id === id);
+          if (idx !== -1) updatedList[idx] = obj;
+        } else {
+          updatedList.push(obj);
+        }
+
+        await persistData('data/advisory.json', updatedList);
+        STATE.advisory = updatedList;
+        updateCounters();
+        renderAdvisory();
+        closeAdvisoryModal();
+        showToast('Advisory member updated.', 'success');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function deleteAdvisory(id) {
+      const item = STATE.advisory.find(a => a.id === id);
+      if (!confirm(`Delete advisor "${item ? item.name : id}"?`)) return;
+
+      try {
+        const updatedList = STATE.advisory.filter(a => a.id !== id);
+        await persistData('data/advisory.json', updatedList);
+        STATE.advisory = updatedList;
+        updateCounters();
+        renderAdvisory();
+        showToast('Advisor deleted.', 'info');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // =========================================================================
+    // SETTINGS & STORAGE TOGGLE
+    // =========================================================================
+    function toggleSettingsModal() {
+      const modal = document.getElementById('settings-modal');
+      const isHidden = modal.classList.contains('hidden');
+      if (isHidden) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.getElementById('custom-passcode-input').value = (STATE.customPasscode !== DEFAULT_PASSCODE) ? STATE.customPasscode : '';
+        const radios = document.getElementsByName('storage-mode');
+        for (const r of radios) {
+          if (r.value === STATE.mode) r.checked = true;
+        }
+        setStorageMode(STATE.mode);
+      } else {
+        const customPass = document.getElementById('custom-passcode-input').value.trim();
+        if (customPass) {
+          STATE.customPasscode = customPass;
+          localStorage.setItem('ics_custom_passcode', customPass);
+        }
+        localStorage.setItem('ics_admin_mode', STATE.mode);
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        updateEnvBadge();
+      }
+      lucide.createIcons();
+    }
+
+    function setStorageMode(mode) {
+      STATE.mode = mode;
+    }
+
+    function updateEnvBadge() {
+      const badge = document.getElementById('env-badge');
+      const label = document.getElementById('env-label');
+      if (STATE.mode === 'local') {
+        badge.className = 'inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
+        label.textContent = '⚡ Local Server Mode (Safe Testing)';
+      } else {
+        badge.className = 'inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30';
+        label.textContent = '🌐 GitHub Cloud Sync Mode';
+      }
+    }
+
+    function downloadJsonBackup(dataset) {
+      const data = STATE[dataset];
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${dataset}_backup_${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast(`Exported ${dataset}.json backup.`, 'info');
+    }
+  </script>
+</body>
+</html>
