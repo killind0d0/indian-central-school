@@ -57,9 +57,10 @@ class MultiThreadedHandler(http.server.SimpleHTTPRequestHandler):
                     "data/achievements.json",
                     "data/faculty.json",
                     "data/campus.json",
-                    "data/advisory.json"
+                    "data/advisory.json",
+                    "data/permissions.json"
                 }
-                if file_rel not in allowed_files or not isinstance(data, list):
+                if file_rel not in allowed_files or not isinstance(data, (list, dict)):
                     self.send_response(400)
                     self.send_header("Content-Type", "application/json")
                     self.end_headers()

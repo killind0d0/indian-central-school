@@ -145,6 +145,12 @@
         </div>
 
         <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Staff OTP Auth Status Indicator -->
+          <button id="staff-auth-badge" type="button" onclick="handleAuthBadgeClick()" title="Click to view or verify Staff OTP" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition bg-amber-500/20 text-amber-300 border border-amber-500/30 hover:bg-amber-500/30">
+            <i data-lucide="shield-alert" id="staff-auth-icon" class="w-3.5 h-3.5 text-amber-400"></i>
+            <span id="staff-auth-label">🔐 Staff OTP Required</span>
+          </button>
+
           <!-- Target & Environment Indicator -->
           <div id="env-badge" class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -204,7 +210,21 @@
     </nav>
 
     <!-- MAIN CONTAINER -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-6">
+
+      <!-- MASTER STAFF LOCKOUT BANNER -->
+      <div id="staff-disabled-banner" class="hidden p-4 rounded-2xl bg-rose-600 text-white shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+            <i data-lucide="lock" class="w-5 h-5 text-white"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-sm">Staff Portal Access is Temporarily Paused by Principal</h4>
+            <p class="text-xs text-rose-100 mt-0.5">The Principal has locked staff editing via the ICS Admin Android App. Website content is in Read-Only mode.</p>
+          </div>
+        </div>
+        <span class="px-3 py-1 rounded-full bg-black/25 text-xs font-black uppercase tracking-wider shrink-0 border border-white/20">Read-Only Enforced</span>
+      </div>
 
       <!-- ================================================================= -->
       <!-- SECTION 1: NOTICES (MAX 15 ENFORCED)                              -->
@@ -213,11 +233,12 @@
         <div class="bg-white rounded-2xl border border-brand-warmBorder p-6 shadow-sm">
           <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <div class="flex items-center gap-2.5">
-                <h2 class="font-serif font-black text-xl text-brand-navy">Digital Notices & Circulars</h2>
+              <div class="flex flex-wrap items-center gap-2.5">
+                <h2 class="font-serif font-black text-xl text-brand-navy">Digital Notices &amp; Circulars</h2>
                 <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-200">
                   15 Notices App Limit
                 </span>
+                <span id="badge-perm-notices" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200"></span>
               </div>
               <p class="text-xs text-slate-500 mt-1">
                 Synchronized with the Android School App. Maximum 15 active notices allowed on the portal.
@@ -225,7 +246,7 @@
             </div>
 
             <div class="flex items-center gap-3">
-              <button onclick="openNoticeModal()" class="inline-flex items-center gap-2 bg-brand-navy hover:bg-brand-blue text-amber-300 px-4 py-2 rounded-xl text-xs font-bold shadow transition">
+              <button id="btn-add-notice" onclick="openNoticeModal()" class="inline-flex items-center gap-2 bg-brand-navy hover:bg-brand-blue text-amber-300 px-4 py-2 rounded-xl text-xs font-bold shadow transition">
                 <i data-lucide="plus-circle" class="w-4 h-4"></i> Post New Notice
               </button>
               <button onclick="refreshData('notices')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition" title="Reload Notices">
@@ -260,11 +281,14 @@
       <section id="section-faculty" class="admin-section hidden space-y-6">
         <div class="bg-white rounded-2xl border border-brand-warmBorder p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 class="font-serif font-black text-xl text-brand-navy">Faculty & Academic Mentors</h2>
+            <div class="flex flex-wrap items-center gap-2.5">
+              <h2 class="font-serif font-black text-xl text-brand-navy">Faculty &amp; Academic Mentors</h2>
+              <span id="badge-perm-faculty" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200"></span>
+            </div>
             <p class="text-xs text-slate-500 mt-1">Manage teaching staff profiles, designations, qualifications, and department categories.</p>
           </div>
           <div class="flex items-center gap-3">
-            <button onclick="openFacultyModal()" class="inline-flex items-center gap-2 bg-brand-navy hover:bg-brand-blue text-amber-300 px-4 py-2 rounded-xl text-xs font-bold shadow transition">
+            <button id="btn-add-faculty" onclick="openFacultyModal()" class="inline-flex items-center gap-2 bg-brand-navy hover:bg-brand-blue text-amber-300 px-4 py-2 rounded-xl text-xs font-bold shadow transition">
               <i data-lucide="user-plus" class="w-4 h-4"></i> Add Faculty Member
             </button>
             <button onclick="refreshData('faculty')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition" title="Reload Faculty">
@@ -296,11 +320,14 @@
       <section id="section-achievements" class="admin-section hidden space-y-6">
         <div class="bg-white rounded-2xl border border-brand-warmBorder p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 class="font-serif font-black text-xl text-brand-navy">Hall of Fame & Achievements</h2>
+            <div class="flex flex-wrap items-center gap-2.5">
+              <h2 class="font-serif font-black text-xl text-brand-navy">Hall of Fame &amp; Achievements</h2>
+              <span id="badge-perm-achievements" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200"></span>
+            </div>
             <p class="text-xs text-slate-500 mt-1">Manage institutional honors, student board toppers, Olympiad medalists, and athletic honors.</p>
           </div>
           <div class="flex items-center gap-3">
-            <button onclick="openAchievementModal()" class="inline-flex items-center gap-2 bg-brand-navy hover:bg-brand-blue text-amber-300 px-4 py-2 rounded-xl text-xs font-bold shadow transition">
+            <button id="btn-add-achievement" onclick="openAchievementModal()" class="inline-flex items-center gap-2 bg-brand-navy hover:bg-brand-blue text-amber-300 px-4 py-2 rounded-xl text-xs font-bold shadow transition">
               <i data-lucide="plus-circle" class="w-4 h-4"></i> Add Achievement
             </button>
             <button onclick="refreshData('achievements')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition" title="Reload Achievements">
@@ -318,11 +345,14 @@
       <section id="section-campus" class="admin-section hidden space-y-6">
         <div class="bg-white rounded-2xl border border-brand-warmBorder p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 class="font-serif font-black text-xl text-brand-navy">Campus & Facilities Highlights</h2>
+            <div class="flex flex-wrap items-center gap-2.5">
+              <h2 class="font-serif font-black text-xl text-brand-navy">Campus &amp; Facilities Highlights</h2>
+              <span id="badge-perm-campus" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200"></span>
+            </div>
             <p class="text-xs text-slate-500 mt-1">Manage campus entrance, smart classrooms, laboratories, library, and athletic grounds.</p>
           </div>
           <div class="flex items-center gap-3">
-            <button onclick="openCampusModal()" class="inline-flex items-center gap-2 bg-brand-navy hover:bg-brand-blue text-amber-300 px-4 py-2 rounded-xl text-xs font-bold shadow transition">
+            <button id="btn-add-campus" onclick="openCampusModal()" class="inline-flex items-center gap-2 bg-brand-navy hover:bg-brand-blue text-amber-300 px-4 py-2 rounded-xl text-xs font-bold shadow transition">
               <i data-lucide="plus-circle" class="w-4 h-4"></i> Add Campus Item
             </button>
             <button onclick="refreshData('campus')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition" title="Reload Campus">
@@ -340,11 +370,14 @@
       <section id="section-advisory" class="admin-section hidden space-y-6">
         <div class="bg-white rounded-2xl border border-brand-warmBorder p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 class="font-serif font-black text-xl text-brand-navy">Advisory Committee & Patrons</h2>
+            <div class="flex flex-wrap items-center gap-2.5">
+              <h2 class="font-serif font-black text-xl text-brand-navy">Advisory Committee &amp; Patrons</h2>
+              <span id="badge-perm-advisory" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200"></span>
+            </div>
             <p class="text-xs text-slate-500 mt-1">Manage university professors, educationists, and institutional advisors governing the school.</p>
           </div>
           <div class="flex items-center gap-3">
-            <button onclick="openAdvisoryModal()" class="inline-flex items-center gap-2 bg-brand-navy hover:bg-brand-blue text-amber-300 px-4 py-2 rounded-xl text-xs font-bold shadow transition">
+            <button id="btn-add-advisory" onclick="openAdvisoryModal()" class="inline-flex items-center gap-2 bg-brand-navy hover:bg-brand-blue text-amber-300 px-4 py-2 rounded-xl text-xs font-bold shadow transition">
               <i data-lucide="user-plus" class="w-4 h-4"></i> Add Advisor
             </button>
             <button onclick="refreshData('advisory')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition" title="Reload Advisory">
@@ -455,6 +488,68 @@
           </button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- STAFF OTP AUTHORIZATION GATEWAY MODAL                             -->
+  <!-- ================================================================= -->
+  <div id="staff-otp-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-amber-300 relative overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      
+      <!-- Top Accent Bar -->
+      <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600"></div>
+
+      <!-- Header -->
+      <div class="text-center mb-6 pt-2">
+        <div class="w-14 h-14 mx-auto p-2 rounded-2xl bg-amber-50 border-2 border-amber-400/40 shadow-sm flex items-center justify-center mb-3">
+          <i data-lucide="shield-alert" class="w-7 h-7 text-amber-600"></i>
+        </div>
+        <h3 class="font-serif font-black text-xl text-brand-navy tracking-tight">Admin Authorization Required</h3>
+        <p id="staff-otp-action-desc" class="text-xs text-slate-500 mt-1 max-w-xs mx-auto">
+          Updating important school records requires one-time authorization from the Principal or Admin Android App.
+        </p>
+      </div>
+
+      <!-- Form -->
+      <form id="staff-otp-form" onsubmit="handleStaffOtpVerify(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+            Staff Member Name / Role *
+          </label>
+          <input type="text" id="staff-auth-name" required placeholder="e.g. Ramesh Kumar (Computer Dept)" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500 text-sm font-medium bg-slate-50 focus:bg-white" />
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+              6-Digit Admin Approval OTP *
+            </label>
+            <span class="text-[11px] text-amber-700 font-bold bg-amber-100/60 px-2 py-0.5 rounded-md">5-Min Live Token</span>
+          </div>
+          <div class="relative">
+            <input type="text" id="staff-otp-input" maxlength="6" inputmode="numeric" required placeholder="Enter 6-digit OTP" class="w-full text-center tracking-[0.35em] font-mono text-2xl font-black py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500 bg-slate-50 focus:bg-white text-brand-navy" autocomplete="off" />
+          </div>
+          <div class="p-3 bg-amber-50/60 rounded-xl border border-amber-200/60 mt-2 text-[11px] text-amber-900 leading-relaxed">
+            👉 Ask the Principal or Head Administrator to open the <strong>ICS Admin Android App</strong> on their phone and tap <strong>"Staff OTP"</strong>.
+          </div>
+        </div>
+
+        <div id="staff-otp-error" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-700 font-semibold flex items-center gap-2">
+          <i data-lucide="alert-circle" class="w-4 h-4 text-rose-600 shrink-0"></i>
+          <span id="staff-otp-error-text">Invalid OTP code. Please check with Admin and try again.</span>
+        </div>
+
+        <div class="flex items-center gap-3 pt-2">
+          <button type="button" onclick="closeStaffOtpModal()" class="w-1/3 py-2.5 px-4 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 font-bold text-xs transition">
+            Cancel
+          </button>
+          <button type="submit" id="staff-otp-submit-btn" class="w-2/3 py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-brand-navy font-black text-xs uppercase tracking-wider shadow-md transition flex items-center justify-center gap-1.5">
+            <i data-lucide="key" class="w-4 h-4"></i> Verify &amp; Unlock
+          </button>
+        </div>
+      </form>
+
     </div>
   </div>
 
@@ -826,7 +921,8 @@
       customPasscode: localStorage.getItem('ics_custom_passcode') || DEFAULT_PASSCODE,
       repoOwner: 'killind0d0',
       repoName: 'indian-central-school',
-      branch: 'main'
+      branch: 'main',
+      permissions: null
     };
 
     const NOTICE_LIMIT = 15;
@@ -924,6 +1020,7 @@
       app.classList.add('flex');
 
       updateEnvBadge();
+      updateStaffAuthBadge();
       await loadAllData();
       renderAllTabs();
       lucide.createIcons();
@@ -940,6 +1037,345 @@
         icon.setAttribute('data-lucide', 'eye');
       }
       lucide.createIcons();
+    }
+
+    // =========================================================================
+    // STAFF OTP AUTHENTICATION GATEWAY (MATCHES ICS ADMIN ANDROID APP)
+    // =========================================================================
+    const STAFF_OTP_SECRET = 'ICS-GAYA-STAFF-AUTH-KEY-2026';
+    const OTP_STEP_SECONDS = 300; // 5-minute rolling window
+    let pendingStaffCallback = null;
+
+    async function calculateTotp(secret, stepOffset = 0) {
+      try {
+        const step = Math.floor(Date.now() / 1000 / OTP_STEP_SECONDS) + stepOffset;
+        const enc = new TextEncoder();
+        const key = await window.crypto.subtle.importKey(
+          'raw',
+          enc.encode(secret),
+          { name: 'HMAC', hash: { name: 'SHA-256' } },
+          false,
+          ['sign']
+        );
+        const buffer = new ArrayBuffer(8);
+        const view = new DataView(buffer);
+        view.setBigUint64(0, BigInt(step), false);
+        const signature = await window.crypto.subtle.sign('HMAC', key, buffer);
+        const sigBytes = new Uint8Array(signature);
+        const offset = sigBytes[sigBytes.length - 1] & 0x0f;
+        const binary = ((sigBytes[offset] & 0x7f) << 24) |
+                       ((sigBytes[offset + 1] & 0xff) << 16) |
+                       ((sigBytes[offset + 2] & 0xff) << 8) |
+                       (sigBytes[offset + 3] & 0xff);
+        return (binary % 1000000).toString().padStart(6, '0');
+      } catch (e) {
+        let hash = 0;
+        const str = `${secret}:${Math.floor(Date.now() / 1000 / OTP_STEP_SECONDS) + stepOffset}`;
+        for (let i = 0; i < str.length; i++) {
+          hash = ((hash << 5) - hash) + str.charCodeAt(i);
+          hash |= 0;
+        }
+        return Math.abs(hash % 1000000).toString().padStart(6, '0');
+      }
+    }
+
+    async function verifyStaffOtp(enteredOtp) {
+      const clean = (enteredOtp || '').replace(/\s+/g, '');
+      if (clean.length !== 6) return false;
+      const [otp0, otpMinus, otpPlus] = await Promise.all([
+        calculateTotp(STAFF_OTP_SECRET, 0),
+        calculateTotp(STAFF_OTP_SECRET, -1),
+        calculateTotp(STAFF_OTP_SECRET, 1)
+      ]);
+      return (clean === otp0 || clean === otpMinus || clean === otpPlus);
+    }
+
+    function getStaffAuth() {
+      // If running inside Android App WebView, automatic Admin authorization
+      if (window.AndroidBridge) {
+        return { isMasterAdmin: true, staffName: 'Principal / Admin App', timestamp: Date.now() };
+      }
+      try {
+        const stored = sessionStorage.getItem('ics_staff_auth_v1');
+        if (!stored) return null;
+        const parsed = JSON.parse(stored);
+        const maxAge = 30 * 60 * 1000; // 30 minutes active window
+        if (Date.now() - parsed.timestamp < maxAge) {
+          return parsed;
+        } else {
+          sessionStorage.removeItem('ics_staff_auth_v1');
+          return null;
+        }
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function isStaffAuthorized() {
+      return getStaffAuth() !== null;
+    }
+
+    function updateStaffAuthBadge() {
+      const badge = document.getElementById('staff-auth-badge');
+      const label = document.getElementById('staff-auth-label');
+      const icon = document.getElementById('staff-auth-icon');
+      if (!badge || !label) return;
+
+      const auth = getStaffAuth();
+      if (auth) {
+        if (auth.isMasterAdmin) {
+          badge.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition bg-purple-500/20 text-purple-300 border border-purple-500/30';
+          label.textContent = '👑 Master Admin';
+          if (icon) {
+            icon.setAttribute('data-lucide', 'shield-check');
+            icon.className = 'w-3.5 h-3.5 text-purple-400';
+          }
+        } else {
+          badge.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 cursor-pointer';
+          const minsLeft = Math.max(1, Math.round((30 * 60 * 1000 - (Date.now() - auth.timestamp)) / 60000));
+          label.textContent = `🛡️ ${auth.staffName} (${minsLeft}m left)`;
+          if (icon) {
+            icon.setAttribute('data-lucide', 'shield-check');
+            icon.className = 'w-3.5 h-3.5 text-emerald-400';
+          }
+        }
+      } else {
+        badge.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition bg-amber-500/20 text-amber-300 border border-amber-500/30 hover:bg-amber-500/30 cursor-pointer';
+        label.textContent = '🔐 Staff OTP Required';
+        if (icon) {
+          icon.setAttribute('data-lucide', 'shield-alert');
+          icon.className = 'w-3.5 h-3.5 text-amber-400';
+        }
+      }
+      lucide.createIcons();
+    }
+
+    function handleAuthBadgeClick() {
+      const auth = getStaffAuth();
+      if (auth && !auth.isMasterAdmin) {
+        if (confirm(`Active edit session for "${auth.staffName}".\n\nClick OK to log out of this staff session and lock editing, or Cancel to continue.`)) {
+          sessionStorage.removeItem('ics_staff_auth_v1');
+          updateStaffAuthBadge();
+          showToast('Staff edit session closed.', 'info');
+        }
+      } else if (!auth) {
+        promptStaffOtp('Website Content Updates', null);
+      } else {
+        showToast('Running as Master Administrator in App.', 'info');
+      }
+    }
+
+    function promptStaffOtp(actionDescription, callback = null) {
+      pendingStaffCallback = callback;
+      const modal = document.getElementById('staff-otp-modal');
+      const descEl = document.getElementById('staff-otp-action-desc');
+      const errBox = document.getElementById('staff-otp-error');
+      const otpInput = document.getElementById('staff-otp-input');
+      const nameInput = document.getElementById('staff-auth-name');
+
+      if (descEl && actionDescription) {
+        descEl.textContent = `Action: "${actionDescription}". Enter the 6-digit OTP from the Principal or Admin Android App to authorize this change.`;
+      }
+      if (errBox) errBox.classList.add('hidden');
+      if (otpInput) {
+        otpInput.value = '';
+      }
+      const savedLastName = localStorage.getItem('ics_staff_last_name');
+      if (nameInput && savedLastName && !nameInput.value) {
+        nameInput.value = savedLastName;
+      }
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      lucide.createIcons();
+      setTimeout(() => {
+        if (nameInput && nameInput.value.trim()) {
+          if (otpInput) otpInput.focus();
+        } else if (nameInput) {
+          nameInput.focus();
+        }
+      }, 100);
+    }
+
+    function closeStaffOtpModal() {
+      const modal = document.getElementById('staff-otp-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      pendingStaffCallback = null;
+    }
+
+    async function handleStaffOtpVerify(e) {
+      e.preventDefault();
+      const nameInput = document.getElementById('staff-auth-name');
+      const otpInput = document.getElementById('staff-otp-input');
+      const errBox = document.getElementById('staff-otp-error');
+      const errText = document.getElementById('staff-otp-error-text');
+      const btn = document.getElementById('staff-otp-submit-btn');
+
+      const staffName = nameInput.value.trim();
+      const enteredOtp = otpInput.value.trim();
+
+      if (!staffName) {
+        nameInput.focus();
+        return;
+      }
+      if (!enteredOtp || enteredOtp.length !== 6) {
+        errText.textContent = 'Please enter a complete 6-digit OTP.';
+        errBox.classList.remove('hidden');
+        otpInput.focus();
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="animate-spin mr-1">⏳</span> Verifying...';
+
+      try {
+        const isValid = await verifyStaffOtp(enteredOtp);
+        if (isValid) {
+          const authObj = {
+            isMasterAdmin: false,
+            staffName: staffName,
+            timestamp: Date.now()
+          };
+          sessionStorage.setItem('ics_staff_auth_v1', JSON.stringify(authObj));
+          localStorage.setItem('ics_staff_last_name', staffName);
+          updateStaffAuthBadge();
+          closeStaffOtpModal();
+          showToast(`Admin Authorization Verified! Welcome, ${staffName}.`, 'success');
+
+          if (typeof pendingStaffCallback === 'function') {
+            const cb = pendingStaffCallback;
+            pendingStaffCallback = null;
+            cb();
+          }
+        } else {
+          errText.textContent = 'Incorrect or expired OTP. Please check the code in the ICS Admin Android App and try again.';
+          errBox.classList.remove('hidden');
+          otpInput.select();
+        }
+      } catch (err) {
+        errText.textContent = `Verification error: ${err.message}`;
+        errBox.classList.remove('hidden');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i data-lucide="key" class="w-4 h-4"></i> Verify &amp; Unlock';
+        lucide.createIcons();
+      }
+    }
+
+    // =========================================================================
+    // STAFF PERMISSIONS POLICY ENGINE (CONTROLLED BY PRINCIPAL VIA ANDROID APP)
+    // =========================================================================
+    async function loadPermissionsData() {
+      try {
+        const res = await fetch(`data/permissions.json?_t=${Date.now()}`);
+        if (res.ok) {
+          STATE.permissions = await res.json();
+        } else {
+          STATE.permissions = {
+            staffAccessEnabled: true,
+            modules: {
+              faculty: { name: "Faculty Directory", allowEdit: true, requireOtp: true },
+              notices: { name: "Notices & Circulars", allowEdit: true, requireOtp: true },
+              achievements: { name: "Hall of Fame & Awards", allowEdit: true, requireOtp: true },
+              campus: { name: "Campus & Facilities", allowEdit: true, requireOtp: true },
+              advisory: { name: "Advisory Committee", allowEdit: false, requireOtp: true }
+            }
+          };
+        }
+      } catch (e) {
+        console.warn('Failed to load permissions.json:', e);
+        STATE.permissions = {
+          staffAccessEnabled: true,
+          modules: {
+            faculty: { name: "Faculty Directory", allowEdit: true, requireOtp: true },
+            notices: { name: "Notices & Circulars", allowEdit: true, requireOtp: true },
+            achievements: { name: "Hall of Fame & Awards", allowEdit: true, requireOtp: true },
+            campus: { name: "Campus & Facilities", allowEdit: true, requireOtp: true },
+            advisory: { name: "Advisory Committee", allowEdit: false, requireOtp: true }
+          }
+        };
+      }
+      applyPermissionsToUI();
+    }
+
+    function applyPermissionsToUI() {
+      const perms = STATE.permissions;
+      if (!perms) return;
+
+      const isAndroid = !!window.AndroidBridge;
+      const banner = document.getElementById('staff-disabled-banner');
+
+      if (!isAndroid && perms.staffAccessEnabled === false) {
+        if (banner) banner.classList.remove('hidden');
+      } else {
+        if (banner) banner.classList.add('hidden');
+      }
+
+      const modules = ['notices', 'faculty', 'achievements', 'campus', 'advisory'];
+      modules.forEach(modKey => {
+        const badge = document.getElementById(`badge-perm-${modKey}`);
+        if (!badge) return;
+
+        if (isAndroid) {
+          badge.textContent = 'Principal (Full Access)';
+          badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-100 text-purple-700 border border-purple-200';
+          return;
+        }
+
+        const mod = perms.modules && perms.modules[modKey];
+        if (perms.staffAccessEnabled === false) {
+          badge.textContent = 'Staff Disabled';
+          badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-700 border border-rose-200';
+        } else if (!mod || mod.allowEdit === false) {
+          badge.textContent = 'Locked by Admin';
+          badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-700 border border-rose-200';
+        } else if (mod.requireOtp === false) {
+          badge.textContent = 'Direct Edit (No OTP)';
+          badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700 border border-emerald-200';
+        } else {
+          badge.textContent = 'Requires Admin OTP';
+          badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700 border border-amber-200';
+        }
+      });
+    }
+
+    function checkStaffPermission(moduleKey, actionName, callback) {
+      if (window.AndroidBridge) return true;
+
+      const perms = STATE.permissions;
+      if (!perms) {
+        if (!isStaffAuthorized()) {
+          promptStaffOtp(actionName, callback);
+          return false;
+        }
+        return true;
+      }
+
+      if (perms.staffAccessEnabled === false) {
+        showToast('Staff editing is currently disabled by the Principal.', 'error');
+        alert('Action Blocked: The Principal has temporarily disabled staff editing on the website via the ICS Admin Android App.');
+        return false;
+      }
+
+      const mod = perms.modules && perms.modules[moduleKey];
+      if (mod && mod.allowEdit === false) {
+        const modName = mod.name || moduleKey;
+        showToast(`Editing "${modName}" is locked by the Principal.`, 'warning');
+        alert(`Action Blocked: The Principal has locked editing for "${modName}" in the ICS Admin Android App.`);
+        return false;
+      }
+
+      if (mod && mod.requireOtp === false) {
+        return true;
+      }
+
+      if (!isStaffAuthorized()) {
+        promptStaffOtp(actionName, callback);
+        return false;
+      }
+
+      return true;
     }
 
     // =========================================================================
@@ -1114,6 +1550,7 @@
     }
 
     async function loadAllData() {
+      await loadPermissionsData();
       const datasets = ['notices', 'faculty', 'achievements', 'campus', 'advisory'];
       for (const name of datasets) {
         try {
@@ -1132,6 +1569,7 @@
     }
 
     async function refreshData(name) {
+      await loadPermissionsData();
       try {
         const res = await fetch(`data/${name}.json?_t=${Date.now()}`);
         if (res.ok) {
@@ -1204,6 +1642,31 @@
     // PERSISTENCE ENGINE (LOCAL SERVER OR GITHUB CLOUD)
     // =========================================================================
     async function persistData(filename, dataArray) {
+      const isAndroid = !!window.AndroidBridge;
+      let staffTag = 'Master Admin (ICS App)';
+
+      if (!isAndroid) {
+        const perms = STATE.permissions;
+        if (perms && perms.staffAccessEnabled === false) {
+          throw new Error('Action blocked: Staff editing has been disabled by the Principal via the Admin App.');
+        }
+
+        const modKey = filename.replace('data/', '').replace('.json', '');
+        const mod = perms && perms.modules && perms.modules[modKey];
+        if (mod && mod.allowEdit === false) {
+          throw new Error(`Action blocked: Editing for "${mod.name || modKey}" is locked by the Principal.`);
+        }
+
+        const isOtpRequired = !mod || mod.requireOtp !== false;
+        const auth = getStaffAuth();
+        if (isOtpRequired && !auth) {
+          throw new Error('Action blocked: 6-Digit Admin OTP authorization required before saving changes to this section.');
+        }
+
+        const staffName = auth ? auth.staffName : (localStorage.getItem('ics_staff_last_name') || 'Staff');
+        staffTag = auth ? `Staff: ${staffName} (OTP Verified)` : `Staff: ${staffName} (Direct Edit)`;
+      }
+
       if (STATE.mode === 'local') {
         try {
           const res = await fetch('/api/save', {
@@ -1211,7 +1674,8 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               file: filename,
-              data: dataArray
+              data: dataArray,
+              author: staffTag
             })
           });
           const json = await res.json();
@@ -1251,7 +1715,7 @@
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            message: `Update ${filename} via ICS Administration Console`,
+            message: `Update ${filename} via ICS Administration Console [${staffTag}]`,
             content: encodedContent,
             sha: sha,
             branch: STATE.branch
@@ -1424,6 +1888,9 @@
     }
 
     function openNoticeModal(notice = null) {
+      if (!checkStaffPermission('notices', notice ? 'Edit School Notice' : 'Publish New Notice', () => openNoticeModal(notice))) {
+        return;
+      }
       const modal = document.getElementById('notice-modal');
       const titleEl = document.getElementById('notice-modal-title');
       const form = document.getElementById('notice-form');
@@ -1541,6 +2008,9 @@
     }
 
     async function deleteNotice(id) {
+      if (!checkStaffPermission('notices', 'Delete Notice', () => deleteNotice(id))) {
+        return;
+      }
       const notice = STATE.notices.find(n => n.id === id);
       if (!confirm(`Are you sure you want to delete notice:\n"${notice ? notice.title : id}"?`)) return;
 
@@ -1638,6 +2108,9 @@
     }
 
     function openFacultyModal(faculty = null) {
+      if (!checkStaffPermission('faculty', faculty ? 'Edit Faculty Profile' : 'Add New Faculty Member', () => openFacultyModal(faculty))) {
+        return;
+      }
       const modal = document.getElementById('faculty-modal');
       const form = document.getElementById('faculty-form');
       form.reset();
@@ -1728,6 +2201,9 @@
     }
 
     async function deleteFaculty(id) {
+      if (!checkStaffPermission('faculty', 'Delete Faculty Member', () => deleteFaculty(id))) {
+        return;
+      }
       const item = STATE.faculty.find(f => f.id === id);
       if (!confirm(`Delete faculty member "${item ? item.name : id}"?`)) return;
 
@@ -1790,6 +2266,9 @@
     }
 
     function openAchievementModal(item = null) {
+      if (!checkStaffPermission('achievements', item ? 'Edit Achievement Award' : 'Add Student Achievement', () => openAchievementModal(item))) {
+        return;
+      }
       const modal = document.getElementById('achievement-modal');
       const form = document.getElementById('achievement-form');
       form.reset();
@@ -1871,6 +2350,9 @@
     }
 
     async function deleteAchievement(id) {
+      if (!checkStaffPermission('achievements', 'Delete Achievement Award', () => deleteAchievement(id))) {
+        return;
+      }
       const item = STATE.achievements.find(a => a.id === id);
       if (!confirm(`Delete achievement "${item ? item.title : id}"?`)) return;
 
@@ -1926,6 +2408,9 @@
     }
 
     function openCampusModal(item = null) {
+      if (!checkStaffPermission('campus', item ? 'Edit Campus Facility' : 'Add Campus Facility / Photo', () => openCampusModal(item))) {
+        return;
+      }
       const modal = document.getElementById('campus-modal');
       const form = document.getElementById('campus-form');
       form.reset();
@@ -2004,6 +2489,9 @@
     }
 
     async function deleteCampus(id) {
+      if (!checkStaffPermission('campus', 'Delete Campus Facility', () => deleteCampus(id))) {
+        return;
+      }
       const item = STATE.campus.find(c => c.id === id);
       if (!confirm(`Delete facility "${item ? item.title : id}"?`)) return;
 
@@ -2067,6 +2555,9 @@
     }
 
     function openAdvisoryModal(item = null) {
+      if (!checkStaffPermission('advisory', item ? 'Edit Advisory Board Member' : 'Add Advisory Member', () => openAdvisoryModal(item))) {
+        return;
+      }
       const modal = document.getElementById('advisory-modal');
       const form = document.getElementById('advisory-form');
       form.reset();
@@ -2157,6 +2648,9 @@
     }
 
     async function deleteAdvisory(id) {
+      if (!checkStaffPermission('advisory', 'Delete Advisory Member', () => deleteAdvisory(id))) {
+        return;
+      }
       const item = STATE.advisory.find(a => a.id === id);
       if (!confirm(`Delete advisor "${item ? item.name : id}"?`)) return;
 
