@@ -1,0 +1,32 @@
+{
+  "staffAccessEnabled": true,
+  "lastUpdated": "2026-09-15T04:39:28.028Z",
+  "updatedBy": "Principal (ICS Admin App)",
+  "modules": {
+    "faculty": {
+      "name": "Faculty Directory",
+      "allowEdit": true,
+      "requireOtp": true
+    },
+    "notices": {
+      "name": "Notices & Circulars",
+      "allowEdit": true,
+      "requireOtp": false
+    },
+    "achievements": {
+      "name": "Hall of Fame & Awards",
+      "allowEdit": true,
+      "requireOtp": true
+    },
+    "campus": {
+      "name": "Campus & Facilities",
+      "allowEdit": true,
+      "requireOtp": true
+    },
+    "advisory": {
+      "name": "Advisory Committee",
+      "allowEdit": false,
+      "requireOtp": true
+    }
+  }
+}
