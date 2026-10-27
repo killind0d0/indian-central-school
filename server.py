@@ -4,7 +4,7 @@ import os
 import sys
 import socket
 
-PORT = 8080
+PORT = int(os.environ.get("PORT", 8085))
 DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 
 # Ensure all essential mime types are registered
