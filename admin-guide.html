@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Portal Operations & Handover Manual | Indian Central School</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  
+  <!-- Google Fonts: Plus Jakarta Sans & Cinzel -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#0B192C',
+              navyDark: '#060D17',
+              blue: '#1B365D',
+              gold: '#D4AF37',
+              goldHover: '#B59428',
+              amber: '#B45309',
+              cream: '#FAF8F5',
+              creamBorder: '#E6DFC9',
+              warmBorder: '#E2E8F0'
+            }
+          },
+          fontFamily: {
+            serif: ['Cinzel', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white !important; color: black !important; font-size: 10.5pt; }
+      .page-break { page-break-before: always; }
+      .card-box { border: 1px solid #cbd5e1 !important; box-shadow: none !important; }
+    }
+  </style>
+</head>
+<body class="bg-brand-cream text-slate-800 font-sans antialiased selection:bg-amber-100 selection:text-amber-900 min-h-screen flex flex-col">
+
+  <!-- TOP STICKY BAR (NO-PRINT) -->
+  <header class="no-print bg-brand-navy text-white sticky top-0 z-50 shadow-md border-b border-amber-500/20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 p-1 rounded-xl bg-white border border-amber-400/40 shadow-sm flex items-center justify-center shrink-0">
+          <img src="assets/logo.png" alt="ICS Crest" class="w-full h-full object-contain" />
+        </div>
+        <div>
+          <div class="font-serif font-black text-sm tracking-wide text-amber-300 leading-tight">INDIAN CENTRAL SCHOOL</div>
+          <div class="text-[10px] text-slate-300 font-sans uppercase tracking-wider">Administrative Governance & Handover Manual</div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <a href="assets/docs/ICS_Admin_Portal_Handbook_SJEnterprises.pdf" download class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-brand-navy font-bold text-xs shadow-md transition">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Download Official PDF</span>
+        </a>
+
+        <button onclick="window.print()" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/10 transition">
+          <i data-lucide="printer" class="w-4 h-4"></i>
+          <span class="hidden sm:inline">Print Manual</span>
+        </button>
+
+        <a href="admin.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-bold text-xs border border-emerald-500/30 transition">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+          <span class="hidden md:inline">Open Admin Console</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN DOCUMENT CONTAINER -->
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex-1 w-full space-y-10">
+
+    <!-- COVER / HEADER CARD -->
+    <div class="bg-white rounded-3xl border border-brand-creamBorder p-6 sm:p-10 shadow-sm relative overflow-hidden card-box">
+      <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-brand-navy via-amber-500 to-brand-navy"></div>
+
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-slate-100">
+        <div class="flex items-center gap-4">
+          <img src="assets/logo.png" alt="Indian Central School Crest" class="w-20 h-20 object-contain p-1.5 bg-slate-50 rounded-2xl border border-slate-200" />
+          <div>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-100 text-amber-900 border border-amber-300 mb-1">
+              Official Handover Document • Confidential
+            </span>
+            <h1 class="font-serif font-black text-2xl sm:text-3xl text-brand-navy leading-tight">
+              INDIAN CENTRAL SCHOOL, GAYA JI
+            </h1>
+            <p class="text-xs sm:text-sm text-slate-500 font-medium">A.T. Gate, Gaya Ji, on Gaya - Sherghati Road, Bihar</p>
+          </div>
+        </div>
+
+        <div class="sm:text-right text-xs text-slate-500 space-y-1">
+          <div><strong class="text-brand-navy">Document Ref:</strong> <span class="font-mono font-bold text-amber-700">SJ-ICS-2026-ADM</span></div>
+          <div><strong class="text-brand-navy">Version:</strong> v2.4 (Security Hardened)</div>
+          <div><strong class="text-brand-navy">Issued By:</strong> <strong>SJ Enterprises / SJ Digitals</strong></div>
+          <div><strong class="text-brand-navy">Date:</strong> October 30, 2026</div>
+        </div>
+      </div>
+
+      <!-- Foreword Box -->
+      <div class="mt-6 p-5 rounded-2xl bg-[#EFF6FF] border border-[#93C5FD] text-brand-navy text-xs sm:text-sm leading-relaxed">
+        <div class="flex items-center gap-2 font-bold mb-1 text-blue-900">
+          <i data-lucide="info" class="w-4 h-4 text-blue-700"></i>
+          <span>Executive Handover Notice to School Leadership:</span>
+        </div>
+        <p>
+          On behalf of <strong>SJ Enterprises / SJ Digitals</strong>, we are pleased to deliver this official operations manual for the modernized administrative portal of <strong>Indian Central School (icsgayaji.org)</strong>. This document outlines everything the Director, Principal, and IT Council need to know to operate the portal, delegate publishing to teachers safely, control the new <strong>Toggleable Approval Queue</strong>, and protect institutional data.
+        </p>
+      </div>
+    </div>
+
+    <!-- SECTION 1: CREDENTIALS & ACCESS KEYS -->
+    <section class="bg-white rounded-3xl border border-brand-creamBorder p-6 sm:p-8 shadow-sm space-y-6 card-box">
+      <div class="flex items-center gap-3 pb-3 border-b border-slate-100">
+        <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-900 flex items-center justify-center font-bold">1</div>
+        <div>
+          <h2 class="font-serif font-black text-lg sm:text-xl text-brand-navy">Portal URLs &amp; Confidential Passcodes</h2>
+          <p class="text-xs text-slate-500">Keep these credentials strictly confidential within authorized school leadership.</p>
+        </div>
+      </div>
+
+      <!-- URLs Cards -->
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+          <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Production Portal (Live Website)</div>
+          <div class="font-mono text-sm font-bold text-brand-navy select-all break-all">https://icsgayaji.org/admin.html</div>
+          <div class="text-[11px] text-slate-500 mt-2">Access from any computer or mobile browser with school credentials.</div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+          <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Offline Local Testing Sandbox</div>
+          <div class="font-mono text-sm font-bold text-brand-navy select-all">http://localhost:8085/admin.html</div>
+          <div class="text-[11px] text-slate-500 mt-2">Runs locally on your computer via <code>python3 server.py</code> for safe offline editing.</div>
+        </div>
+      </div>
+
+      <!-- Credential Table -->
+      <div class="overflow-x-auto rounded-2xl border border-slate-200">
+        <table class="w-full text-left text-xs sm:text-sm">
+          <thead class="bg-brand-navy text-white text-[11px] font-bold uppercase tracking-wider">
+            <tr>
+              <th class="p-3.5">Role</th>
+              <th class="p-3.5">Target Users</th>
+              <th class="p-3.5">Default Passcode</th>
+              <th class="p-3.5">Permission Scope</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 font-sans">
+            <tr class="bg-amber-50/50 hover:bg-amber-50">
+              <td class="p-3.5 font-bold text-brand-navy flex items-center gap-1.5">
+                <i data-lucide="shield-check" class="w-4 h-4 text-amber-600"></i> School Administrator
+              </td>
+              <td class="p-3.5 text-slate-700">Director, Principal, IT Council</td>
+              <td class="p-3.5 font-mono font-bold text-amber-900 bg-amber-100/60 rounded select-all">ics@2026</td>
+              <td class="p-3.5 text-slate-600">
+                <strong>Full Unrestricted Control.</strong> Directly edit/delete any content, approve/decline staff submissions, toggle approval mode ON/OFF, reset teacher passcodes, view audit log.
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="p-3.5 font-bold text-brand-navy flex items-center gap-1.5">
+                <i data-lucide="graduation-cap" class="w-4 h-4 text-emerald-600"></i> Teacher / Staff
+              </td>
+              <td class="p-3.5 text-slate-700">Class Teachers, Exam In-charges, Faculty</td>
+              <td class="p-3.5 font-mono font-bold text-emerald-900 bg-emerald-100/60 rounded select-all">staff@2026</td>
+              <td class="p-3.5 text-slate-600">
+                <strong>Delegated Operations.</strong> Add and update notices and faculty. When approval is ON, proposals wait in queue. When OFF, publishes directly to live site.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 2: THE TOGGLEABLE APPROVAL QUEUE -->
+    <section class="bg-white rounded-3xl border border-brand-creamBorder p-6 sm:p-8 shadow-sm space-y-6 card-box">
+      <div class="flex items-center gap-3 pb-3 border-b border-slate-100">
+        <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-900 flex items-center justify-center font-bold">2</div>
+        <div>
+          <h2 class="font-serif font-black text-lg sm:text-xl text-brand-navy">Staff Delegation &amp; The Toggleable Approval Queue</h2>
+          <p class="text-xs text-slate-500">How the administrator chooses between strict review vs. instant publishing.</p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <!-- Queue Mode -->
+        <div class="p-5 rounded-2xl border-2 border-amber-300 bg-amber-50/40 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-200 text-amber-900">
+              MODE 1: Approval Required (Default)
+            </span>
+            <i data-lucide="lock" class="w-4 h-4 text-amber-700"></i>
+          </div>
+          <h3 class="font-serif font-bold text-base text-brand-navy">Queue Mode (Strict Governance)</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            When a teacher creates, updates, or deletes a circular or faculty profile, their submission is saved into the <strong>Pending Approvals Queue</strong>. The live website is <strong>not touched</strong> until an administrator reviews and approves it.
+          </p>
+          <ul class="text-xs text-slate-600 space-y-1.5 list-disc list-inside">
+            <li>Teacher button says: <strong>"Submit for Admin Approval"</strong>.</li>
+            <li>Admin receives notification counter badge on <strong>Approvals &amp; Staff</strong> tab.</li>
+            <li>Admin inspects details and clicks <strong>Approve</strong> or <strong>Reject</strong> with feedback.</li>
+          </ul>
+        </div>
+
+        <!-- Direct Mode -->
+        <div class="p-5 rounded-2xl border-2 border-emerald-300 bg-emerald-50/40 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-200 text-emerald-900">
+              MODE 2: Direct Publish (Fast Mode)
+            </span>
+            <i data-lucide="zap" class="w-4 h-4 text-emerald-700"></i>
+          </div>
+          <h3 class="font-serif font-bold text-base text-brand-navy">Direct Mode (Events &amp; Rapid Updates)</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            During major events, sports days, or parent-teacher meets, the administrator can toggle approval <strong>OFF</strong>. Teachers can now publish circulars directly to the live website without waiting in a queue.
+          </p>
+          <ul class="text-xs text-slate-600 space-y-1.5 list-disc list-inside">
+            <li>Teacher button automatically updates to: <strong>"Save Notice Live"</strong>.</li>
+            <li>Published immediately to <code>data/notices.json</code> and live website.</li>
+            <li><strong>Complete Accountability:</strong> Every action is automatically logged in the <strong>Activity Audit Log</strong> with teacher name and timestamp.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- How to Toggle Steps -->
+      <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+        <h4 class="font-serif font-bold text-sm text-brand-navy flex items-center gap-2">
+          <i data-lucide="sliders" class="w-4 h-4 text-amber-600"></i> How to Toggle the Approval Setting at Any Time:
+        </h4>
+        <ol class="text-xs text-slate-600 space-y-2 list-decimal list-inside pl-1 leading-relaxed">
+          <li>Log in as <strong>Administrator</strong> using passcode <code>ics@2026</code>.</li>
+          <li>Click the <strong>"Approvals &amp; Staff"</strong> tab in the navigation bar.</li>
+          <li>Click the <strong>"Portal Security &amp; Access"</strong> sub-tab.</li>
+          <li>Locate the card titled <strong>"Require Admin Approval for Staff Updates"</strong>:
+            <span class="block ml-6 mt-1 text-slate-500">
+              &bull; <strong>ON (Checked):</strong> Staff updates require admin review in queue.<br />
+              &bull; <strong>OFF (Unchecked):</strong> Staff updates publish directly to live site.
+            </span>
+          </li>
+          <li>The toggle takes effect immediately and writes to <code>data/permissions.json</code>.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SECTION 3: PUBLISHING NOTICES & CIRCULARS -->
+    <section class="bg-white rounded-3xl border border-brand-creamBorder p-6 sm:p-8 shadow-sm space-y-6 card-box">
+      <div class="flex items-center gap-3 pb-3 border-b border-slate-100">
+        <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-900 flex items-center justify-center font-bold">3</div>
+        <div>
+          <h2 class="font-serif font-black text-lg sm:text-xl text-brand-navy">Publishing Notices &amp; Circulars</h2>
+          <p class="text-xs text-slate-500">How to manage the homepage ticker, spotlight card, and official notices directory.</p>
+        </div>
+      </div>
+
+      <!-- Spotlight on Health Camp Notice -->
+      <div class="p-5 rounded-2xl bg-emerald-50/60 border border-emerald-300 flex flex-col sm:flex-row items-center gap-5">
+        <img src="assets/notices/checkupics.jpeg" alt="Health Camp Notice" class="w-24 h-24 object-cover rounded-xl shadow-sm border border-emerald-200 shrink-0" />
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-600 text-white uppercase">🚨 Urgent</span>
+            <span class="text-xs font-bold text-emerald-800">Notice Successfully Synchronized Live</span>
+          </div>
+          <h3 class="font-serif font-bold text-base text-brand-navy">Multi-Specialty Health Checkup Camp</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            The free medical checkup camp notice featuring Gaya Ji's specialist doctors is live at the top of <code>icsgayaji.org</code>, spotlighted on the homepage, and archived at <code>assets/notices/checkupics.jpeg</code>.
+          </p>
+        </div>
+      </div>
+
+      <!-- Step by step post guide -->
+      <div class="grid sm:grid-cols-3 gap-4 text-xs">
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
+          <div class="w-6 h-6 rounded-lg bg-brand-navy text-amber-300 font-bold flex items-center justify-center text-xs">1</div>
+          <div class="font-bold text-brand-navy">Click "+ Post New Notice"</div>
+          <p class="text-slate-500">In the Notices tab, click the gold button to open the notice composer modal.</p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
+          <div class="w-6 h-6 rounded-lg bg-brand-navy text-amber-300 font-bold flex items-center justify-center text-xs">2</div>
+          <div class="font-bold text-brand-navy">Fill Details &amp; Upload Banner</div>
+          <p class="text-slate-500">Enter title, select category (Academic, Parent Advisory, Olympiad), set Urgent tag, and attach a circular image.</p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
+          <div class="w-6 h-6 rounded-lg bg-brand-navy text-amber-300 font-bold flex items-center justify-center text-xs">3</div>
+          <div class="font-bold text-brand-navy">Save &amp; View Live</div>
+          <p class="text-slate-500">Notice appears dynamically across the homepage ticker and <code>notices.html</code> within 1 to 2 minutes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: SECURITY & AUDIT TRAIL -->
+    <section class="bg-white rounded-3xl border border-brand-creamBorder p-6 sm:p-8 shadow-sm space-y-6 card-box">
+      <div class="flex items-center gap-3 pb-3 border-b border-slate-100">
+        <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-900 flex items-center justify-center font-bold">4</div>
+        <div>
+          <h2 class="font-serif font-black text-lg sm:text-xl text-brand-navy">Security Governance &amp; Activity Audit Log</h2>
+          <p class="text-xs text-slate-500">Complete institutional accountability and incident prevention.</p>
+        </div>
+      </div>
+
+      <div class="space-y-3 text-xs text-slate-600 leading-relaxed">
+        <p>
+          <strong>Permanent Audit Log:</strong> Every action performed on the portal—whether an administrator approving a proposal, or a teacher publishing directly, editing a staff member, or deleting a record—is permanently tracked in the <strong>Activity Audit Log</strong> table.
+        </p>
+        <p>
+          <strong>Changing the Staff Passcode:</strong> In the <strong>Portal Security &amp; Access</strong> tab, the administrator can enter a new passcode (e.g. <code>faculty@2026</code>) and click "Update Passcode". All teachers will immediately need to use the new passcode to log in.
+        </p>
+        <p>
+          <strong>Master Lockout Switch:</strong> If the administrator toggles off <strong>"Teacher Login Allowed"</strong>, all teachers are locked out of the portal immediately. This is recommended during holiday closures or exams.
+        </p>
+      </div>
+
+      <!-- Sample Audit Log -->
+      <div class="p-4 rounded-2xl bg-slate-900 text-slate-200 font-mono text-[11px] space-y-1.5 overflow-x-auto">
+        <div class="text-amber-400 font-bold">[RECENT AUDIT TRAIL PREVIEW]</div>
+        <div>2026-10-30 13:00 | Actor: Dr. Mirdula Kumari (Staff) | Action: Notice Published (Staff Direct)</div>
+        <div>2026-10-30 12:45 | Actor: Administrator (Admin)    | Action: Approval Requirement Changed</div>
+        <div>2026-10-30 10:55 | Actor: Administrator (Admin)    | Action: Notice Added: Health Checkup Camp</div>
+      </div>
+    </section>
+
+    <!-- HANDOVER CERTIFICATION & FOOTER -->
+    <div class="bg-brand-navy text-white rounded-3xl p-6 sm:p-8 shadow-lg border border-amber-500/30 card-box space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
+        <div>
+          <div class="text-[10px] font-bold uppercase tracking-wider text-amber-300">Engineering Handover Conformance</div>
+          <h3 class="font-serif font-bold text-lg text-white">Delivered on Behalf of SJ Enterprises</h3>
+        </div>
+        <a href="https://sjdigitals.vercel.app" target="_blank" class="text-xs text-amber-300 hover:text-amber-200 font-semibold underline underline-offset-4">
+          SJ Enterprises / SJ Digitals &rarr;
+        </a>
+      </div>
+
+      <div class="grid sm:grid-cols-3 gap-4 text-xs text-slate-300">
+        <div>
+          <strong class="text-white block mb-0.5">Lead Agency:</strong>
+          SJ Enterprises (Digital Architecture)
+        </div>
+        <div>
+          <strong class="text-white block mb-0.5">Client Institution:</strong>
+          Indian Central School, Gaya Ji
+        </div>
+        <div>
+          <strong class="text-white block mb-0.5">Support &amp; Maintenance:</strong>
+          contact@sjenterprises.in
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-white/10 text-center text-[11px] text-slate-400">
+        &copy; 2026 Indian Central School. Portal developed and maintained by SJ Enterprises. All rights reserved.
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Initialize Lucide Icons
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
