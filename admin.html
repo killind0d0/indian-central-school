@@ -2208,10 +2208,15 @@
       if (!isApprovalRequired()) {
         if (!confirm(`Are you sure you want to permanently delete notice:\n"${title}"?`)) return;
 
+        const previousList = [...STATE.notices];
+        const updatedList = STATE.notices.filter(n => n.id !== id);
+        STATE.notices = updatedList;
+        updateCounters();
+        renderNotices();
+        showToast(`Deleting notice "${title}"...`, 'info');
+
         try {
-          const updatedList = STATE.notices.filter(n => n.id !== id);
           await persistData('data/notices.json', updatedList);
-          STATE.notices = updatedList;
 
           const actionLabel = (STATE.role === 'admin') ? 'Notice Deleted (Admin)' : 'Notice Deleted (Staff Direct)';
           const detailsLabel = `Notice "${title}" deleted by ${(STATE.role === 'admin') ? 'Administrator' : STATE.staffName}`;
@@ -2219,11 +2224,12 @@
           addAuditLogEntry(actionLabel, detailsLabel);
           await persistData('data/permissions.json', STATE.permissions);
 
+          showToast('Notice permanently deleted successfully!', 'success');
+        } catch (err) {
+          STATE.notices = previousList;
           updateCounters();
           renderNotices();
-          showToast('Notice deleted successfully.', 'info');
-        } catch (err) {
-          showToast(err.message, 'error');
+          showToast(`Delete failed: ${err.message}`, 'error');
         }
       } else {
         if (!checkStaffPermission('notices', 'Delete Notice Request', () => deleteNotice(id))) {
@@ -2231,6 +2237,8 @@
         }
 
         if (!confirm(`Submit a request to delete notice:\n"${title}"?\nAn Administrator must approve this deletion.`)) return;
+
+        showToast('Submitting deletion request for Admin approval...', 'info');
 
         try {
           if (!STATE.permissions.pendingSubmissions) STATE.permissions.pendingSubmissions = [];
@@ -2484,10 +2492,15 @@
       if (!isApprovalRequired()) {
         if (!confirm(`Delete faculty member "${name}"?`)) return;
 
+        const previousList = [...STATE.faculty];
+        const updatedList = STATE.faculty.filter(f => f.id !== id);
+        STATE.faculty = updatedList;
+        updateCounters();
+        renderFaculty();
+        showToast(`Deleting faculty member "${name}"...`, 'info');
+
         try {
-          const updatedList = STATE.faculty.filter(f => f.id !== id);
           await persistData('data/faculty.json', updatedList);
-          STATE.faculty = updatedList;
 
           const actionLabel = (STATE.role === 'admin') ? 'Faculty Deleted (Admin)' : 'Faculty Deleted (Staff Direct)';
           const detailsLabel = `Faculty member "${name}" deleted by ${(STATE.role === 'admin') ? 'Administrator' : STATE.staffName}`;
@@ -2495,11 +2508,12 @@
           addAuditLogEntry(actionLabel, detailsLabel);
           await persistData('data/permissions.json', STATE.permissions);
 
+          showToast('Faculty member permanently deleted successfully!', 'success');
+        } catch (err) {
+          STATE.faculty = previousList;
           updateCounters();
           renderFaculty();
-          showToast('Faculty deleted.', 'info');
-        } catch (err) {
-          showToast(err.message, 'error');
+          showToast(`Delete failed: ${err.message}`, 'error');
         }
       } else {
         if (!checkStaffPermission('faculty', 'Delete Faculty Member', () => deleteFaculty(id))) {
@@ -2507,6 +2521,8 @@
         }
 
         if (!confirm(`Submit request to delete faculty member "${name}"?\nAn Administrator must approve this deletion.`)) return;
+
+        showToast('Submitting deletion request for Admin approval...', 'info');
 
         try {
           const submissionObj = {
@@ -2715,10 +2731,15 @@
       if (!isApprovalRequired()) {
         if (!confirm(`Delete achievement "${title}"?`)) return;
 
+        const previousList = [...STATE.achievements];
+        const updatedList = STATE.achievements.filter(a => a.id !== id);
+        STATE.achievements = updatedList;
+        updateCounters();
+        renderAchievements();
+        showToast(`Deleting achievement "${title}"...`, 'info');
+
         try {
-          const updatedList = STATE.achievements.filter(a => a.id !== id);
           await persistData('data/achievements.json', updatedList);
-          STATE.achievements = updatedList;
 
           const actionLabel = (STATE.role === 'admin') ? 'Achievement Deleted (Admin)' : 'Achievement Deleted (Staff Direct)';
           const detailsLabel = `Achievement "${title}" deleted by ${(STATE.role === 'admin') ? 'Administrator' : STATE.staffName}`;
@@ -2726,11 +2747,12 @@
           addAuditLogEntry(actionLabel, detailsLabel);
           await persistData('data/permissions.json', STATE.permissions);
 
+          showToast('Achievement permanently deleted successfully!', 'success');
+        } catch (err) {
+          STATE.achievements = previousList;
           updateCounters();
           renderAchievements();
-          showToast('Achievement deleted.', 'info');
-        } catch (err) {
-          showToast(err.message, 'error');
+          showToast(`Delete failed: ${err.message}`, 'error');
         }
       } else {
         if (!checkStaffPermission('achievements', 'Delete Achievement Award', () => deleteAchievement(id))) {
@@ -2738,6 +2760,8 @@
         }
 
         if (!confirm(`Submit request to delete achievement "${title}"?\nAn Administrator must approve this deletion.`)) return;
+
+        showToast('Submitting deletion request for Admin approval...', 'info');
 
         try {
           const submissionObj = {
@@ -2936,10 +2960,15 @@
       if (!isApprovalRequired()) {
         if (!confirm(`Delete facility "${title}"?`)) return;
 
+        const previousList = [...STATE.campus];
+        const updatedList = STATE.campus.filter(c => c.id !== id);
+        STATE.campus = updatedList;
+        updateCounters();
+        renderCampus();
+        showToast(`Deleting facility "${title}"...`, 'info');
+
         try {
-          const updatedList = STATE.campus.filter(c => c.id !== id);
           await persistData('data/campus.json', updatedList);
-          STATE.campus = updatedList;
 
           const actionLabel = (STATE.role === 'admin') ? 'Campus Deleted (Admin)' : 'Campus Deleted (Staff Direct)';
           const detailsLabel = `Facility "${title}" deleted by ${(STATE.role === 'admin') ? 'Administrator' : STATE.staffName}`;
@@ -2947,11 +2976,12 @@
           addAuditLogEntry(actionLabel, detailsLabel);
           await persistData('data/permissions.json', STATE.permissions);
 
+          showToast('Campus facility permanently deleted successfully!', 'success');
+        } catch (err) {
+          STATE.campus = previousList;
           updateCounters();
           renderCampus();
-          showToast('Campus facility deleted.', 'info');
-        } catch (err) {
-          showToast(err.message, 'error');
+          showToast(`Delete failed: ${err.message}`, 'error');
         }
       } else {
         if (!checkStaffPermission('campus', 'Delete Campus Facility', () => deleteCampus(id))) {
@@ -2959,6 +2989,8 @@
         }
 
         if (!confirm(`Submit request to delete facility "${title}"?\nAn Administrator must approve this deletion.`)) return;
+
+        showToast('Submitting deletion request for Admin approval...', 'info');
 
         try {
           const submissionObj = {
@@ -3177,10 +3209,15 @@
       if (!isApprovalRequired()) {
         if (!confirm(`Delete advisor "${name}"?`)) return;
 
+        const previousList = [...STATE.advisory];
+        const updatedList = STATE.advisory.filter(a => a.id !== id);
+        STATE.advisory = updatedList;
+        updateCounters();
+        renderAdvisory();
+        showToast(`Deleting advisor "${name}"...`, 'info');
+
         try {
-          const updatedList = STATE.advisory.filter(a => a.id !== id);
           await persistData('data/advisory.json', updatedList);
-          STATE.advisory = updatedList;
 
           const actionLabel = (STATE.role === 'admin') ? 'Advisory Deleted (Admin)' : 'Advisory Deleted (Staff Direct)';
           const detailsLabel = `Advisor "${name}" deleted by ${(STATE.role === 'admin') ? 'Administrator' : STATE.staffName}`;
@@ -3188,11 +3225,12 @@
           addAuditLogEntry(actionLabel, detailsLabel);
           await persistData('data/permissions.json', STATE.permissions);
 
+          showToast('Advisor permanently deleted successfully!', 'success');
+        } catch (err) {
+          STATE.advisory = previousList;
           updateCounters();
           renderAdvisory();
-          showToast('Advisor deleted.', 'info');
-        } catch (err) {
-          showToast(err.message, 'error');
+          showToast(`Delete failed: ${err.message}`, 'error');
         }
       } else {
         if (!checkStaffPermission('advisory', 'Delete Advisory Member', () => deleteAdvisory(id))) {
@@ -3200,6 +3238,8 @@
         }
 
         if (!confirm(`Submit request to delete advisor "${name}"?\nAn Administrator must approve this deletion.`)) return;
+
+        showToast('Submitting deletion request for Admin approval...', 'info');
 
         try {
           const submissionObj = {
