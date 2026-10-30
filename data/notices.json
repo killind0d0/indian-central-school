@@ -84,20 +84,6 @@
     "date": "2026-09-01"
   },
   {
-    "id": "not-6",
-    "title": "Important Advisory Circular for Parents",
-    "category": "parents",
-    "badge": "Parents Advisory",
-    "badgeIcon": "users",
-    "badgeColor": "emerald",
-    "session": "Administration",
-    "description": "Guidelines regarding timely student arrival, diary notes, homework tracking, bus transport safety, and parent-teacher communication.",
-    "image": "assets/notices/noticeforparents.jpg",
-    "caption": "Important Advisory Circular for Parents",
-    "urgent": false,
-    "date": "2026-08-25"
-  },
-  {
     "id": "not-7",
     "title": "Student Attire & Ornament Regulations",
     "category": "academic",
