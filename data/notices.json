@@ -1,5 +1,19 @@
 [
   {
+    "id": "not-1793337175583",
+    "title": "multi-specialty health checkup camp",
+    "category": "olympiad",
+    "badge": "Notice",
+    "badgeIcon": "award",
+    "badgeColor": "amber",
+    "session": "Session 2026",
+    "description": "ICS gaya ji is organizing a multi-specialty health checkup camp",
+    "image": "assets/notices/1793337173092_whatsapp_image_2026-10-30_at_10_35_23_am_jpeg",
+    "caption": "multi-specialty health checkup camp",
+    "urgent": false,
+    "date": "2026-10-30"
+  },
+  {
     "id": "not-1",
     "title": "National Indian Talent Olympiad Enrollment Notice",
     "category": "olympiad",
