@@ -1,16 +1,16 @@
 [
   {
-    "id": "not-1793337175583",
-    "title": "multi-specialty health checkup camp",
-    "category": "olympiad",
-    "badge": "Notice",
-    "badgeIcon": "award",
-    "badgeColor": "amber",
-    "session": "Session 2026",
-    "description": "ICS gaya ji is organizing a multi-specialty health checkup camp",
-    "image": "assets/notices/1793337173092_whatsapp_image_2026-10-30_at_10_35_23_am_jpeg",
-    "caption": "multi-specialty health checkup camp",
-    "urgent": false,
+    "id": "not-health-camp-2026",
+    "title": "Multi-Specialty Health Checkup Camp",
+    "category": "parents",
+    "badge": "Health Camp",
+    "badgeIcon": "activity",
+    "badgeColor": "emerald",
+    "session": "Session 2026–27",
+    "description": "Multi-specialty comprehensive health checkup camp organised for ICS students, parents, and community members featuring leading doctors of Gaya Ji across Child Health, Oncology, ENT, Dental Care, Urology, Gynecology & General Medicine.",
+    "image": "assets/notices/checkupics.jpeg",
+    "caption": "Multi-Specialty Health Checkup Camp Organised by ICS Gaya Ji",
+    "urgent": true,
     "date": "2026-10-30"
   },
   {

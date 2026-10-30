@@ -1,32 +1,49 @@
 {
   "staffAccessEnabled": true,
-  "lastUpdated": "2026-09-15T04:39:28.028Z",
-  "updatedBy": "Principal (ICS Admin App)",
+  "requireApprovalForStaff": true,
+  "staffPasscode": "staff@2026",
+  "staffCipher": "5dd94a181cae3a3ecc2b8600fdc286bb:05e52e7aca42e9e7496334ed:c1542f71eede6b89f94bb4bb562fbe4e80b452e460c5e1fc7c6da3a82adccb271828af0297122e9f828740b64d37cea19ba957e83ecc3d6f",
+  "lastUpdated": "2026-10-30T12:00:00.000Z",
+  "updatedBy": "School Administrator",
   "modules": {
-    "faculty": {
-      "name": "Faculty Directory",
-      "allowEdit": true,
-      "requireOtp": true
-    },
     "notices": {
       "name": "Notices & Circulars",
-      "allowEdit": true,
-      "requireOtp": false
+      "allowEdit": true
+    },
+    "faculty": {
+      "name": "Faculty Directory",
+      "allowEdit": true
     },
     "achievements": {
       "name": "Hall of Fame & Awards",
-      "allowEdit": true,
-      "requireOtp": true
+      "allowEdit": true
     },
     "campus": {
       "name": "Campus & Facilities",
-      "allowEdit": true,
-      "requireOtp": true
+      "allowEdit": true
     },
     "advisory": {
       "name": "Advisory Committee",
-      "allowEdit": false,
-      "requireOtp": true
+      "allowEdit": false
     }
-  }
+  },
+  "pendingSubmissions": [],
+  "auditLog": [
+    {
+      "id": "log-app-1793343030481",
+      "timestamp": "2026-10-30T06:50:30.481Z",
+      "actor": "School Administrator",
+      "role": "admin",
+      "action": "Proposal Approved (Admin)",
+      "details": "Approved notice_create from Dr. Mirdula Kumari (Faculty): \"New Notice: Annual Science Exhibition 2026\""
+    },
+    {
+      "id": "log-1",
+      "timestamp": "2026-10-30T10:55:00.000Z",
+      "actor": "School Administrator",
+      "role": "admin",
+      "action": "Notice Added",
+      "details": "Multi-Specialty Health Checkup Camp notice published live"
+    }
+  ]
 }

@@ -81,14 +81,33 @@
           <img src="assets/logo.png" alt="Indian Central School Crest" class="w-full h-full object-contain" />
         </div>
         <h1 class="font-crest font-black text-lg text-brand-navy tracking-tight leading-tight">INDIAN CENTRAL SCHOOL</h1>
-        <div class="text-[11px] text-amber-700 font-bold uppercase tracking-widest mt-0.5">Staff & Management Portal</div>
-        <p class="text-xs text-slate-500 mt-2">Sign in with your school administrative passcode</p>
+        <div class="text-[11px] text-amber-700 font-bold uppercase tracking-widest mt-0.5">School Management &amp; Staff Portal</div>
+        <p class="text-xs text-slate-500 mt-2">Sign in as Administrator or Teacher / Staff</p>
+      </div>
+
+      <!-- Role Selector Toggle -->
+      <div class="grid grid-cols-2 p-1 bg-slate-100 rounded-2xl mb-4 border border-slate-200">
+        <button type="button" id="role-tab-admin" onclick="selectLoginRole('admin')" class="py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-brand-navy text-amber-300 shadow-sm">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Administrator
+        </button>
+        <button type="button" id="role-tab-staff" onclick="selectLoginRole('staff')" class="py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-brand-navy transition flex items-center justify-center gap-1.5">
+          <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i> Teacher / Staff
+        </button>
       </div>
 
       <!-- User-Facing Login Form -->
       <form id="login-form" onsubmit="handleLoginSubmit(event)" class="space-y-4">
+        <!-- Staff Name field (visible for staff role) -->
+        <div id="staff-name-field" class="hidden">
+          <label class="block text-xs font-bold text-slate-700 mb-1">Your Full Name &amp; Department *</label>
+          <div class="relative">
+            <input type="text" id="staff-name-input" placeholder="e.g. Ramesh Kumar (Computer Dept)" class="w-full text-xs sm:text-sm pl-9 pr-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500 bg-slate-50 focus:bg-white" />
+            <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+          </div>
+        </div>
+
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">School Admin Passcode</label>
+          <label id="auth-secret-label" class="block text-xs font-bold text-slate-700 mb-1">School Admin Passcode</label>
           <div class="relative">
             <input type="password" id="auth-secret-input" required autofocus placeholder="Enter school passcode" class="w-full text-xs sm:text-sm pl-9 pr-10 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500 font-mono" />
             <i data-lucide="key-round" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
@@ -103,7 +122,7 @@
             <input type="checkbox" id="remember-device-check" checked class="w-4 h-4 rounded text-amber-500 focus:ring-amber-400 border-slate-300" />
             <span class="font-medium">Remember this device</span>
           </label>
-          <span class="text-[11px] text-slate-400">Default: <code>ics@2026</code></span>
+          <span id="passcode-default-hint" class="text-[11px] text-slate-400 hidden">Default: <code>ics@2026</code></span>
         </div>
 
         <div id="login-error-msg" class="hidden p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold flex items-center gap-2">
@@ -112,7 +131,7 @@
         </div>
 
         <button type="submit" id="btn-unlock" class="w-full py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-brand-navy hover:bg-brand-blue text-amber-300 shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2 mt-2">
-          <i data-lucide="shield-check" class="w-4 h-4"></i> Sign In to Portal
+          <i data-lucide="shield-check" class="w-4 h-4" id="btn-unlock-icon"></i> <span id="btn-unlock-text">Sign In as Administrator</span>
         </button>
       </form>
 
@@ -145,10 +164,10 @@
         </div>
 
         <div class="flex items-center gap-2 sm:gap-3">
-          <!-- Staff OTP Auth Status Indicator -->
-          <button id="staff-auth-badge" type="button" onclick="handleAuthBadgeClick()" title="Click to view or verify Staff OTP" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition bg-amber-500/20 text-amber-300 border border-amber-500/30 hover:bg-amber-500/30">
-            <i data-lucide="shield-alert" id="staff-auth-icon" class="w-3.5 h-3.5 text-amber-400"></i>
-            <span id="staff-auth-label">🔐 Staff OTP Required</span>
+          <!-- Administrator Status Indicator -->
+          <button id="staff-auth-badge" type="button" onclick="handleAuthBadgeClick()" title="Administrator Direct Access" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30 cursor-pointer">
+            <i data-lucide="shield-check" id="staff-auth-icon" class="w-3.5 h-3.5 text-emerald-400"></i>
+            <span id="staff-auth-label">🛡️ Administrator (Direct Access)</span>
           </button>
 
           <!-- Target & Environment Indicator -->
@@ -178,8 +197,22 @@
         <div class="flex space-x-1 sm:space-x-4 overflow-x-auto custom-scrollbar py-2" id="nav-tabs">
           <button onclick="switchTab('notices')" id="tab-btn-notices" class="tab-button flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition whitespace-nowrap bg-brand-navy text-amber-300 shadow-sm">
             <i data-lucide="bell" class="w-4 h-4"></i>
-            <span>Notices & Circulars</span>
-            <span id="notices-counter-badge" class="ml-1 px-2 py-0.5 rounded-full text-[11px] bg-amber-400 text-brand-navy font-black">0/15</span>
+            <span>Notices &amp; Circulars</span>
+            <span id="notices-counter-badge" class="ml-1 px-2 py-0.5 rounded-full text-[11px] bg-amber-400 text-brand-navy font-black">0</span>
+          </button>
+
+          <!-- Approvals & Staff Control Tab (Admin Only) -->
+          <button onclick="switchTab('approvals')" id="tab-btn-approvals" class="tab-button flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-brand-navy hover:bg-slate-100 transition whitespace-nowrap">
+            <i data-lucide="shield-alert" class="w-4 h-4 text-amber-500"></i>
+            <span>Approvals &amp; Staff</span>
+            <span id="approvals-counter-badge" class="ml-1 px-2 py-0.5 rounded-full text-[11px] bg-rose-500 text-white font-black hidden">0</span>
+          </button>
+
+          <!-- My Submissions Tab (Teacher / Staff Only) -->
+          <button onclick="switchTab('submissions')" id="tab-btn-submissions" class="tab-button hidden items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-brand-navy hover:bg-slate-100 transition whitespace-nowrap">
+            <i data-lucide="clipboard-list" class="w-4 h-4 text-emerald-600"></i>
+            <span>My Submissions</span>
+            <span id="submissions-counter-badge" class="ml-1 px-2 py-0.5 rounded-full text-[11px] bg-amber-400 text-brand-navy font-bold hidden">0</span>
           </button>
 
           <button onclick="switchTab('faculty')" id="tab-btn-faculty" class="tab-button flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-brand-navy hover:bg-slate-100 transition whitespace-nowrap">
@@ -190,13 +223,13 @@
 
           <button onclick="switchTab('achievements')" id="tab-btn-achievements" class="tab-button flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-brand-navy hover:bg-slate-100 transition whitespace-nowrap">
             <i data-lucide="award" class="w-4 h-4"></i>
-            <span>Hall of Fame & Awards</span>
+            <span>Hall of Fame &amp; Awards</span>
             <span id="achievements-counter-badge" class="ml-1 px-2 py-0.5 rounded-full text-[11px] bg-slate-200 text-slate-700 font-bold">0</span>
           </button>
 
           <button onclick="switchTab('campus')" id="tab-btn-campus" class="tab-button flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-brand-navy hover:bg-slate-100 transition whitespace-nowrap">
             <i data-lucide="building-2" class="w-4 h-4"></i>
-            <span>Campus & Infrastructure</span>
+            <span>Campus &amp; Infrastructure</span>
             <span id="campus-counter-badge" class="ml-1 px-2 py-0.5 rounded-full text-[11px] bg-slate-200 text-slate-700 font-bold">0</span>
           </button>
 
@@ -212,19 +245,8 @@
     <!-- MAIN CONTAINER -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-6">
 
-      <!-- MASTER STAFF LOCKOUT BANNER -->
-      <div id="staff-disabled-banner" class="hidden p-4 rounded-2xl bg-rose-600 text-white shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-            <i data-lucide="lock" class="w-5 h-5 text-white"></i>
-          </div>
-          <div>
-            <h4 class="font-bold text-sm">Staff Portal Access is Temporarily Paused by Principal</h4>
-            <p class="text-xs text-rose-100 mt-0.5">The Principal has locked staff editing via the ICS Admin Android App. Website content is in Read-Only mode.</p>
-          </div>
-        </div>
-        <span class="px-3 py-1 rounded-full bg-black/25 text-xs font-black uppercase tracking-wider shrink-0 border border-white/20">Read-Only Enforced</span>
-      </div>
+      <!-- MASTER STAFF LOCKOUT BANNER (HIDDEN) -->
+      <div id="staff-disabled-banner" class="hidden"></div>
 
       <!-- ================================================================= -->
       <!-- SECTION 1: NOTICES (MAX 15 ENFORCED)                              -->
@@ -236,18 +258,18 @@
               <div class="flex flex-wrap items-center gap-2.5">
                 <h2 class="font-serif font-black text-xl text-brand-navy">Digital Notices &amp; Circulars</h2>
                 <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-200">
-                  15 Notices App Limit
+                  Notice Board
                 </span>
                 <span id="badge-perm-notices" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200"></span>
               </div>
               <p class="text-xs text-slate-500 mt-1">
-                Synchronized with the Android School App. Maximum 15 active notices allowed on the portal.
+                Directly published on the Indian Central School official website.
               </p>
             </div>
 
             <div class="flex items-center gap-3">
               <button id="btn-add-notice" onclick="openNoticeModal()" class="inline-flex items-center gap-2 bg-brand-navy hover:bg-brand-blue text-amber-300 px-4 py-2 rounded-xl text-xs font-bold shadow transition">
-                <i data-lucide="plus-circle" class="w-4 h-4"></i> Post New Notice
+                <i data-lucide="plus-circle" class="w-4 h-4"></i> <span id="btn-add-notice-text">Post New Notice</span>
               </button>
               <button onclick="refreshData('notices')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition" title="Reload Notices">
                 <i data-lucide="rotate-cw" class="w-4 h-4"></i>
@@ -255,19 +277,16 @@
             </div>
           </div>
 
-          <!-- Quota Capacity Bar -->
+          <!-- Notice Count Bar -->
           <div class="mt-5 pt-4 border-t border-slate-100">
             <div class="flex items-center justify-between text-xs mb-1.5">
-              <span class="font-bold text-slate-700">Notice Board Capacity:</span>
-              <span id="notice-capacity-text" class="font-bold text-brand-navy">0 of 15 Active (15 Available)</span>
+              <span class="font-bold text-slate-700">Notice Board Status:</span>
+              <span id="notice-capacity-text" class="font-bold text-brand-navy">Active Notices</span>
             </div>
-            <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
-              <div id="notice-capacity-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
+              <div id="notice-capacity-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 100%"></div>
             </div>
-            <div id="notice-limit-warning" class="hidden mt-2 p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold flex items-center gap-2">
-              <i data-lucide="alert-triangle" class="w-4 h-4 shrink-0 text-rose-600"></i>
-              <span>Limit Reached (15/15). Posting a new notice will retire the oldest notice to maintain exact sync with the Android app.</span>
-            </div>
+            <div id="notice-limit-warning" class="hidden"></div>
           </div>
         </div>
 
@@ -389,6 +408,214 @@
         <div id="advisory-list-container" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
       </section>
 
+      <!-- ================================================================= -->
+      <!-- SECTION 6: APPROVALS & STAFF CONTROL (ADMIN ONLY)                 -->
+      <!-- ================================================================= -->
+      <section id="section-approvals" class="admin-section hidden space-y-6">
+        
+        <!-- Header Banner -->
+        <div class="bg-gradient-to-r from-brand-navy via-[#0C2344] to-brand-navy text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-amber-400/30">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="space-y-2">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Principal / Head Admin Control
+              </div>
+              <h2 class="font-serif font-black text-2xl sm:text-3xl text-white tracking-tight">Staff Approvals &amp; Governance</h2>
+              <p class="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
+                Review and approve updates proposed by teachers, manage staff login credentials, and inspect the chronological audit log of all school portal activity.
+              </p>
+            </div>
+            
+            <div class="flex items-center gap-3">
+              <button onclick="refreshData('permissions')" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition flex items-center gap-2 border border-white/10 shadow-sm">
+                <i data-lucide="rotate-cw" class="w-4 h-4"></i> Refresh Queue
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub Tabs: 1. Pending Queue, 2. Staff Security, 3. Audit Log -->
+        <div class="flex border-b border-slate-200 gap-2 pb-2 overflow-x-auto custom-scrollbar">
+          <button type="button" onclick="switchApprovalsSubTab('queue')" id="subtab-btn-queue" class="px-4 py-2 rounded-xl text-xs font-bold bg-brand-navy text-amber-300 shadow flex items-center gap-2 whitespace-nowrap">
+            <i data-lucide="clock" class="w-4 h-4"></i>
+            <span>Pending Approvals</span>
+            <span id="queue-count-badge" class="px-2 py-0.5 rounded-full text-[10px] bg-rose-500 text-white font-black">0</span>
+          </button>
+          <button type="button" onclick="switchApprovalsSubTab('security')" id="subtab-btn-security" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-brand-navy hover:bg-slate-100 flex items-center gap-2 whitespace-nowrap">
+            <i data-lucide="key-round" class="w-4 h-4"></i>
+            <span>Staff Account Controls</span>
+          </button>
+          <button type="button" onclick="switchApprovalsSubTab('audit')" id="subtab-btn-audit" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-brand-navy hover:bg-slate-100 flex items-center gap-2 whitespace-nowrap">
+            <i data-lucide="history" class="w-4 h-4"></i>
+            <span>Activity Audit Log</span>
+          </button>
+        </div>
+
+        <!-- SubView 1: Pending Approvals Queue -->
+        <div id="approvals-subview-queue" class="space-y-4">
+          <div id="pending-queue-container" class="space-y-4">
+            <!-- Dynamically injected approval cards -->
+          </div>
+        </div>
+
+        <!-- SubView 2: Staff Security & Passcode Controls -->
+        <div id="approvals-subview-security" class="hidden space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Staff Passcode Settings Card -->
+            <div class="bg-white rounded-2xl border border-brand-warmBorder p-6 shadow-sm space-y-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600">
+                  <i data-lucide="key" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h3 class="font-serif font-black text-base text-brand-navy">Teacher / Staff Passcode</h3>
+                  <p class="text-xs text-slate-500">Passcode used by teachers and faculty to log in.</p>
+                </div>
+              </div>
+
+              <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                <div class="flex items-center justify-between text-xs">
+                  <span class="text-slate-500">Current Staff Passcode:</span>
+                  <span id="current-staff-passcode-display" class="font-mono font-bold text-brand-navy bg-white px-2.5 py-1 rounded-lg border border-slate-200">staff@2026</span>
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <label class="block text-xs font-bold text-slate-700">Set New Staff Passcode</label>
+                <div class="flex gap-2">
+                  <input type="text" id="new-staff-passcode-input" placeholder="e.g. faculty@2026" class="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500 font-mono" />
+                  <button type="button" onclick="saveNewStaffPasscode()" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-brand-navy text-amber-300 hover:bg-brand-blue transition whitespace-nowrap shadow">
+                    Update Passcode
+                  </button>
+                </div>
+                <p class="text-[11px] text-slate-400">Updating this will immediately enforce the new passcode for all staff members.</p>
+              </div>
+            </div>
+
+            <!-- Master Staff Switch -->
+            <div class="bg-white rounded-2xl border border-brand-warmBorder p-6 shadow-sm space-y-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600">
+                  <i data-lucide="toggle-left" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h3 class="font-serif font-black text-base text-brand-navy">Staff Portal Access Status</h3>
+                  <p class="text-xs text-slate-500">Pause or enable all teacher submissions instantly.</p>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-xl border border-slate-200 flex items-center justify-between">
+                <div>
+                  <div class="text-xs font-bold text-slate-800">Teacher Login Allowed</div>
+                  <div class="text-[11px] text-slate-500">If toggled off, teachers cannot log in or submit updates.</div>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" id="toggle-staff-access" onchange="handleToggleStaffAccess(this.checked)" class="sr-only peer" checked />
+                  <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                </label>
+              </div>
+
+              <!-- Admin Approval Requirement Toggle -->
+              <div class="p-4 rounded-xl border border-amber-200 bg-amber-50/40 flex items-center justify-between">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs font-bold text-slate-800">Require Admin Approval for Staff Updates</span>
+                    <span id="approval-mode-badge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300">Approval Required</span>
+                  </div>
+                  <div class="text-[11px] text-slate-500 mt-1 leading-snug">
+                    <span class="font-semibold text-slate-700">ON:</span> Teacher updates wait in the Approval Queue until Admin approves.<br />
+                    <span class="font-semibold text-slate-700">OFF:</span> Teachers publish directly to the live website (audit log still tracks who updated).
+                  </div>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer shrink-0 ml-4">
+                  <input type="checkbox" id="toggle-require-approval" onchange="handleToggleRequireApproval(this.checked)" class="sr-only peer" checked />
+                  <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-600"></div>
+                </label>
+              </div>
+
+              <!-- Module Perms -->
+              <div class="space-y-2 pt-2 border-t">
+                <div class="text-xs font-bold text-slate-700">Allow Staff Proposals For:</div>
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                  <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-50 border border-slate-200 cursor-pointer">
+                    <input type="checkbox" id="perm-mod-notices" onchange="handleModulePermToggle('notices', this.checked)" checked class="rounded text-brand-navy" />
+                    <span>Notices &amp; Circulars</span>
+                  </label>
+                  <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-50 border border-slate-200 cursor-pointer">
+                    <input type="checkbox" id="perm-mod-faculty" onchange="handleModulePermToggle('faculty', this.checked)" checked class="rounded text-brand-navy" />
+                    <span>Faculty Directory</span>
+                  </label>
+                  <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-50 border border-slate-200 cursor-pointer">
+                    <input type="checkbox" id="perm-mod-achievements" onchange="handleModulePermToggle('achievements', this.checked)" checked class="rounded text-brand-navy" />
+                    <span>Hall of Fame</span>
+                  </label>
+                  <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-50 border border-slate-200 cursor-pointer">
+                    <input type="checkbox" id="perm-mod-campus" onchange="handleModulePermToggle('campus', this.checked)" checked class="rounded text-brand-navy" />
+                    <span>Campus Facilities</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- SubView 3: Audit Log -->
+        <div id="approvals-subview-audit" class="hidden space-y-4">
+          <div class="bg-white rounded-2xl border border-brand-warmBorder p-6 shadow-sm">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+              <div>
+                <h3 class="font-serif font-black text-lg text-brand-navy">Portal Activity Audit Log</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Chronological record of all updates, submissions, approvals, and deletions.</p>
+              </div>
+              <input type="text" id="audit-log-search" oninput="filterAuditLog(this.value)" placeholder="Filter by staff name or action..." class="text-xs px-3.5 py-2 rounded-xl border border-slate-200 w-full sm:w-64 focus:outline-none focus:border-amber-500" />
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead>
+                  <tr class="border-b border-slate-200 bg-slate-50 text-slate-500 uppercase tracking-wider font-bold">
+                    <th class="py-2.5 px-3">Date &amp; Time</th>
+                    <th class="py-2.5 px-3">User / Account</th>
+                    <th class="py-2.5 px-3">Action</th>
+                    <th class="py-2.5 px-3">Details</th>
+                  </tr>
+                </thead>
+                <tbody id="audit-log-tbody" class="divide-y divide-slate-100">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- SECTION 7: MY SUBMISSIONS (TEACHER / STAFF ONLY)                  -->
+      <!-- ================================================================= -->
+      <section id="section-submissions" class="admin-section hidden space-y-6">
+        <div class="bg-white rounded-2xl border border-brand-warmBorder p-6 shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div class="flex items-center gap-2">
+                <i data-lucide="clipboard-list" class="w-5 h-5 text-emerald-600"></i>
+                <h2 class="font-serif font-black text-xl text-brand-navy">My Proposals &amp; Submissions</h2>
+              </div>
+              <p class="text-xs text-slate-500 mt-1">Track the review status of notices and updates you have submitted to the Administrator.</p>
+            </div>
+            <button onclick="refreshData('permissions')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition" title="Refresh">
+              <i data-lucide="rotate-cw" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="staff-submissions-list-container" class="space-y-4">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+
     </main>
   </div>
 
@@ -491,67 +718,8 @@
     </div>
   </div>
 
-  <!-- ================================================================= -->
-  <!-- STAFF OTP AUTHORIZATION GATEWAY MODAL                             -->
-  <!-- ================================================================= -->
-  <div id="staff-otp-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-amber-300 relative overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-      
-      <!-- Top Accent Bar -->
-      <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600"></div>
-
-      <!-- Header -->
-      <div class="text-center mb-6 pt-2">
-        <div class="w-14 h-14 mx-auto p-2 rounded-2xl bg-amber-50 border-2 border-amber-400/40 shadow-sm flex items-center justify-center mb-3">
-          <i data-lucide="shield-alert" class="w-7 h-7 text-amber-600"></i>
-        </div>
-        <h3 class="font-serif font-black text-xl text-brand-navy tracking-tight">Admin Authorization Required</h3>
-        <p id="staff-otp-action-desc" class="text-xs text-slate-500 mt-1 max-w-xs mx-auto">
-          Updating important school records requires one-time authorization from the Principal or Admin Android App.
-        </p>
-      </div>
-
-      <!-- Form -->
-      <form id="staff-otp-form" onsubmit="handleStaffOtpVerify(event)" class="space-y-4">
-        <div>
-          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-            Staff Member Name / Role *
-          </label>
-          <input type="text" id="staff-auth-name" required placeholder="e.g. Ramesh Kumar (Computer Dept)" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500 text-sm font-medium bg-slate-50 focus:bg-white" />
-        </div>
-
-        <div>
-          <div class="flex items-center justify-between mb-1">
-            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-              6-Digit Admin Approval OTP *
-            </label>
-            <span class="text-[11px] text-amber-700 font-bold bg-amber-100/60 px-2 py-0.5 rounded-md">5-Min Live Token</span>
-          </div>
-          <div class="relative">
-            <input type="text" id="staff-otp-input" maxlength="6" inputmode="numeric" required placeholder="Enter 6-digit OTP" class="w-full text-center tracking-[0.35em] font-mono text-2xl font-black py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500 bg-slate-50 focus:bg-white text-brand-navy" autocomplete="off" />
-          </div>
-          <div class="p-3 bg-amber-50/60 rounded-xl border border-amber-200/60 mt-2 text-[11px] text-amber-900 leading-relaxed">
-            👉 Ask the Principal or Head Administrator to open the <strong>ICS Admin Android App</strong> on their phone and tap <strong>"Staff OTP"</strong>.
-          </div>
-        </div>
-
-        <div id="staff-otp-error" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-700 font-semibold flex items-center gap-2">
-          <i data-lucide="alert-circle" class="w-4 h-4 text-rose-600 shrink-0"></i>
-          <span id="staff-otp-error-text">Invalid OTP code. Please check with Admin and try again.</span>
-        </div>
-
-        <div class="flex items-center gap-3 pt-2">
-          <button type="button" onclick="closeStaffOtpModal()" class="w-1/3 py-2.5 px-4 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 font-bold text-xs transition">
-            Cancel
-          </button>
-          <button type="submit" id="staff-otp-submit-btn" class="w-2/3 py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-brand-navy font-black text-xs uppercase tracking-wider shadow-md transition flex items-center justify-center gap-1.5">
-            <i data-lucide="key" class="w-4 h-4"></i> Verify &amp; Unlock
-          </button>
-        </div>
-      </form>
-
-    </div>
-  </div>
+  <!-- STAFF OTP MODAL (REMOVED - DIRECT ADMIN ACCESS ENABLED) -->
+  <div id="staff-otp-modal" class="hidden"></div>
 
   <!-- FACULTY MODAL -->
   <div id="faculty-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
@@ -908,6 +1076,8 @@
     const DEFAULT_PASSCODE = 'ics@2026';
 
     const STATE = {
+      role: 'admin', // 'admin' | 'staff'
+      staffName: 'School Administrator',
       notices: [],
       faculty: [],
       achievements: [],
@@ -925,7 +1095,7 @@
       permissions: null
     };
 
-    const NOTICE_LIMIT = 15;
+    const NOTICE_LIMIT = 50;
 
     // =========================================================================
     // BROWSER WEB CRYPTO AES-GCM (PBKDF2 SHA-256)
@@ -987,16 +1157,85 @@
       }
     }
 
+    let currentLoginRole = 'admin';
+
+    function selectLoginRole(role) {
+      currentLoginRole = role;
+      const adminTab = document.getElementById('role-tab-admin');
+      const staffTab = document.getElementById('role-tab-staff');
+      const staffField = document.getElementById('staff-name-field');
+      const label = document.getElementById('auth-secret-label');
+      const hint = document.getElementById('passcode-default-hint');
+      const btnText = document.getElementById('btn-unlock-text');
+      const btnIcon = document.getElementById('btn-unlock-icon');
+      const staffNameInput = document.getElementById('staff-name-input');
+      const errBox = document.getElementById('login-error-msg');
+      if (errBox) errBox.classList.add('hidden');
+
+      const isLocalHost = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+
+      if (role === 'admin') {
+        if (adminTab) adminTab.className = 'py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-brand-navy text-amber-300 shadow-sm';
+        if (staffTab) staffTab.className = 'py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-brand-navy transition flex items-center justify-center gap-1.5';
+        if (staffField) staffField.classList.add('hidden');
+        if (staffNameInput) staffNameInput.required = false;
+        if (label) label.textContent = 'School Admin Passcode';
+        if (hint) {
+          if (isLocalHost) {
+            hint.innerHTML = 'Default: <code>ics@2026</code>';
+            hint.classList.remove('hidden');
+          } else {
+            hint.classList.add('hidden');
+          }
+        }
+        if (btnText) btnText.textContent = 'Sign In as Administrator';
+        if (btnIcon) btnIcon.setAttribute('data-lucide', 'shield-check');
+      } else {
+        if (staffTab) staffTab.className = 'py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-brand-navy text-amber-300 shadow-sm';
+        if (adminTab) adminTab.className = 'py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-brand-navy transition flex items-center justify-center gap-1.5';
+        if (staffField) staffField.classList.remove('hidden');
+        if (staffNameInput) {
+          staffNameInput.required = true;
+          const lastSaved = localStorage.getItem('ics_staff_last_name');
+          if (lastSaved && !staffNameInput.value) staffNameInput.value = lastSaved;
+        }
+        if (label) label.textContent = 'Teacher / Staff Passcode';
+        if (hint) {
+          if (isLocalHost) {
+            hint.innerHTML = 'Default Staff Passcode: <code>staff@2026</code>';
+            hint.classList.remove('hidden');
+          } else {
+            hint.classList.add('hidden');
+          }
+        }
+        if (btnText) btnText.textContent = 'Sign In as Teacher / Staff';
+        if (btnIcon) btnIcon.setAttribute('data-lucide', 'graduation-cap');
+      }
+      lucide.createIcons();
+    }
+
     // =========================================================================
     // INITIALIZATION & AUTH CHECK
     // =========================================================================
     document.addEventListener('DOMContentLoaded', async () => {
+      selectLoginRole('admin');
       lucide.createIcons();
+      await loadPermissionsData();
 
       // Check if session is already remembered on this device
+      const savedSessionStr = localStorage.getItem('ics_session_auth') || sessionStorage.getItem('ics_session_auth');
+      if (savedSessionStr) {
+        try {
+          const sess = JSON.parse(savedSessionStr);
+          const ok = await attemptAuthentication(sess.passcode, sess.role, sess.staffName);
+          if (ok) return;
+        } catch(e) {}
+      }
+
+      // Legacy fallback check
       const savedPass = localStorage.getItem('ics_remembered_pass') || sessionStorage.getItem('ics_remembered_pass');
       if (savedPass) {
-        const ok = await attemptAuthentication(savedPass);
+        const ok = await attemptAuthentication(savedPass, 'admin', 'School Administrator');
         if (ok) return;
       }
 
@@ -1019,11 +1258,37 @@
       app.classList.remove('hidden');
       app.classList.add('flex');
 
+      updateRoleUI();
       updateEnvBadge();
       updateStaffAuthBadge();
       await loadAllData();
       renderAllTabs();
       lucide.createIcons();
+    }
+
+    function isApprovalRequired() {
+      if (STATE.role === 'admin') return false;
+      return (STATE.permissions && STATE.permissions.requireApprovalForStaff !== false);
+    }
+
+    function updateRoleUI() {
+      const isAdmin = STATE.role === 'admin';
+      const approvalsTab = document.getElementById('tab-btn-approvals');
+      const submissionsTab = document.getElementById('tab-btn-submissions');
+      const btnAddNoticeText = document.getElementById('btn-add-notice-text');
+      const reqApproval = isApprovalRequired();
+
+      if (isAdmin) {
+        if (approvalsTab) approvalsTab.classList.remove('hidden');
+        if (submissionsTab) submissionsTab.classList.add('hidden');
+        if (btnAddNoticeText) btnAddNoticeText.textContent = 'Post New Notice';
+      } else {
+        if (approvalsTab) approvalsTab.classList.add('hidden');
+        if (submissionsTab) submissionsTab.classList.remove('hidden');
+        if (btnAddNoticeText) {
+          btnAddNoticeText.textContent = reqApproval ? 'Propose New Notice' : 'Post New Notice (Direct)';
+        }
+      }
     }
 
     function toggleSecretVisibility() {
@@ -1039,232 +1304,47 @@
       lucide.createIcons();
     }
 
-    // =========================================================================
-    // STAFF OTP AUTHENTICATION GATEWAY (MATCHES ICS ADMIN ANDROID APP)
-    // =========================================================================
-    const STAFF_OTP_SECRET = 'ICS-GAYA-STAFF-AUTH-KEY-2026';
-    const OTP_STEP_SECONDS = 300; // 5-minute rolling window
-    let pendingStaffCallback = null;
-
-    async function calculateTotp(secret, stepOffset = 0) {
-      try {
-        const step = Math.floor(Date.now() / 1000 / OTP_STEP_SECONDS) + stepOffset;
-        const enc = new TextEncoder();
-        const key = await window.crypto.subtle.importKey(
-          'raw',
-          enc.encode(secret),
-          { name: 'HMAC', hash: { name: 'SHA-256' } },
-          false,
-          ['sign']
-        );
-        const buffer = new ArrayBuffer(8);
-        const view = new DataView(buffer);
-        view.setBigUint64(0, BigInt(step), false);
-        const signature = await window.crypto.subtle.sign('HMAC', key, buffer);
-        const sigBytes = new Uint8Array(signature);
-        const offset = sigBytes[sigBytes.length - 1] & 0x0f;
-        const binary = ((sigBytes[offset] & 0x7f) << 24) |
-                       ((sigBytes[offset + 1] & 0xff) << 16) |
-                       ((sigBytes[offset + 2] & 0xff) << 8) |
-                       (sigBytes[offset + 3] & 0xff);
-        return (binary % 1000000).toString().padStart(6, '0');
-      } catch (e) {
-        let hash = 0;
-        const str = `${secret}:${Math.floor(Date.now() / 1000 / OTP_STEP_SECONDS) + stepOffset}`;
-        for (let i = 0; i < str.length; i++) {
-          hash = ((hash << 5) - hash) + str.charCodeAt(i);
-          hash |= 0;
-        }
-        return Math.abs(hash % 1000000).toString().padStart(6, '0');
-      }
-    }
-
-    async function verifyStaffOtp(enteredOtp) {
-      const clean = (enteredOtp || '').replace(/\s+/g, '');
-      if (clean.length !== 6) return false;
-      const [otp0, otpMinus, otpPlus] = await Promise.all([
-        calculateTotp(STAFF_OTP_SECRET, 0),
-        calculateTotp(STAFF_OTP_SECRET, -1),
-        calculateTotp(STAFF_OTP_SECRET, 1)
-      ]);
-      return (clean === otp0 || clean === otpMinus || clean === otpPlus);
-    }
-
-    function getStaffAuth() {
-      // If running inside Android App WebView, automatic Admin authorization
-      if (window.AndroidBridge) {
-        return { isMasterAdmin: true, staffName: 'Principal / Admin App', timestamp: Date.now() };
-      }
-      try {
-        const stored = sessionStorage.getItem('ics_staff_auth_v1');
-        if (!stored) return null;
-        const parsed = JSON.parse(stored);
-        const maxAge = 30 * 60 * 1000; // 30 minutes active window
-        if (Date.now() - parsed.timestamp < maxAge) {
-          return parsed;
-        } else {
-          sessionStorage.removeItem('ics_staff_auth_v1');
-          return null;
-        }
-      } catch (e) {
-        return null;
-      }
-    }
-
-    function isStaffAuthorized() {
-      return getStaffAuth() !== null;
-    }
-
     function updateStaffAuthBadge() {
       const badge = document.getElementById('staff-auth-badge');
       const label = document.getElementById('staff-auth-label');
       const icon = document.getElementById('staff-auth-icon');
       if (!badge || !label) return;
 
-      const auth = getStaffAuth();
-      if (auth) {
-        if (auth.isMasterAdmin) {
-          badge.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition bg-purple-500/20 text-purple-300 border border-purple-500/30';
-          label.textContent = '👑 Master Admin';
-          if (icon) {
-            icon.setAttribute('data-lucide', 'shield-check');
-            icon.className = 'w-3.5 h-3.5 text-purple-400';
-          }
-        } else {
-          badge.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 cursor-pointer';
-          const minsLeft = Math.max(1, Math.round((30 * 60 * 1000 - (Date.now() - auth.timestamp)) / 60000));
-          label.textContent = `🛡️ ${auth.staffName} (${minsLeft}m left)`;
-          if (icon) {
-            icon.setAttribute('data-lucide', 'shield-check');
-            icon.className = 'w-3.5 h-3.5 text-emerald-400';
-          }
+      if (STATE.role === 'admin') {
+        badge.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30 cursor-pointer';
+        label.textContent = '👑 Administrator (Full Control)';
+        if (icon) {
+          icon.setAttribute('data-lucide', 'shield-check');
+          icon.className = 'w-3.5 h-3.5 text-emerald-400';
         }
       } else {
-        badge.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition bg-amber-500/20 text-amber-300 border border-amber-500/30 hover:bg-amber-500/30 cursor-pointer';
-        label.textContent = '🔐 Staff OTP Required';
+        const req = isApprovalRequired();
+        badge.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition bg-blue-500/20 text-blue-300 border border-blue-500/30 hover:bg-blue-500/30 cursor-pointer';
+        label.textContent = `🎓 Teacher: ${STATE.staffName} (${req ? 'Queue Mode' : 'Direct Mode'})`;
         if (icon) {
-          icon.setAttribute('data-lucide', 'shield-alert');
-          icon.className = 'w-3.5 h-3.5 text-amber-400';
+          icon.setAttribute('data-lucide', 'graduation-cap');
+          icon.className = 'w-3.5 h-3.5 text-blue-400';
         }
       }
       lucide.createIcons();
     }
 
     function handleAuthBadgeClick() {
-      const auth = getStaffAuth();
-      if (auth && !auth.isMasterAdmin) {
-        if (confirm(`Active edit session for "${auth.staffName}".\n\nClick OK to log out of this staff session and lock editing, or Cancel to continue.`)) {
-          sessionStorage.removeItem('ics_staff_auth_v1');
-          updateStaffAuthBadge();
-          showToast('Staff edit session closed.', 'info');
-        }
-      } else if (!auth) {
-        promptStaffOtp('Website Content Updates', null);
+      if (STATE.role === 'admin') {
+        showToast('Logged in with Full Administrator Privileges (Direct Access & Approval Powers).', 'success');
       } else {
-        showToast('Running as Master Administrator in App.', 'info');
-      }
-    }
-
-    function promptStaffOtp(actionDescription, callback = null) {
-      pendingStaffCallback = callback;
-      const modal = document.getElementById('staff-otp-modal');
-      const descEl = document.getElementById('staff-otp-action-desc');
-      const errBox = document.getElementById('staff-otp-error');
-      const otpInput = document.getElementById('staff-otp-input');
-      const nameInput = document.getElementById('staff-auth-name');
-
-      if (descEl && actionDescription) {
-        descEl.textContent = `Action: "${actionDescription}". Enter the 6-digit OTP from the Principal or Admin Android App to authorize this change.`;
-      }
-      if (errBox) errBox.classList.add('hidden');
-      if (otpInput) {
-        otpInput.value = '';
-      }
-      const savedLastName = localStorage.getItem('ics_staff_last_name');
-      if (nameInput && savedLastName && !nameInput.value) {
-        nameInput.value = savedLastName;
-      }
-
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-      lucide.createIcons();
-      setTimeout(() => {
-        if (nameInput && nameInput.value.trim()) {
-          if (otpInput) otpInput.focus();
-        } else if (nameInput) {
-          nameInput.focus();
-        }
-      }, 100);
-    }
-
-    function closeStaffOtpModal() {
-      const modal = document.getElementById('staff-otp-modal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-      pendingStaffCallback = null;
-    }
-
-    async function handleStaffOtpVerify(e) {
-      e.preventDefault();
-      const nameInput = document.getElementById('staff-auth-name');
-      const otpInput = document.getElementById('staff-otp-input');
-      const errBox = document.getElementById('staff-otp-error');
-      const errText = document.getElementById('staff-otp-error-text');
-      const btn = document.getElementById('staff-otp-submit-btn');
-
-      const staffName = nameInput.value.trim();
-      const enteredOtp = otpInput.value.trim();
-
-      if (!staffName) {
-        nameInput.focus();
-        return;
-      }
-      if (!enteredOtp || enteredOtp.length !== 6) {
-        errText.textContent = 'Please enter a complete 6-digit OTP.';
-        errBox.classList.remove('hidden');
-        otpInput.focus();
-        return;
-      }
-
-      btn.disabled = true;
-      btn.innerHTML = '<span class="animate-spin mr-1">⏳</span> Verifying...';
-
-      try {
-        const isValid = await verifyStaffOtp(enteredOtp);
-        if (isValid) {
-          const authObj = {
-            isMasterAdmin: false,
-            staffName: staffName,
-            timestamp: Date.now()
-          };
-          sessionStorage.setItem('ics_staff_auth_v1', JSON.stringify(authObj));
-          localStorage.setItem('ics_staff_last_name', staffName);
-          updateStaffAuthBadge();
-          closeStaffOtpModal();
-          showToast(`Admin Authorization Verified! Welcome, ${staffName}.`, 'success');
-
-          if (typeof pendingStaffCallback === 'function') {
-            const cb = pendingStaffCallback;
-            pendingStaffCallback = null;
-            cb();
-          }
-        } else {
-          errText.textContent = 'Incorrect or expired OTP. Please check the code in the ICS Admin Android App and try again.';
-          errBox.classList.remove('hidden');
-          otpInput.select();
-        }
-      } catch (err) {
-        errText.textContent = `Verification error: ${err.message}`;
-        errBox.classList.remove('hidden');
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = '<i data-lucide="key" class="w-4 h-4"></i> Verify &amp; Unlock';
-        lucide.createIcons();
+        const req = isApprovalRequired();
+        showToast(
+          req
+            ? `Logged in as Teacher/Staff: ${STATE.staffName}. Updates are submitted for Admin approval.`
+            : `Logged in as Teacher/Staff: ${STATE.staffName}. Direct publish mode is enabled by Admin.`,
+          'info'
+        );
       }
     }
 
     // =========================================================================
-    // STAFF PERMISSIONS POLICY ENGINE (CONTROLLED BY PRINCIPAL VIA ANDROID APP)
+    // MODULE PERMISSIONS ENGINE
     // =========================================================================
     async function loadPermissionsData() {
       try {
@@ -1274,25 +1354,32 @@
         } else {
           STATE.permissions = {
             staffAccessEnabled: true,
+            requireApprovalForStaff: true,
+            staffPasscode: "staff@2026",
+            pendingSubmissions: [],
+            auditLog: [],
             modules: {
-              faculty: { name: "Faculty Directory", allowEdit: true, requireOtp: true },
-              notices: { name: "Notices & Circulars", allowEdit: true, requireOtp: true },
-              achievements: { name: "Hall of Fame & Awards", allowEdit: true, requireOtp: true },
-              campus: { name: "Campus & Facilities", allowEdit: true, requireOtp: true },
-              advisory: { name: "Advisory Committee", allowEdit: false, requireOtp: true }
+              notices: { name: "Notices & Circulars", allowEdit: true },
+              faculty: { name: "Faculty Directory", allowEdit: true },
+              achievements: { name: "Hall of Fame & Awards", allowEdit: true },
+              campus: { name: "Campus & Facilities", allowEdit: true },
+              advisory: { name: "Advisory Committee", allowEdit: false }
             }
           };
         }
       } catch (e) {
-        console.warn('Failed to load permissions.json:', e);
         STATE.permissions = {
           staffAccessEnabled: true,
+          requireApprovalForStaff: true,
+          staffPasscode: "staff@2026",
+          pendingSubmissions: [],
+          auditLog: [],
           modules: {
-            faculty: { name: "Faculty Directory", allowEdit: true, requireOtp: true },
-            notices: { name: "Notices & Circulars", allowEdit: true, requireOtp: true },
-            achievements: { name: "Hall of Fame & Awards", allowEdit: true, requireOtp: true },
-            campus: { name: "Campus & Facilities", allowEdit: true, requireOtp: true },
-            advisory: { name: "Advisory Committee", allowEdit: false, requireOtp: true }
+            notices: { name: "Notices & Circulars", allowEdit: true },
+            faculty: { name: "Faculty Directory", allowEdit: true },
+            achievements: { name: "Hall of Fame & Awards", allowEdit: true },
+            campus: { name: "Campus & Facilities", allowEdit: true },
+            advisory: { name: "Advisory Committee", allowEdit: false }
           }
         };
       }
@@ -1300,121 +1387,133 @@
     }
 
     function applyPermissionsToUI() {
-      const perms = STATE.permissions;
-      if (!perms) return;
-
-      const isAndroid = !!window.AndroidBridge;
       const banner = document.getElementById('staff-disabled-banner');
+      if (banner) banner.classList.add('hidden');
 
-      if (!isAndroid && perms.staffAccessEnabled === false) {
-        if (banner) banner.classList.remove('hidden');
-      } else {
-        if (banner) banner.classList.add('hidden');
-      }
+      const reqApproval = isApprovalRequired();
 
       const modules = ['notices', 'faculty', 'achievements', 'campus', 'advisory'];
       modules.forEach(modKey => {
         const badge = document.getElementById(`badge-perm-${modKey}`);
         if (!badge) return;
-
-        if (isAndroid) {
-          badge.textContent = 'Principal (Full Access)';
-          badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-100 text-purple-700 border border-purple-200';
-          return;
-        }
-
-        const mod = perms.modules && perms.modules[modKey];
-        if (perms.staffAccessEnabled === false) {
-          badge.textContent = 'Staff Disabled';
-          badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-700 border border-rose-200';
-        } else if (!mod || mod.allowEdit === false) {
-          badge.textContent = 'Locked by Admin';
-          badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-700 border border-rose-200';
-        } else if (mod.requireOtp === false) {
-          badge.textContent = 'Direct Edit (No OTP)';
+        if (STATE.role === 'admin') {
+          badge.textContent = 'Direct Edit (Admin)';
           badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700 border border-emerald-200';
+        } else if (reqApproval) {
+          badge.textContent = 'Staff Proposal Mode';
+          badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-blue-700 border border-blue-200';
         } else {
-          badge.textContent = 'Requires Admin OTP';
-          badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700 border border-amber-200';
+          badge.textContent = 'Direct Publish (Staff)';
+          badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700 border border-emerald-200';
         }
       });
     }
 
     function checkStaffPermission(moduleKey, actionName, callback) {
-      if (window.AndroidBridge) return true;
-
-      const perms = STATE.permissions;
-      if (!perms) {
-        if (!isStaffAuthorized()) {
-          promptStaffOtp(actionName, callback);
-          return false;
-        }
-        return true;
-      }
-
-      if (perms.staffAccessEnabled === false) {
-        showToast('Staff editing is currently disabled by the Principal.', 'error');
-        alert('Action Blocked: The Principal has temporarily disabled staff editing on the website via the ICS Admin Android App.');
-        return false;
-      }
-
-      const mod = perms.modules && perms.modules[moduleKey];
+      if (STATE.role === 'admin') return true;
+      const mod = STATE.permissions && STATE.permissions.modules && STATE.permissions.modules[moduleKey];
       if (mod && mod.allowEdit === false) {
-        const modName = mod.name || moduleKey;
-        showToast(`Editing "${modName}" is locked by the Principal.`, 'warning');
-        alert(`Action Blocked: The Principal has locked editing for "${modName}" in the ICS Admin Android App.`);
+        alert(`Staff proposals for "${mod.name || moduleKey}" are currently restricted by the Administrator.`);
         return false;
       }
-
-      if (mod && mod.requireOtp === false) {
-        return true;
-      }
-
-      if (!isStaffAuthorized()) {
-        promptStaffOtp(actionName, callback);
-        return false;
-      }
-
       return true;
     }
 
-    // =========================================================================
-    // AUTHENTICATION LOGIC (STAFF ONLY TYPES PASSCODE)
-    // =========================================================================
-    async function attemptAuthentication(enteredPasscode) {
-      const expectedPass = STATE.customPasscode || DEFAULT_PASSCODE;
+    function addAuditLogEntry(action, details) {
+      if (!STATE.permissions) STATE.permissions = {};
+      if (!STATE.permissions.auditLog) STATE.permissions.auditLog = [];
 
-      // Check 1: Did user enter correct school passcode?
-      const isPasscodeValid = (enteredPasscode === expectedPass || enteredPasscode === DEFAULT_PASSCODE);
+      const entry = {
+        id: `log-${Date.now()}`,
+        timestamp: new Date().toISOString(),
+        actor: STATE.staffName || (STATE.role === 'admin' ? 'Administrator' : 'Teacher'),
+        role: STATE.role || 'admin',
+        action: action,
+        details: details
+      };
 
-      // Check 2: If we have an EMBEDDED_CIPHER, decrypt it with this passcode!
-      if (EMBEDDED_CIPHER) {
-        const decryptedToken = await decryptSecret(EMBEDDED_CIPHER, enteredPasscode);
-        if (decryptedToken) {
-          STATE.githubToken = decryptedToken;
-          const isLocal = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-          STATE.mode = isLocal ? (localStorage.getItem('ics_admin_mode') || 'local') : 'github';
+      STATE.permissions.auditLog.unshift(entry);
+
+      if (STATE.permissions.auditLog.length > 100) {
+        STATE.permissions.auditLog.pop();
+      }
+    }
+
+    // =========================================================================
+    // AUTHENTICATION LOGIC (ADMIN & TEACHER/STAFF DUAL ROLES)
+    // =========================================================================
+    async function attemptAuthentication(enteredPasscode, role = 'admin', staffName = '') {
+      if (!STATE.permissions) {
+        await loadPermissionsData();
+      }
+      const perms = STATE.permissions || {};
+      const isLocal = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+
+      if (role === 'staff') {
+        // Teacher / Staff authentication
+        if (perms.staffAccessEnabled === false) {
+          alert('Teacher / Staff portal access is temporarily disabled by the Administrator.');
+          return false;
+        }
+
+        const expectedStaffPass = perms.staffPasscode || 'staff@2026';
+        if (enteredPasscode !== expectedStaffPass) {
+          return false;
+        }
+
+        STATE.role = 'staff';
+        STATE.staffName = staffName || localStorage.getItem('ics_staff_last_name') || 'Teacher / Staff';
+        localStorage.setItem('ics_staff_last_name', STATE.staffName);
+
+        // In Cloud mode, decrypt token using staffCipher so staff can commit proposals
+        if (!isLocal && perms.staffCipher) {
+          const decryptedToken = await decryptSecret(perms.staffCipher, enteredPasscode);
+          if (decryptedToken) {
+            STATE.githubToken = decryptedToken;
+            STATE.mode = 'github';
+          }
+        } else {
+          STATE.mode = 'local';
+        }
+
+        await unlockConsole();
+        return true;
+      } else {
+        // Admin authentication
+        const expectedPass = STATE.customPasscode || DEFAULT_PASSCODE;
+        const isPasscodeValid = (enteredPasscode === expectedPass || enteredPasscode === DEFAULT_PASSCODE);
+
+        if (EMBEDDED_CIPHER) {
+          const decryptedToken = await decryptSecret(EMBEDDED_CIPHER, enteredPasscode);
+          if (decryptedToken) {
+            STATE.githubToken = decryptedToken;
+            STATE.mode = isLocal ? (localStorage.getItem('ics_admin_mode') || 'local') : 'github';
+            STATE.role = 'admin';
+            STATE.staffName = 'School Administrator';
+            await unlockConsole();
+            return true;
+          }
+        }
+
+        if (isPasscodeValid) {
+          STATE.mode = 'local';
+          STATE.role = 'admin';
+          STATE.staffName = 'School Administrator';
           await unlockConsole();
           return true;
         }
-      }
 
-      // Check 3: If passcode is valid and in Local Dev Mode (server.py)
-      if (isPasscodeValid) {
-        STATE.mode = 'local';
-        await unlockConsole();
-        return true;
-      }
+        if (enteredPasscode.startsWith('ghp_') || enteredPasscode.startsWith('github_pat_')) {
+          STATE.githubToken = enteredPasscode;
+          STATE.mode = 'github';
+          STATE.role = 'admin';
+          STATE.staffName = 'School Administrator';
+          await unlockConsole();
+          return true;
+        }
 
-      // Check 4: If developer directly enters a raw token during initial testing
-      if (enteredPasscode.startsWith('ghp_') || enteredPasscode.startsWith('github_pat_')) {
-        STATE.githubToken = enteredPasscode;
-        STATE.mode = 'github';
-        await unlockConsole();
-        return true;
+        return false;
       }
-
-      return false;
     }
 
     async function handleLoginSubmit(e) {
@@ -1423,23 +1522,41 @@
       const val = secretInput.value.trim();
       const remember = document.getElementById('remember-device-check').checked;
       const errorBox = document.getElementById('login-error-msg');
+      const errorText = document.getElementById('login-error-text');
       const loginCard = document.getElementById('login-card');
+      const staffNameInput = document.getElementById('staff-name-input');
+      const staffName = staffNameInput ? staffNameInput.value.trim() : '';
 
       errorBox.classList.add('hidden');
 
-      const success = await attemptAuthentication(val);
+      if (currentLoginRole === 'staff' && !staffName) {
+        errorText.textContent = 'Please enter your name and department.';
+        errorBox.classList.remove('hidden');
+        staffNameInput.focus();
+        return;
+      }
+
+      const success = await attemptAuthentication(val, currentLoginRole, staffName);
 
       if (success) {
+        const sessionObj = {
+          role: currentLoginRole,
+          passcode: val,
+          staffName: staffName
+        };
         if (remember) {
-          localStorage.setItem('ics_remembered_pass', val);
+          localStorage.setItem('ics_session_auth', JSON.stringify(sessionObj));
         } else {
-          sessionStorage.setItem('ics_remembered_pass', val);
+          sessionStorage.setItem('ics_session_auth', JSON.stringify(sessionObj));
         }
-        showToast('Welcome to Indian Central School Administration.', 'success');
+        showToast(`Welcome, ${STATE.staffName}!`, 'success');
       } else {
+        errorText.textContent = (currentLoginRole === 'staff')
+          ? 'Access Denied: Incorrect staff passcode, or staff access is paused by Admin.'
+          : 'Access Denied: Incorrect admin passcode.';
         errorBox.classList.remove('hidden');
         loginCard.classList.remove('animate-shake');
-        void loginCard.offsetWidth; // Force CSS animation restart
+        void loginCard.offsetWidth;
         loginCard.classList.add('animate-shake');
         lucide.createIcons();
       }
@@ -1448,9 +1565,13 @@
     function handleLogout() {
       if (!confirm('Lock console and log out?')) return;
 
+      localStorage.removeItem('ics_session_auth');
+      sessionStorage.removeItem('ics_session_auth');
       localStorage.removeItem('ics_remembered_pass');
       sessionStorage.removeItem('ics_remembered_pass');
       STATE.githubToken = '';
+      STATE.role = 'admin';
+      STATE.staffName = 'School Administrator';
       showToast('Console locked.', 'info');
       showLoginGate();
     }
@@ -1528,7 +1649,12 @@
 
     function escapeHtml(str) {
       if (!str) return '';
-      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
     }
 
     function switchTab(tab) {
@@ -1545,6 +1671,9 @@
       document.querySelectorAll('.admin-section').forEach(sec => sec.classList.add('hidden'));
       const activeSec = document.getElementById(`section-${tab}`);
       if (activeSec) activeSec.classList.remove('hidden');
+
+      if (tab === 'approvals') renderApprovalsTab();
+      if (tab === 'submissions') renderSubmissionsTab();
 
       lucide.createIcons();
     }
@@ -1570,6 +1699,13 @@
 
     async function refreshData(name) {
       await loadPermissionsData();
+      if (name === 'permissions') {
+        updateCounters();
+        renderApprovalsTab();
+        renderSubmissionsTab();
+        showToast('Refreshed approval queue & permissions.', 'info');
+        return;
+      }
       try {
         const res = await fetch(`data/${name}.json?_t=${Date.now()}`);
         if (res.ok) {
@@ -1591,32 +1727,45 @@
       const nLen = STATE.notices.length;
       const nBadge = document.getElementById('notices-counter-badge');
       if (nBadge) {
-        nBadge.textContent = `${nLen}/${NOTICE_LIMIT}`;
-        if (nLen >= NOTICE_LIMIT) {
-          nBadge.className = 'ml-1 px-2 py-0.5 rounded-full text-[11px] bg-rose-500 text-white font-black';
-        } else {
-          nBadge.className = 'ml-1 px-2 py-0.5 rounded-full text-[11px] bg-amber-400 text-brand-navy font-black';
-        }
+        nBadge.textContent = nLen;
+        nBadge.className = 'ml-1 px-2 py-0.5 rounded-full text-[11px] bg-amber-400 text-brand-navy font-black';
       }
 
       const capText = document.getElementById('notice-capacity-text');
       const capBar = document.getElementById('notice-capacity-bar');
-      const warnBox = document.getElementById('notice-limit-warning');
       if (capText && capBar) {
-        const avail = Math.max(0, NOTICE_LIMIT - nLen);
-        capText.textContent = `${nLen} of ${NOTICE_LIMIT} Active (${avail} Available)`;
-        const pct = Math.min(100, (nLen / NOTICE_LIMIT) * 100);
-        capBar.style.width = `${pct}%`;
+        capText.textContent = `${nLen} Active Notice${nLen === 1 ? '' : 's'} Published`;
+        capBar.style.width = '100%';
+        capBar.className = 'h-full bg-emerald-500 rounded-full transition-all duration-500';
+      }
 
-        if (nLen >= NOTICE_LIMIT) {
-          capBar.className = 'h-full bg-rose-500 rounded-full transition-all duration-500';
-          if (warnBox) warnBox.classList.remove('hidden');
-        } else if (nLen >= 12) {
-          capBar.className = 'h-full bg-amber-500 rounded-full transition-all duration-500';
-          if (warnBox) warnBox.classList.add('hidden');
+      // Approvals Badge (Admin)
+      const pendingList = (STATE.permissions && STATE.permissions.pendingSubmissions)
+        ? STATE.permissions.pendingSubmissions.filter(s => s.status === 'pending')
+        : [];
+      const appBadge = document.getElementById('approvals-counter-badge');
+      const queueBadge = document.getElementById('queue-count-badge');
+      if (appBadge) {
+        appBadge.textContent = pendingList.length;
+        if (pendingList.length > 0) {
+          appBadge.classList.remove('hidden');
         } else {
-          capBar.className = 'h-full bg-emerald-500 rounded-full transition-all duration-500';
-          if (warnBox) warnBox.classList.add('hidden');
+          appBadge.classList.add('hidden');
+        }
+      }
+      if (queueBadge) queueBadge.textContent = pendingList.length;
+
+      // Submissions Badge (Staff)
+      const mySubs = (STATE.permissions && STATE.permissions.pendingSubmissions && STATE.role === 'staff')
+        ? STATE.permissions.pendingSubmissions.filter(s => s.submittedBy === STATE.staffName)
+        : [];
+      const subBadge = document.getElementById('submissions-counter-badge');
+      if (subBadge) {
+        subBadge.textContent = mySubs.length;
+        if (mySubs.length > 0) {
+          subBadge.classList.remove('hidden');
+        } else {
+          subBadge.classList.add('hidden');
         }
       }
 
@@ -1636,36 +1785,28 @@
       renderAchievements();
       renderCampus();
       renderAdvisory();
+      if (STATE.role === 'admin') {
+        renderApprovalsTab();
+      } else {
+        renderSubmissionsTab();
+      }
+    }
+
+    // Helper for bulletproof UTF-8 to Base64 in modern browsers
+    function utf8ToBase64(str) {
+      const bytes = new TextEncoder().encode(str);
+      let binary = '';
+      for (let i = 0; i < bytes.length; i++) {
+        binary += String.fromCharCode(bytes[i]);
+      }
+      return btoa(binary);
     }
 
     // =========================================================================
     // PERSISTENCE ENGINE (LOCAL SERVER OR GITHUB CLOUD)
     // =========================================================================
     async function persistData(filename, dataArray) {
-      const isAndroid = !!window.AndroidBridge;
-      let staffTag = 'Master Admin (ICS App)';
-
-      if (!isAndroid) {
-        const perms = STATE.permissions;
-        if (perms && perms.staffAccessEnabled === false) {
-          throw new Error('Action blocked: Staff editing has been disabled by the Principal via the Admin App.');
-        }
-
-        const modKey = filename.replace('data/', '').replace('.json', '');
-        const mod = perms && perms.modules && perms.modules[modKey];
-        if (mod && mod.allowEdit === false) {
-          throw new Error(`Action blocked: Editing for "${mod.name || modKey}" is locked by the Principal.`);
-        }
-
-        const isOtpRequired = !mod || mod.requireOtp !== false;
-        const auth = getStaffAuth();
-        if (isOtpRequired && !auth) {
-          throw new Error('Action blocked: 6-Digit Admin OTP authorization required before saving changes to this section.');
-        }
-
-        const staffName = auth ? auth.staffName : (localStorage.getItem('ics_staff_last_name') || 'Staff');
-        staffTag = auth ? `Staff: ${staffName} (OTP Verified)` : `Staff: ${staffName} (Direct Edit)`;
-      }
+      const staffTag = (STATE.role === 'admin') ? 'Administrator' : (STATE.staffName || 'Teacher');
 
       if (STATE.mode === 'local') {
         try {
@@ -1704,7 +1845,7 @@
         const sha = getJson.sha;
 
         const jsonStr = JSON.stringify(dataArray, null, 2);
-        const encodedContent = btoa(unescape(encodeURIComponent(jsonStr)));
+        const encodedContent = utf8ToBase64(jsonStr);
 
         const putUrl = `https://api.github.com/repos/${STATE.repoOwner}/${STATE.repoName}/contents/${filename}`;
         const putRes = await fetch(putUrl, {
@@ -1734,7 +1875,7 @@
         const reader = new FileReader();
         reader.onload = async () => {
           const base64Data = reader.result;
-          const cleanBase = file.name.replace(/[^a-zA-Z0-9_-]/g, '_').toLowerCase();
+          const cleanBase = file.name.replace(/[^a-zA-Z0-9._-]/g, '_').toLowerCase();
           const uniqueFilename = `${Date.now()}_${cleanBase}`;
 
           if (STATE.mode === 'local') {
@@ -1893,13 +2034,21 @@
       }
       const modal = document.getElementById('notice-modal');
       const titleEl = document.getElementById('notice-modal-title');
+      const saveBtn = document.getElementById('btn-save-notice');
       const form = document.getElementById('notice-form');
       form.reset();
 
       document.getElementById('notice-image-preview').classList.add('hidden');
 
+      const reqApproval = isApprovalRequired();
+
       if (notice) {
-        titleEl.textContent = 'Edit Notice';
+        titleEl.textContent = reqApproval ? 'Propose Notice Edits' : (STATE.role === 'admin' ? 'Edit Notice' : 'Edit Notice (Direct)');
+        if (saveBtn) {
+          saveBtn.innerHTML = reqApproval
+            ? `<i data-lucide="send" class="w-4 h-4"></i> Submit for Admin Approval`
+            : `<i data-lucide="check" class="w-4 h-4"></i> Save Notice Live`;
+        }
         document.getElementById('notice-id').value = notice.id;
         document.getElementById('notice-title').value = notice.title || '';
         document.getElementById('notice-category').value = notice.category || 'olympiad';
@@ -1918,12 +2067,12 @@
           previewEl.classList.remove('hidden');
         }
       } else {
-        if (STATE.notices.length >= NOTICE_LIMIT) {
-          const proceed = confirm(`Notice board quota is full (${NOTICE_LIMIT}/${NOTICE_LIMIT}).\n\nAdding a new notice will automatically retire the oldest notice to maintain strict Android app synchronization.\n\nDo you want to proceed?`);
-          if (!proceed) return;
+        titleEl.textContent = reqApproval ? 'Propose New Notice' : (STATE.role === 'admin' ? 'Add New Notice' : 'Post New Notice (Direct)');
+        if (saveBtn) {
+          saveBtn.innerHTML = reqApproval
+            ? `<i data-lucide="send" class="w-4 h-4"></i> Submit for Admin Approval`
+            : `<i data-lucide="check" class="w-4 h-4"></i> Save Notice Live`;
         }
-
-        titleEl.textContent = 'Add New Notice';
         document.getElementById('notice-id').value = '';
         document.getElementById('notice-date').value = new Date().toISOString().split('T')[0];
         document.getElementById('notice-session').value = 'Session 2026';
@@ -1961,14 +2110,19 @@
           imagePath = await uploadImageFile(fileInput.files[0], 'assets/notices');
         }
 
+        const existingNotice = id ? STATE.notices.find(n => n.id === id) : null;
+        const catVal = document.getElementById('notice-category').value;
+        const badgeIcon = (existingNotice && existingNotice.badgeIcon) ||
+          (catVal === 'olympiad' ? 'award' :
+           catVal === 'academic' ? 'calendar' :
+           catVal === 'parents' ? 'users' : 'bell');
+
         const noticeObj = {
           id: id || `not-${Date.now()}`,
           title: document.getElementById('notice-title').value.trim(),
-          category: document.getElementById('notice-category').value,
+          category: catVal,
           badge: document.getElementById('notice-badge').value.trim() || 'Notice',
-          badgeIcon: document.getElementById('notice-category').value === 'olympiad' ? 'award' :
-                     document.getElementById('notice-category').value === 'academic' ? 'calendar' :
-                     document.getElementById('notice-category').value === 'parents' ? 'users' : 'bell',
+          badgeIcon: badgeIcon,
           badgeColor: document.getElementById('notice-badge-color').value,
           session: document.getElementById('notice-session').value.trim() || 'Session 2026',
           description: document.getElementById('notice-description').value.trim(),
@@ -1978,51 +2132,128 @@
           date: document.getElementById('notice-date').value
         };
 
-        let updatedList = [...STATE.notices];
-        if (id) {
-          const idx = updatedList.findIndex(n => n.id === id);
-          if (idx !== -1) updatedList[idx] = noticeObj;
-        } else {
-          updatedList.unshift(noticeObj);
-
-          if (updatedList.length > NOTICE_LIMIT) {
-            const removed = updatedList.pop();
-            showToast(`Notice quota enforced: Oldest notice "${removed.title}" retired.`, 'warning');
+        if (!isApprovalRequired()) {
+          // Direct Administrator Save & Publish, or Direct Staff Save when Approval Queue is Disabled
+          let updatedList = [...STATE.notices];
+          if (id) {
+            const idx = updatedList.findIndex(n => n.id === id);
+            if (idx !== -1) updatedList[idx] = noticeObj;
+          } else {
+            updatedList.unshift(noticeObj);
           }
-        }
 
-        await persistData('data/notices.json', updatedList);
-        STATE.notices = updatedList;
-        updateCounters();
-        renderNotices();
-        closeNoticeModal();
-        showToast('Notice saved and synchronized successfully!', 'success');
+          await persistData('data/notices.json', updatedList);
+          STATE.notices = updatedList;
+
+          const actionLabel = (STATE.role === 'admin')
+            ? (id ? 'Notice Edited (Admin)' : 'Notice Published (Admin)')
+            : (id ? 'Notice Edited (Staff Direct)' : 'Notice Published (Staff Direct)');
+          const detailsLabel = `${noticeObj.title} [${(STATE.role === 'admin') ? 'Direct Admin Action' : `Direct publish by ${STATE.staffName}`}]`;
+
+          addAuditLogEntry(actionLabel, detailsLabel);
+          await persistData('data/permissions.json', STATE.permissions);
+
+          updateCounters();
+          renderNotices();
+          closeNoticeModal();
+          showToast('Notice published live successfully!', 'success');
+        } else {
+          // Teacher / Staff Proposal Mode -> Sent to Admin Approval Queue
+          if (!STATE.permissions.pendingSubmissions) STATE.permissions.pendingSubmissions = [];
+
+          const submissionObj = {
+            id: `sub-${Date.now()}`,
+            type: id ? 'notice_edit' : 'notice_create',
+            module: 'notices',
+            title: (id ? 'Edit Notice: ' : 'New Notice: ') + noticeObj.title,
+            data: noticeObj,
+            targetId: id || null,
+            submittedBy: STATE.staffName || 'Teacher',
+            submittedAt: new Date().toISOString(),
+            status: 'pending',
+            adminNotes: ''
+          };
+
+          STATE.permissions.pendingSubmissions.unshift(submissionObj);
+          addAuditLogEntry('Proposal Submitted (Staff)', `Notice: "${noticeObj.title}" submitted by ${STATE.staffName}`);
+
+          await persistData('data/permissions.json', STATE.permissions);
+
+          updateCounters();
+          closeNoticeModal();
+          renderSubmissionsTab();
+          showToast('Notice proposal submitted for Administrator approval!', 'success');
+        }
       } catch (err) {
         alert(err.message);
         showToast(err.message, 'error');
       } finally {
         saveBtn.disabled = false;
-        saveBtn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> Save Notice`;
+        saveBtn.innerHTML = !isApprovalRequired()
+          ? `<i data-lucide="check" class="w-4 h-4"></i> Save Notice Live`
+          : `<i data-lucide="send" class="w-4 h-4"></i> Submit for Admin Approval`;
         lucide.createIcons();
       }
     }
 
     async function deleteNotice(id) {
-      if (!checkStaffPermission('notices', 'Delete Notice', () => deleteNotice(id))) {
-        return;
-      }
       const notice = STATE.notices.find(n => n.id === id);
-      if (!confirm(`Are you sure you want to delete notice:\n"${notice ? notice.title : id}"?`)) return;
+      const title = notice ? notice.title : id;
 
-      try {
-        const updatedList = STATE.notices.filter(n => n.id !== id);
-        await persistData('data/notices.json', updatedList);
-        STATE.notices = updatedList;
-        updateCounters();
-        renderNotices();
-        showToast('Notice deleted.', 'info');
-      } catch (err) {
-        showToast(err.message, 'error');
+      if (!isApprovalRequired()) {
+        if (!confirm(`Are you sure you want to permanently delete notice:\n"${title}"?`)) return;
+
+        try {
+          const updatedList = STATE.notices.filter(n => n.id !== id);
+          await persistData('data/notices.json', updatedList);
+          STATE.notices = updatedList;
+
+          const actionLabel = (STATE.role === 'admin') ? 'Notice Deleted (Admin)' : 'Notice Deleted (Staff Direct)';
+          const detailsLabel = `Notice "${title}" deleted by ${(STATE.role === 'admin') ? 'Administrator' : STATE.staffName}`;
+
+          addAuditLogEntry(actionLabel, detailsLabel);
+          await persistData('data/permissions.json', STATE.permissions);
+
+          updateCounters();
+          renderNotices();
+          showToast('Notice deleted successfully.', 'info');
+        } catch (err) {
+          showToast(err.message, 'error');
+        }
+      } else {
+        if (!checkStaffPermission('notices', 'Delete Notice Request', () => deleteNotice(id))) {
+          return;
+        }
+
+        if (!confirm(`Submit a request to delete notice:\n"${title}"?\nAn Administrator must approve this deletion.`)) return;
+
+        try {
+          if (!STATE.permissions.pendingSubmissions) STATE.permissions.pendingSubmissions = [];
+
+          const submissionObj = {
+            id: `sub-${Date.now()}`,
+            type: 'notice_delete',
+            module: 'notices',
+            title: `Delete Notice: ${title}`,
+            data: notice || { id: id, title: title },
+            targetId: id,
+            submittedBy: STATE.staffName || 'Teacher',
+            submittedAt: new Date().toISOString(),
+            status: 'pending',
+            adminNotes: ''
+          };
+
+          STATE.permissions.pendingSubmissions.unshift(submissionObj);
+          addAuditLogEntry('Deletion Request (Staff)', `Deletion request for notice: "${title}" by ${STATE.staffName}`);
+
+          await persistData('data/permissions.json', STATE.permissions);
+
+          updateCounters();
+          renderSubmissionsTab();
+          showToast('Notice deletion proposal submitted for Admin approval.', 'success');
+        } catch (err) {
+          showToast(err.message, 'error');
+        }
       }
     }
 
@@ -2113,11 +2344,16 @@
       }
       const modal = document.getElementById('faculty-modal');
       const form = document.getElementById('faculty-form');
+      const titleEl = document.getElementById('faculty-modal-title');
+      const submitBtn = document.querySelector('#faculty-form button[type="submit"]');
       form.reset();
       document.getElementById('faculty-image-preview').classList.add('hidden');
 
+      const reqApproval = isApprovalRequired();
+
       if (faculty) {
-        document.getElementById('faculty-modal-title').textContent = 'Edit Faculty Member';
+        if (titleEl) titleEl.textContent = reqApproval ? 'Propose Faculty Edit' : (STATE.role === 'admin' ? 'Edit Faculty Member' : 'Edit Faculty Member (Direct)');
+        if (submitBtn) submitBtn.textContent = reqApproval ? 'Submit for Admin Approval' : 'Save Faculty Live';
         document.getElementById('faculty-id').value = faculty.id;
         document.getElementById('faculty-name').value = faculty.name || '';
         document.getElementById('faculty-initials').value = faculty.initials || '';
@@ -2133,7 +2369,8 @@
           previewEl.classList.remove('hidden');
         }
       } else {
-        document.getElementById('faculty-modal-title').textContent = 'Add Faculty Member';
+        if (titleEl) titleEl.textContent = reqApproval ? 'Propose Faculty Member' : (STATE.role === 'admin' ? 'Add Faculty Member' : 'Add Faculty Member (Direct)');
+        if (submitBtn) submitBtn.textContent = reqApproval ? 'Submit for Admin Approval' : 'Save Faculty Live';
         document.getElementById('faculty-id').value = '';
       }
 
@@ -2181,41 +2418,117 @@
           initials: initials
         };
 
-        let updatedList = [...STATE.faculty];
-        if (id) {
-          const idx = updatedList.findIndex(f => f.id === id);
-          if (idx !== -1) updatedList[idx] = obj;
-        } else {
-          updatedList.push(obj);
-        }
+        if (!isApprovalRequired()) {
+          let updatedList = [...STATE.faculty];
+          if (id) {
+            const idx = updatedList.findIndex(f => f.id === id);
+            if (idx !== -1) updatedList[idx] = obj;
+          } else {
+            updatedList.push(obj);
+          }
 
-        await persistData('data/faculty.json', updatedList);
-        STATE.faculty = updatedList;
-        updateCounters();
-        renderFaculty();
-        closeFacultyModal();
-        showToast('Faculty directory updated.', 'success');
+          await persistData('data/faculty.json', updatedList);
+          STATE.faculty = updatedList;
+
+          const actionLabel = (STATE.role === 'admin')
+            ? (id ? 'Faculty Updated (Admin)' : 'Faculty Added (Admin)')
+            : (id ? 'Faculty Updated (Staff Direct)' : 'Faculty Added (Staff Direct)');
+          const detailsLabel = `${obj.name} [${(STATE.role === 'admin') ? 'Direct Admin Action' : `Direct publish by ${STATE.staffName}`}]`;
+
+          addAuditLogEntry(actionLabel, detailsLabel);
+          await persistData('data/permissions.json', STATE.permissions);
+
+          updateCounters();
+          renderFaculty();
+          closeFacultyModal();
+          showToast('Faculty directory updated.', 'success');
+        } else {
+          const submissionObj = {
+            id: `sub-${Date.now()}`,
+            type: id ? 'faculty_edit' : 'faculty_create',
+            module: 'faculty',
+            title: (id ? 'Edit Faculty: ' : 'New Faculty: ') + obj.name,
+            data: obj,
+            targetId: id || null,
+            submittedBy: STATE.staffName || 'Teacher',
+            submittedAt: new Date().toISOString(),
+            status: 'pending',
+            adminNotes: ''
+          };
+
+          if (!STATE.permissions.pendingSubmissions) STATE.permissions.pendingSubmissions = [];
+          STATE.permissions.pendingSubmissions.unshift(submissionObj);
+          addAuditLogEntry('Proposal Submitted (Staff)', `Faculty: "${obj.name}" submitted by ${STATE.staffName}`);
+
+          await persistData('data/permissions.json', STATE.permissions);
+
+          updateCounters();
+          closeFacultyModal();
+          renderSubmissionsTab();
+          showToast('Faculty proposal submitted for Admin approval!', 'success');
+        }
       } catch (err) {
         showToast(err.message, 'error');
       }
     }
 
     async function deleteFaculty(id) {
-      if (!checkStaffPermission('faculty', 'Delete Faculty Member', () => deleteFaculty(id))) {
-        return;
-      }
       const item = STATE.faculty.find(f => f.id === id);
-      if (!confirm(`Delete faculty member "${item ? item.name : id}"?`)) return;
+      const name = item ? item.name : id;
 
-      try {
-        const updatedList = STATE.faculty.filter(f => f.id !== id);
-        await persistData('data/faculty.json', updatedList);
-        STATE.faculty = updatedList;
-        updateCounters();
-        renderFaculty();
-        showToast('Faculty deleted.', 'info');
-      } catch (err) {
-        showToast(err.message, 'error');
+      if (!isApprovalRequired()) {
+        if (!confirm(`Delete faculty member "${name}"?`)) return;
+
+        try {
+          const updatedList = STATE.faculty.filter(f => f.id !== id);
+          await persistData('data/faculty.json', updatedList);
+          STATE.faculty = updatedList;
+
+          const actionLabel = (STATE.role === 'admin') ? 'Faculty Deleted (Admin)' : 'Faculty Deleted (Staff Direct)';
+          const detailsLabel = `Faculty member "${name}" deleted by ${(STATE.role === 'admin') ? 'Administrator' : STATE.staffName}`;
+
+          addAuditLogEntry(actionLabel, detailsLabel);
+          await persistData('data/permissions.json', STATE.permissions);
+
+          updateCounters();
+          renderFaculty();
+          showToast('Faculty deleted.', 'info');
+        } catch (err) {
+          showToast(err.message, 'error');
+        }
+      } else {
+        if (!checkStaffPermission('faculty', 'Delete Faculty Member', () => deleteFaculty(id))) {
+          return;
+        }
+
+        if (!confirm(`Submit request to delete faculty member "${name}"?\nAn Administrator must approve this deletion.`)) return;
+
+        try {
+          const submissionObj = {
+            id: `sub-${Date.now()}`,
+            type: 'faculty_delete',
+            module: 'faculty',
+            title: `Delete Faculty: ${name}`,
+            data: item || { id: id, name: name },
+            targetId: id,
+            submittedBy: STATE.staffName || 'Teacher',
+            submittedAt: new Date().toISOString(),
+            status: 'pending',
+            adminNotes: ''
+          };
+
+          if (!STATE.permissions.pendingSubmissions) STATE.permissions.pendingSubmissions = [];
+          STATE.permissions.pendingSubmissions.unshift(submissionObj);
+          addAuditLogEntry('Deletion Request (Staff)', `Deletion request for faculty: "${name}" by ${STATE.staffName}`);
+
+          await persistData('data/permissions.json', STATE.permissions);
+
+          updateCounters();
+          renderSubmissionsTab();
+          showToast('Faculty deletion proposal submitted for Admin approval.', 'success');
+        } catch (err) {
+          showToast(err.message, 'error');
+        }
       }
     }
 
@@ -2271,11 +2584,16 @@
       }
       const modal = document.getElementById('achievement-modal');
       const form = document.getElementById('achievement-form');
+      const titleEl = document.getElementById('achievement-modal-title');
+      const submitBtn = document.querySelector('#achievement-form button[type="submit"]');
       form.reset();
       document.getElementById('achievement-image-preview').classList.add('hidden');
 
+      const reqApproval = isApprovalRequired();
+
       if (item) {
-        document.getElementById('achievement-modal-title').textContent = 'Edit Achievement';
+        if (titleEl) titleEl.textContent = reqApproval ? 'Propose Achievement Edit' : (STATE.role === 'admin' ? 'Edit Achievement' : 'Edit Achievement (Direct)');
+        if (submitBtn) submitBtn.textContent = reqApproval ? 'Submit for Admin Approval' : 'Save Achievement Live';
         document.getElementById('achievement-id').value = item.id;
         document.getElementById('achievement-title').value = item.title || '';
         document.getElementById('achievement-category').value = item.category || 'Hall of Fame';
@@ -2289,7 +2607,8 @@
           previewEl.classList.remove('hidden');
         }
       } else {
-        document.getElementById('achievement-modal-title').textContent = 'Add Achievement';
+        if (titleEl) titleEl.textContent = reqApproval ? 'Propose Achievement' : (STATE.role === 'admin' ? 'Add Achievement' : 'Add Achievement (Direct)');
+        if (submitBtn) submitBtn.textContent = reqApproval ? 'Submit for Admin Approval' : 'Save Achievement Live';
         document.getElementById('achievement-id').value = '';
         document.getElementById('achievement-date').value = new Date().getFullYear().toString();
       }
@@ -2330,41 +2649,117 @@
           date: document.getElementById('achievement-date').value.trim()
         };
 
-        let updatedList = [...STATE.achievements];
-        if (id) {
-          const idx = updatedList.findIndex(a => a.id === id);
-          if (idx !== -1) updatedList[idx] = obj;
-        } else {
-          updatedList.unshift(obj);
-        }
+        if (!isApprovalRequired()) {
+          let updatedList = [...STATE.achievements];
+          if (id) {
+            const idx = updatedList.findIndex(a => a.id === id);
+            if (idx !== -1) updatedList[idx] = obj;
+          } else {
+            updatedList.unshift(obj);
+          }
 
-        await persistData('data/achievements.json', updatedList);
-        STATE.achievements = updatedList;
-        updateCounters();
-        renderAchievements();
-        closeAchievementModal();
-        showToast('Achievement saved successfully.', 'success');
+          await persistData('data/achievements.json', updatedList);
+          STATE.achievements = updatedList;
+
+          const actionLabel = (STATE.role === 'admin')
+            ? (id ? 'Achievement Edited (Admin)' : 'Achievement Added (Admin)')
+            : (id ? 'Achievement Edited (Staff Direct)' : 'Achievement Added (Staff Direct)');
+          const detailsLabel = `${obj.title} [${(STATE.role === 'admin') ? 'Direct Admin Action' : `Direct staff publish by ${STATE.staffName}`}]`;
+
+          addAuditLogEntry(actionLabel, detailsLabel);
+          await persistData('data/permissions.json', STATE.permissions);
+
+          updateCounters();
+          renderAchievements();
+          closeAchievementModal();
+          showToast('Achievement saved successfully.', 'success');
+        } else {
+          const submissionObj = {
+            id: `sub-${Date.now()}`,
+            type: id ? 'achievements_edit' : 'achievements_create',
+            module: 'achievements',
+            title: (id ? 'Edit Achievement: ' : 'New Achievement: ') + obj.title,
+            data: obj,
+            targetId: id || null,
+            submittedBy: STATE.staffName || 'Teacher',
+            submittedAt: new Date().toISOString(),
+            status: 'pending',
+            adminNotes: ''
+          };
+
+          if (!STATE.permissions.pendingSubmissions) STATE.permissions.pendingSubmissions = [];
+          STATE.permissions.pendingSubmissions.unshift(submissionObj);
+          addAuditLogEntry('Proposal Submitted (Staff)', `Achievement: "${obj.title}" submitted by ${STATE.staffName}`);
+
+          await persistData('data/permissions.json', STATE.permissions);
+
+          updateCounters();
+          closeAchievementModal();
+          renderSubmissionsTab();
+          showToast('Achievement proposal submitted for Admin approval!', 'success');
+        }
       } catch (err) {
         showToast(err.message, 'error');
       }
     }
 
     async function deleteAchievement(id) {
-      if (!checkStaffPermission('achievements', 'Delete Achievement Award', () => deleteAchievement(id))) {
-        return;
-      }
       const item = STATE.achievements.find(a => a.id === id);
-      if (!confirm(`Delete achievement "${item ? item.title : id}"?`)) return;
+      const title = item ? item.title : id;
 
-      try {
-        const updatedList = STATE.achievements.filter(a => a.id !== id);
-        await persistData('data/achievements.json', updatedList);
-        STATE.achievements = updatedList;
-        updateCounters();
-        renderAchievements();
-        showToast('Achievement deleted.', 'info');
-      } catch (err) {
-        showToast(err.message, 'error');
+      if (!isApprovalRequired()) {
+        if (!confirm(`Delete achievement "${title}"?`)) return;
+
+        try {
+          const updatedList = STATE.achievements.filter(a => a.id !== id);
+          await persistData('data/achievements.json', updatedList);
+          STATE.achievements = updatedList;
+
+          const actionLabel = (STATE.role === 'admin') ? 'Achievement Deleted (Admin)' : 'Achievement Deleted (Staff Direct)';
+          const detailsLabel = `Achievement "${title}" deleted by ${(STATE.role === 'admin') ? 'Administrator' : STATE.staffName}`;
+
+          addAuditLogEntry(actionLabel, detailsLabel);
+          await persistData('data/permissions.json', STATE.permissions);
+
+          updateCounters();
+          renderAchievements();
+          showToast('Achievement deleted.', 'info');
+        } catch (err) {
+          showToast(err.message, 'error');
+        }
+      } else {
+        if (!checkStaffPermission('achievements', 'Delete Achievement Award', () => deleteAchievement(id))) {
+          return;
+        }
+
+        if (!confirm(`Submit request to delete achievement "${title}"?\nAn Administrator must approve this deletion.`)) return;
+
+        try {
+          const submissionObj = {
+            id: `sub-${Date.now()}`,
+            type: 'achievements_delete',
+            module: 'achievements',
+            title: `Delete Achievement: ${title}`,
+            data: item || { id: id, title: title },
+            targetId: id,
+            submittedBy: STATE.staffName || 'Teacher',
+            submittedAt: new Date().toISOString(),
+            status: 'pending',
+            adminNotes: ''
+          };
+
+          if (!STATE.permissions.pendingSubmissions) STATE.permissions.pendingSubmissions = [];
+          STATE.permissions.pendingSubmissions.unshift(submissionObj);
+          addAuditLogEntry('Deletion Request (Staff)', `Deletion request for achievement: "${title}" by ${STATE.staffName}`);
+
+          await persistData('data/permissions.json', STATE.permissions);
+
+          updateCounters();
+          renderSubmissionsTab();
+          showToast('Achievement deletion proposal submitted for Admin approval.', 'success');
+        } catch (err) {
+          showToast(err.message, 'error');
+        }
       }
     }
 
@@ -2413,11 +2808,16 @@
       }
       const modal = document.getElementById('campus-modal');
       const form = document.getElementById('campus-form');
+      const titleEl = document.getElementById('campus-modal-title');
+      const submitBtn = document.querySelector('#campus-form button[type="submit"]');
       form.reset();
       document.getElementById('campus-image-preview').classList.add('hidden');
 
+      const reqApproval = isApprovalRequired();
+
       if (item) {
-        document.getElementById('campus-modal-title').textContent = 'Edit Campus Facility';
+        if (titleEl) titleEl.textContent = reqApproval ? 'Propose Facility Edit' : (STATE.role === 'admin' ? 'Edit Campus Facility' : 'Edit Campus Facility (Direct)');
+        if (submitBtn) submitBtn.textContent = reqApproval ? 'Submit for Admin Approval' : 'Save Facility Live';
         document.getElementById('campus-id').value = item.id;
         document.getElementById('campus-title').value = item.title || '';
         document.getElementById('campus-category').value = item.category || 'Infrastructure';
@@ -2430,7 +2830,8 @@
           previewEl.classList.remove('hidden');
         }
       } else {
-        document.getElementById('campus-modal-title').textContent = 'Add Campus Facility';
+        if (titleEl) titleEl.textContent = reqApproval ? 'Propose Campus Facility' : (STATE.role === 'admin' ? 'Add Campus Facility' : 'Add Campus Facility (Direct)');
+        if (submitBtn) submitBtn.textContent = reqApproval ? 'Submit for Admin Approval' : 'Save Facility Live';
         document.getElementById('campus-id').value = '';
       }
 
@@ -2469,41 +2870,117 @@
           description: document.getElementById('campus-description').value.trim()
         };
 
-        let updatedList = [...STATE.campus];
-        if (id) {
-          const idx = updatedList.findIndex(c => c.id === id);
-          if (idx !== -1) updatedList[idx] = obj;
-        } else {
-          updatedList.push(obj);
-        }
+        if (!isApprovalRequired()) {
+          let updatedList = [...STATE.campus];
+          if (id) {
+            const idx = updatedList.findIndex(c => c.id === id);
+            if (idx !== -1) updatedList[idx] = obj;
+          } else {
+            updatedList.push(obj);
+          }
 
-        await persistData('data/campus.json', updatedList);
-        STATE.campus = updatedList;
-        updateCounters();
-        renderCampus();
-        closeCampusModal();
-        showToast('Campus facility updated.', 'success');
+          await persistData('data/campus.json', updatedList);
+          STATE.campus = updatedList;
+
+          const actionLabel = (STATE.role === 'admin')
+            ? (id ? 'Campus Facility Edited (Admin)' : 'Campus Facility Added (Admin)')
+            : (id ? 'Campus Facility Edited (Staff Direct)' : 'Campus Facility Added (Staff Direct)');
+          const detailsLabel = `${obj.title} [${(STATE.role === 'admin') ? 'Direct Admin Action' : `Direct staff publish by ${STATE.staffName}`}]`;
+
+          addAuditLogEntry(actionLabel, detailsLabel);
+          await persistData('data/permissions.json', STATE.permissions);
+
+          updateCounters();
+          renderCampus();
+          closeCampusModal();
+          showToast('Campus facility updated.', 'success');
+        } else {
+          const submissionObj = {
+            id: `sub-${Date.now()}`,
+            type: id ? 'campus_edit' : 'campus_create',
+            module: 'campus',
+            title: (id ? 'Edit Campus: ' : 'New Campus: ') + obj.title,
+            data: obj,
+            targetId: id || null,
+            submittedBy: STATE.staffName || 'Teacher',
+            submittedAt: new Date().toISOString(),
+            status: 'pending',
+            adminNotes: ''
+          };
+
+          if (!STATE.permissions.pendingSubmissions) STATE.permissions.pendingSubmissions = [];
+          STATE.permissions.pendingSubmissions.unshift(submissionObj);
+          addAuditLogEntry('Proposal Submitted (Staff)', `Campus: "${obj.title}" submitted by ${STATE.staffName}`);
+
+          await persistData('data/permissions.json', STATE.permissions);
+
+          updateCounters();
+          closeCampusModal();
+          renderSubmissionsTab();
+          showToast('Campus facility proposal submitted for Admin approval!', 'success');
+        }
       } catch (err) {
         showToast(err.message, 'error');
       }
     }
 
     async function deleteCampus(id) {
-      if (!checkStaffPermission('campus', 'Delete Campus Facility', () => deleteCampus(id))) {
-        return;
-      }
       const item = STATE.campus.find(c => c.id === id);
-      if (!confirm(`Delete facility "${item ? item.title : id}"?`)) return;
+      const title = item ? item.title : id;
 
-      try {
-        const updatedList = STATE.campus.filter(c => c.id !== id);
-        await persistData('data/campus.json', updatedList);
-        STATE.campus = updatedList;
-        updateCounters();
-        renderCampus();
-        showToast('Campus facility deleted.', 'info');
-      } catch (err) {
-        showToast(err.message, 'error');
+      if (!isApprovalRequired()) {
+        if (!confirm(`Delete facility "${title}"?`)) return;
+
+        try {
+          const updatedList = STATE.campus.filter(c => c.id !== id);
+          await persistData('data/campus.json', updatedList);
+          STATE.campus = updatedList;
+
+          const actionLabel = (STATE.role === 'admin') ? 'Campus Deleted (Admin)' : 'Campus Deleted (Staff Direct)';
+          const detailsLabel = `Facility "${title}" deleted by ${(STATE.role === 'admin') ? 'Administrator' : STATE.staffName}`;
+
+          addAuditLogEntry(actionLabel, detailsLabel);
+          await persistData('data/permissions.json', STATE.permissions);
+
+          updateCounters();
+          renderCampus();
+          showToast('Campus facility deleted.', 'info');
+        } catch (err) {
+          showToast(err.message, 'error');
+        }
+      } else {
+        if (!checkStaffPermission('campus', 'Delete Campus Facility', () => deleteCampus(id))) {
+          return;
+        }
+
+        if (!confirm(`Submit request to delete facility "${title}"?\nAn Administrator must approve this deletion.`)) return;
+
+        try {
+          const submissionObj = {
+            id: `sub-${Date.now()}`,
+            type: 'campus_delete',
+            module: 'campus',
+            title: `Delete Facility: ${title}`,
+            data: item || { id: id, title: title },
+            targetId: id,
+            submittedBy: STATE.staffName || 'Teacher',
+            submittedAt: new Date().toISOString(),
+            status: 'pending',
+            adminNotes: ''
+          };
+
+          if (!STATE.permissions.pendingSubmissions) STATE.permissions.pendingSubmissions = [];
+          STATE.permissions.pendingSubmissions.unshift(submissionObj);
+          addAuditLogEntry('Deletion Request (Staff)', `Deletion request for campus: "${title}" by ${STATE.staffName}`);
+
+          await persistData('data/permissions.json', STATE.permissions);
+
+          updateCounters();
+          renderSubmissionsTab();
+          showToast('Campus facility deletion proposal submitted for Admin approval.', 'success');
+        } catch (err) {
+          showToast(err.message, 'error');
+        }
       }
     }
 
@@ -2560,11 +3037,16 @@
       }
       const modal = document.getElementById('advisory-modal');
       const form = document.getElementById('advisory-form');
+      const titleEl = document.getElementById('advisory-modal-title');
+      const submitBtn = document.querySelector('#advisory-form button[type="submit"]');
       form.reset();
       document.getElementById('advisory-image-preview').classList.add('hidden');
 
+      const reqApproval = isApprovalRequired();
+
       if (item) {
-        document.getElementById('advisory-modal-title').textContent = 'Edit Advisory Member';
+        if (titleEl) titleEl.textContent = reqApproval ? 'Propose Advisory Edit' : (STATE.role === 'admin' ? 'Edit Advisory Member' : 'Edit Advisory Member (Direct)');
+        if (submitBtn) submitBtn.textContent = reqApproval ? 'Submit for Admin Approval' : 'Save Advisory Live';
         document.getElementById('advisory-id').value = item.id;
         document.getElementById('advisory-name').value = item.name || '';
         document.getElementById('advisory-initials').value = item.initials || '';
@@ -2580,7 +3062,8 @@
           previewEl.classList.remove('hidden');
         }
       } else {
-        document.getElementById('advisory-modal-title').textContent = 'Add Advisory Member';
+        if (titleEl) titleEl.textContent = reqApproval ? 'Propose Advisory Member' : (STATE.role === 'admin' ? 'Add Advisory Member' : 'Add Advisory Member (Direct)');
+        if (submitBtn) submitBtn.textContent = reqApproval ? 'Submit for Admin Approval' : 'Save Advisory Live';
         document.getElementById('advisory-id').value = '';
       }
 
@@ -2628,42 +3111,662 @@
           initials: initials
         };
 
-        let updatedList = [...STATE.advisory];
-        if (id) {
-          const idx = updatedList.findIndex(a => a.id === id);
-          if (idx !== -1) updatedList[idx] = obj;
-        } else {
-          updatedList.push(obj);
-        }
+        if (!isApprovalRequired()) {
+          let updatedList = [...STATE.advisory];
+          if (id) {
+            const idx = updatedList.findIndex(a => a.id === id);
+            if (idx !== -1) updatedList[idx] = obj;
+          } else {
+            updatedList.push(obj);
+          }
 
-        await persistData('data/advisory.json', updatedList);
-        STATE.advisory = updatedList;
-        updateCounters();
-        renderAdvisory();
-        closeAdvisoryModal();
-        showToast('Advisory member updated.', 'success');
+          await persistData('data/advisory.json', updatedList);
+          STATE.advisory = updatedList;
+
+          const actionLabel = (STATE.role === 'admin')
+            ? (id ? 'Advisory Edited (Admin)' : 'Advisory Added (Admin)')
+            : (id ? 'Advisory Edited (Staff Direct)' : 'Advisory Added (Staff Direct)');
+          const detailsLabel = `${obj.name} [${(STATE.role === 'admin') ? 'Direct Admin Action' : `Direct staff publish by ${STATE.staffName}`}]`;
+
+          addAuditLogEntry(actionLabel, detailsLabel);
+          await persistData('data/permissions.json', STATE.permissions);
+
+          updateCounters();
+          renderAdvisory();
+          closeAdvisoryModal();
+          showToast('Advisory member updated.', 'success');
+        } else {
+          const submissionObj = {
+            id: `sub-${Date.now()}`,
+            type: id ? 'advisory_edit' : 'advisory_create',
+            module: 'advisory',
+            title: (id ? 'Edit Advisory: ' : 'New Advisory: ') + obj.name,
+            data: obj,
+            targetId: id || null,
+            submittedBy: STATE.staffName || 'Teacher',
+            submittedAt: new Date().toISOString(),
+            status: 'pending',
+            adminNotes: ''
+          };
+
+          if (!STATE.permissions.pendingSubmissions) STATE.permissions.pendingSubmissions = [];
+          STATE.permissions.pendingSubmissions.unshift(submissionObj);
+          addAuditLogEntry('Proposal Submitted (Staff)', `Advisory: "${obj.name}" submitted by ${STATE.staffName}`);
+
+          await persistData('data/permissions.json', STATE.permissions);
+
+          updateCounters();
+          closeAdvisoryModal();
+          renderSubmissionsTab();
+          showToast('Advisory proposal submitted for Admin approval!', 'success');
+        }
       } catch (err) {
         showToast(err.message, 'error');
       }
     }
 
     async function deleteAdvisory(id) {
-      if (!checkStaffPermission('advisory', 'Delete Advisory Member', () => deleteAdvisory(id))) {
+      const item = STATE.advisory.find(a => a.id === id);
+      const name = item ? item.name : id;
+
+      if (!isApprovalRequired()) {
+        if (!confirm(`Delete advisor "${name}"?`)) return;
+
+        try {
+          const updatedList = STATE.advisory.filter(a => a.id !== id);
+          await persistData('data/advisory.json', updatedList);
+          STATE.advisory = updatedList;
+
+          const actionLabel = (STATE.role === 'admin') ? 'Advisory Deleted (Admin)' : 'Advisory Deleted (Staff Direct)';
+          const detailsLabel = `Advisor "${name}" deleted by ${(STATE.role === 'admin') ? 'Administrator' : STATE.staffName}`;
+
+          addAuditLogEntry(actionLabel, detailsLabel);
+          await persistData('data/permissions.json', STATE.permissions);
+
+          updateCounters();
+          renderAdvisory();
+          showToast('Advisor deleted.', 'info');
+        } catch (err) {
+          showToast(err.message, 'error');
+        }
+      } else {
+        if (!checkStaffPermission('advisory', 'Delete Advisory Member', () => deleteAdvisory(id))) {
+          return;
+        }
+
+        if (!confirm(`Submit request to delete advisor "${name}"?\nAn Administrator must approve this deletion.`)) return;
+
+        try {
+          const submissionObj = {
+            id: `sub-${Date.now()}`,
+            type: 'advisory_delete',
+            module: 'advisory',
+            title: `Delete Advisor: ${name}`,
+            data: item || { id: id, name: name },
+            targetId: id,
+            submittedBy: STATE.staffName || 'Teacher',
+            submittedAt: new Date().toISOString(),
+            status: 'pending',
+            adminNotes: ''
+          };
+
+          if (!STATE.permissions.pendingSubmissions) STATE.permissions.pendingSubmissions = [];
+          STATE.permissions.pendingSubmissions.unshift(submissionObj);
+          addAuditLogEntry('Deletion Request (Staff)', `Deletion request for advisor: "${name}" by ${STATE.staffName}`);
+
+          await persistData('data/permissions.json', STATE.permissions);
+
+          updateCounters();
+          renderSubmissionsTab();
+          showToast('Advisor deletion proposal submitted for Admin approval.', 'success');
+        } catch (err) {
+          showToast(err.message, 'error');
+        }
+      }
+    }
+
+    // =========================================================================
+    // SECTION 6 & 7: APPROVALS QUEUE, STAFF SECURITY & ACTIVITY AUDIT
+    // =========================================================================
+    function formatDateTime(isoString) {
+      if (!isoString) return '';
+      try {
+        const d = new Date(isoString);
+        return d.toLocaleString('en-IN', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+      } catch(e) {
+        return isoString;
+      }
+    }
+
+    function switchApprovalsSubTab(subtab) {
+      const tabs = ['queue', 'security', 'audit'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`subtab-btn-${t}`);
+        const view = document.getElementById(`approvals-subview-${t}`);
+        if (t === subtab) {
+          if (btn) btn.className = 'px-4 py-2 rounded-xl text-xs font-bold bg-brand-navy text-amber-300 shadow flex items-center gap-2 whitespace-nowrap';
+          if (view) view.classList.remove('hidden');
+        } else {
+          if (btn) btn.className = 'px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-brand-navy hover:bg-slate-100 flex items-center gap-2 whitespace-nowrap';
+          if (view) view.classList.add('hidden');
+        }
+      });
+
+      if (subtab === 'queue') renderApprovalsQueue();
+      if (subtab === 'security') renderStaffSecurity();
+      if (subtab === 'audit') renderAuditLogTable();
+      lucide.createIcons();
+    }
+
+    function renderApprovalsTab() {
+      renderApprovalsQueue();
+      renderStaffSecurity();
+      renderAuditLogTable();
+      updateCounters();
+    }
+
+    function renderApprovalsQueue() {
+      const container = document.getElementById('pending-queue-container');
+      if (!container) return;
+
+      const pendingList = (STATE.permissions && STATE.permissions.pendingSubmissions)
+        ? STATE.permissions.pendingSubmissions.filter(s => s.status === 'pending')
+        : [];
+
+      const queueBadge = document.getElementById('queue-count-badge');
+      if (queueBadge) queueBadge.textContent = pendingList.length;
+
+      if (pendingList.length === 0) {
+        container.innerHTML = `
+          <div class="py-16 text-center text-slate-400 bg-white rounded-2xl border border-dashed border-slate-300">
+            <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center">
+              <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+            </div>
+            <p class="font-serif font-bold text-slate-700 text-base">Approval Queue is Clear</p>
+            <p class="text-xs text-slate-400 mt-1 max-w-md mx-auto">No pending proposals awaiting administrative review. When teachers submit notices or updates, they will appear here for your approval.</p>
+          </div>
+        `;
+        lucide.createIcons();
         return;
       }
-      const item = STATE.advisory.find(a => a.id === id);
-      if (!confirm(`Delete advisor "${item ? item.name : id}"?`)) return;
+
+      container.innerHTML = pendingList.map(s => {
+        const isDelete = s.type.endsWith('_delete');
+        const isEdit = s.type.endsWith('_edit');
+        const badgeType = isDelete ? 'bg-rose-100 text-rose-800 border-rose-200' :
+                          isEdit ? 'bg-blue-100 text-blue-800 border-blue-200' :
+                          'bg-emerald-100 text-emerald-800 border-emerald-200';
+        const typeLabel = isDelete ? 'Deletion Request' : isEdit ? 'Edit Proposal' : 'New Creation Proposal';
+
+        return `
+          <div class="bg-white rounded-2xl border border-brand-warmBorder p-6 shadow-sm space-y-4 hover:shadow-md transition">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
+              <div class="flex items-center gap-2.5 flex-wrap">
+                <span class="px-2.5 py-1 rounded-full text-[11px] font-bold border ${badgeType}">
+                  ${escapeHtml(typeLabel)}
+                </span>
+                <span class="inline-flex items-center gap-1.5 text-xs text-slate-600 font-semibold bg-slate-100 px-3 py-1 rounded-full">
+                  <i data-lucide="user" class="w-3.5 h-3.5 text-slate-400"></i>
+                  Teacher: ${escapeHtml(s.submittedBy || 'Staff')}
+                </span>
+                <span class="text-[11px] text-slate-400 flex items-center gap-1">
+                  <i data-lucide="clock" class="w-3 h-3"></i>
+                  ${formatDateTime(s.submittedAt)}
+                </span>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button onclick="approveSubmission('${escapeHtml(s.id)}')" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition flex items-center gap-1.5 shadow-sm">
+                  <i data-lucide="check" class="w-4 h-4"></i> Approve &amp; Publish Live
+                </button>
+                <button onclick="rejectSubmission('${escapeHtml(s.id)}')" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition flex items-center gap-1.5">
+                  <i data-lucide="x" class="w-4 h-4"></i> Reject
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="font-serif font-black text-base text-brand-navy mb-1">${escapeHtml(s.title || (s.data && s.data.title) || 'Untitled Proposal')}</h4>
+              ${s.data && s.data.description ? `<p class="text-xs text-slate-600 leading-relaxed mb-3">${escapeHtml(s.data.description)}</p>` : ''}
+
+              ${s.data && s.data.image ? `
+                <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl border border-slate-200 max-w-md">
+                  <img src="${escapeHtml(s.data.image)}" alt="Preview" class="w-16 h-16 object-cover rounded-lg border border-slate-200" onerror="this.style.display='none';" />
+                  <div class="min-w-0 flex-1 text-xs">
+                    <div class="font-bold text-slate-700 truncate">${escapeHtml(s.data.image)}</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5">${escapeHtml(s.data.caption || 'Attached image')}</div>
+                  </div>
+                </div>
+              ` : ''}
+
+              ${isDelete ? `
+                <div class="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-800 flex items-center gap-2">
+                  <i data-lucide="alert-triangle" class="w-4 h-4 shrink-0 text-rose-600"></i>
+                  <span>Teacher requested permanent deletion of target item (ID: <code>${escapeHtml(s.targetId || '')}</code>). Approving will remove it from the live website.</span>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    function renderStaffSecurity() {
+      const perms = STATE.permissions || {};
+      const currentPassEl = document.getElementById('current-staff-passcode-display');
+      if (currentPassEl) {
+        currentPassEl.textContent = perms.staffPasscode || 'staff@2026';
+      }
+
+      const toggleStaff = document.getElementById('toggle-staff-access');
+      if (toggleStaff) {
+        toggleStaff.checked = (perms.staffAccessEnabled !== false);
+      }
+
+      const toggleRequire = document.getElementById('toggle-require-approval');
+      const badgeRequire = document.getElementById('approval-mode-badge');
+      const isReq = (perms.requireApprovalForStaff !== false);
+      if (toggleRequire) {
+        toggleRequire.checked = isReq;
+      }
+      if (badgeRequire) {
+        badgeRequire.textContent = isReq ? 'Approval Required' : 'Direct Publish Enabled';
+        badgeRequire.className = isReq
+          ? 'px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300'
+          : 'px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300';
+      }
+
+      const mods = ['notices', 'faculty', 'achievements', 'campus'];
+      mods.forEach(m => {
+        const el = document.getElementById(`perm-mod-${m}`);
+        if (el) {
+          el.checked = !(perms.modules && perms.modules[m] && perms.modules[m].allowEdit === false);
+        }
+      });
+    }
+
+    function renderAuditLogTable(query = '') {
+      const tbody = document.getElementById('audit-log-tbody');
+      if (!tbody) return;
+
+      const logs = (STATE.permissions && STATE.permissions.auditLog) ? STATE.permissions.auditLog : [];
+      let filtered = logs;
+
+      if (query && query.trim()) {
+        const q = query.trim().toLowerCase();
+        filtered = logs.filter(l =>
+          (l.actor && l.actor.toLowerCase().includes(q)) ||
+          (l.role && l.role.toLowerCase().includes(q)) ||
+          (l.action && l.action.toLowerCase().includes(q)) ||
+          (l.details && l.details.toLowerCase().includes(q))
+        );
+      }
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="4" class="py-8 text-center text-slate-400 text-xs">
+              ${query ? 'No audit records matching your search.' : 'No audit entries recorded yet.'}
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(l => {
+        const isAdmin = l.role === 'admin';
+        return `
+          <tr class="hover:bg-slate-50/70 transition">
+            <td class="py-3 px-3 whitespace-nowrap text-slate-500 font-mono text-[11px]">
+              ${formatDateTime(l.timestamp)}
+            </td>
+            <td class="py-3 px-3 whitespace-nowrap">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold ${
+                isAdmin ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-blue-100 text-blue-800 border border-blue-200'
+              }">
+                <i data-lucide="${isAdmin ? 'shield-check' : 'graduation-cap'}" class="w-3 h-3"></i>
+                ${escapeHtml(l.actor || (isAdmin ? 'Admin' : 'Staff'))}
+              </span>
+            </td>
+            <td class="py-3 px-3 whitespace-nowrap font-bold text-slate-800">
+              ${escapeHtml(l.action)}
+            </td>
+            <td class="py-3 px-3 text-slate-600 leading-snug">
+              ${escapeHtml(l.details)}
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    function filterAuditLog(val) {
+      renderAuditLogTable(val);
+    }
+
+    async function approveSubmission(submissionId) {
+      if (!confirm('Approve this proposal and publish changes live to the website?')) return;
 
       try {
-        const updatedList = STATE.advisory.filter(a => a.id !== id);
-        await persistData('data/advisory.json', updatedList);
-        STATE.advisory = updatedList;
+        if (!STATE.permissions || !STATE.permissions.pendingSubmissions) return;
+        const sub = STATE.permissions.pendingSubmissions.find(s => s.id === submissionId);
+        if (!sub) {
+          showToast('Submission not found.', 'error');
+          return;
+        }
+
+        // Apply changes directly to live dataset
+        if (sub.module === 'notices') {
+          if (sub.type === 'notice_create') {
+            STATE.notices.unshift(sub.data);
+          } else if (sub.type === 'notice_edit') {
+            const idx = STATE.notices.findIndex(n => n.id === sub.targetId || n.id === (sub.data && sub.data.id));
+            if (idx !== -1) {
+              STATE.notices[idx] = sub.data;
+            } else {
+              STATE.notices.unshift(sub.data);
+            }
+          } else if (sub.type === 'notice_delete') {
+            STATE.notices = STATE.notices.filter(n => n.id !== sub.targetId);
+          }
+          await persistData('data/notices.json', STATE.notices);
+          renderNotices();
+        } else if (sub.module === 'faculty') {
+          if (sub.type === 'faculty_create') {
+            STATE.faculty.push(sub.data);
+          } else if (sub.type === 'faculty_edit') {
+            const idx = STATE.faculty.findIndex(f => f.id === sub.targetId || f.id === (sub.data && sub.data.id));
+            if (idx !== -1) {
+              STATE.faculty[idx] = sub.data;
+            } else {
+              STATE.faculty.push(sub.data);
+            }
+          } else if (sub.type === 'faculty_delete') {
+            STATE.faculty = STATE.faculty.filter(f => f.id !== sub.targetId);
+          }
+          await persistData('data/faculty.json', STATE.faculty);
+          renderFaculty();
+        } else if (sub.module === 'achievements') {
+          if (sub.type === 'achievements_create') {
+            STATE.achievements.unshift(sub.data);
+          } else if (sub.type === 'achievements_edit') {
+            const idx = STATE.achievements.findIndex(a => a.id === sub.targetId || a.id === (sub.data && sub.data.id));
+            if (idx !== -1) {
+              STATE.achievements[idx] = sub.data;
+            } else {
+              STATE.achievements.unshift(sub.data);
+            }
+          } else if (sub.type === 'achievements_delete') {
+            STATE.achievements = STATE.achievements.filter(a => a.id !== sub.targetId);
+          }
+          await persistData('data/achievements.json', STATE.achievements);
+          renderAchievements();
+        } else if (sub.module === 'campus') {
+          if (sub.type === 'campus_create') {
+            STATE.campus.push(sub.data);
+          } else if (sub.type === 'campus_edit') {
+            const idx = STATE.campus.findIndex(c => c.id === sub.targetId || c.id === (sub.data && sub.data.id));
+            if (idx !== -1) {
+              STATE.campus[idx] = sub.data;
+            } else {
+              STATE.campus.push(sub.data);
+            }
+          } else if (sub.type === 'campus_delete') {
+            STATE.campus = STATE.campus.filter(c => c.id !== sub.targetId);
+          }
+          await persistData('data/campus.json', STATE.campus);
+          renderCampus();
+        } else if (sub.module === 'advisory') {
+          if (sub.type === 'advisory_create') {
+            STATE.advisory.push(sub.data);
+          } else if (sub.type === 'advisory_edit') {
+            const idx = STATE.advisory.findIndex(a => a.id === sub.targetId || a.id === (sub.data && sub.data.id));
+            if (idx !== -1) {
+              STATE.advisory[idx] = sub.data;
+            } else {
+              STATE.advisory.push(sub.data);
+            }
+          } else if (sub.type === 'advisory_delete') {
+            STATE.advisory = STATE.advisory.filter(a => a.id !== sub.targetId);
+          }
+          await persistData('data/advisory.json', STATE.advisory);
+          renderAdvisory();
+        }
+
+        // Mark submission record approved
+        sub.status = 'approved';
+        sub.approvedBy = 'School Administrator';
+        sub.approvedAt = new Date().toISOString();
+
+        addAuditLogEntry('Proposal Approved (Admin)', `Approved ${sub.type} from ${sub.submittedBy}: "${sub.title}"`);
+        await persistData('data/permissions.json', STATE.permissions);
+
         updateCounters();
-        renderAdvisory();
-        showToast('Advisor deleted.', 'info');
+        renderApprovalsTab();
+        showToast('Proposal approved and published live!', 'success');
       } catch (err) {
-        showToast(err.message, 'error');
+        showToast(`Approval failed: ${err.message}`, 'error');
       }
+    }
+
+    async function rejectSubmission(submissionId) {
+      if (!STATE.permissions || !STATE.permissions.pendingSubmissions) return;
+      const sub = STATE.permissions.pendingSubmissions.find(s => s.id === submissionId);
+      if (!sub) return;
+
+      const reason = prompt('Reason or instructions for rejection (will be visible to the teacher):', 'Please revise content according to school guidelines');
+      if (reason === null) return; // user cancelled prompt
+
+      try {
+        sub.status = 'rejected';
+        sub.rejectedBy = 'School Administrator';
+        sub.rejectedAt = new Date().toISOString();
+        sub.adminNotes = reason.trim() || 'Declined by Administrator';
+
+        addAuditLogEntry('Proposal Rejected (Admin)', `Rejected ${sub.type} from ${sub.submittedBy}: "${sub.title}" - Note: ${sub.adminNotes}`);
+        await persistData('data/permissions.json', STATE.permissions);
+
+        updateCounters();
+        renderApprovalsTab();
+        showToast('Proposal rejected.', 'info');
+      } catch (err) {
+        showToast(`Rejection failed: ${err.message}`, 'error');
+      }
+    }
+
+    async function saveNewStaffPasscode() {
+      const input = document.getElementById('new-staff-passcode-input');
+      const newPass = input ? input.value.trim() : '';
+      if (!newPass || newPass.length < 4) {
+        alert('Staff passcode must be at least 4 characters long.');
+        return;
+      }
+      if (!confirm(`Update teacher/staff login passcode to "${newPass}"?\nAll teachers will immediately use this new passcode.`)) return;
+
+      try {
+        STATE.permissions.staffPasscode = newPass;
+
+        if (STATE.githubToken) {
+          try {
+            const newCipher = await encryptSecret(STATE.githubToken, newPass);
+            STATE.permissions.staffCipher = newCipher;
+          } catch (e) {
+            console.warn('Could not re-encrypt staff cipher:', e);
+          }
+        }
+
+        STATE.permissions.lastUpdated = new Date().toISOString();
+        STATE.permissions.updatedBy = 'School Administrator';
+        addAuditLogEntry('Staff Passcode Changed', `Administrator updated staff passcode to ${newPass}`);
+
+        await persistData('data/permissions.json', STATE.permissions);
+
+        const disp = document.getElementById('current-staff-passcode-display');
+        if (disp) disp.textContent = newPass;
+        if (input) input.value = '';
+        showToast('Teacher/Staff passcode updated successfully!', 'success');
+      } catch (err) {
+        showToast(`Passcode update failed: ${err.message}`, 'error');
+      }
+    }
+
+    async function handleToggleStaffAccess(isEnabled) {
+      try {
+        STATE.permissions.staffAccessEnabled = isEnabled;
+        STATE.permissions.lastUpdated = new Date().toISOString();
+        STATE.permissions.updatedBy = 'School Administrator';
+        addAuditLogEntry('Staff Access Status Changed', `Teacher portal login set to: ${isEnabled ? 'ENABLED' : 'PAUSED'}`);
+
+        await persistData('data/permissions.json', STATE.permissions);
+        showToast(`Teacher/Staff portal access ${isEnabled ? 'ENABLED' : 'PAUSED'}.`, isEnabled ? 'success' : 'warning');
+      } catch (err) {
+        showToast(`Toggle failed: ${err.message}`, 'error');
+      }
+    }
+
+    async function handleToggleRequireApproval(isChecked) {
+      try {
+        if (!STATE.permissions) STATE.permissions = {};
+        STATE.permissions.requireApprovalForStaff = isChecked;
+        STATE.permissions.lastUpdated = new Date().toISOString();
+        STATE.permissions.updatedBy = 'School Administrator';
+        addAuditLogEntry(
+          'Approval Requirement Changed',
+          `Teacher updates will now ${isChecked ? 'require Admin approval before publishing' : 'publish directly to live website without queue'}`
+        );
+
+        await persistData('data/permissions.json', STATE.permissions);
+
+        const badgeRequire = document.getElementById('approval-mode-badge');
+        if (badgeRequire) {
+          badgeRequire.textContent = isChecked ? 'Approval Required' : 'Direct Publish Enabled';
+          badgeRequire.className = isChecked
+            ? 'px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300'
+            : 'px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300';
+        }
+
+        applyPermissionsToUI();
+        updateRoleUI();
+        showToast(
+          isChecked
+            ? 'Approval Queue ENABLED: Teacher edits will require admin review.'
+            : 'Direct Publish ENABLED: Teachers can now publish directly to live site.',
+          isChecked ? 'warning' : 'success'
+        );
+      } catch (err) {
+        showToast(`Approval toggle failed: ${err.message}`, 'error');
+      }
+    }
+
+    async function handleModulePermToggle(moduleKey, isAllowed) {
+      try {
+        if (!STATE.permissions.modules) STATE.permissions.modules = {};
+        if (!STATE.permissions.modules[moduleKey]) {
+          STATE.permissions.modules[moduleKey] = { name: moduleKey, allowEdit: true };
+        }
+        STATE.permissions.modules[moduleKey].allowEdit = isAllowed;
+        STATE.permissions.lastUpdated = new Date().toISOString();
+        STATE.permissions.updatedBy = 'School Administrator';
+        addAuditLogEntry('Module Permission Updated', `Staff permissions for ${moduleKey} set to ${isAllowed ? 'Allowed' : 'Restricted'}`);
+
+        await persistData('data/permissions.json', STATE.permissions);
+        showToast(`Permission for ${moduleKey} ${isAllowed ? 'enabled' : 'restricted'}.`, 'info');
+      } catch (err) {
+        showToast(`Permission update failed: ${err.message}`, 'error');
+      }
+    }
+
+    function renderSubmissionsTab() {
+      const container = document.getElementById('staff-submissions-list-container');
+      if (!container) return;
+
+      const allSubs = (STATE.permissions && STATE.permissions.pendingSubmissions) ? STATE.permissions.pendingSubmissions : [];
+      const mySubs = (STATE.role === 'staff' && STATE.staffName)
+        ? allSubs.filter(s => s.submittedBy === STATE.staffName)
+        : allSubs;
+
+      if (mySubs.length === 0) {
+        container.innerHTML = `
+          <div class="py-16 text-center text-slate-400 bg-white rounded-2xl border border-dashed border-slate-300">
+            <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center">
+              <i data-lucide="inbox" class="w-6 h-6"></i>
+            </div>
+            <p class="font-serif font-bold text-slate-700 text-base">No Submissions Yet</p>
+            <p class="text-xs text-slate-400 mt-1 max-w-md mx-auto">When you propose notices or updates, they will appear here along with the Principal's approval status.</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      container.innerHTML = mySubs.map(s => {
+        let statusBadge = '';
+        let statusBanner = '';
+
+        if (s.status === 'approved') {
+          statusBadge = `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 flex items-center gap-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Approved &amp; Live</span>`;
+          statusBanner = `
+            <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-800 flex items-center gap-2">
+              <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+              <span>Approved by Principal on ${formatDateTime(s.approvedAt)}. This update is now live on the school website.</span>
+            </div>
+          `;
+        } else if (s.status === 'rejected') {
+          statusBadge = `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-800 border border-rose-200 flex items-center gap-1.5"><i data-lucide="x-circle" class="w-3.5 h-3.5"></i> Declined / Needs Revision</span>`;
+          statusBanner = `
+            <div class="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-800 space-y-1">
+              <div class="font-bold flex items-center gap-1.5"><i data-lucide="alert-circle" class="w-4 h-4 text-rose-600"></i> Principal Feedback:</div>
+              <p class="pl-5">${escapeHtml(s.adminNotes || 'Declined without additional notes.')}</p>
+            </div>
+          `;
+        } else {
+          statusBadge = `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200 flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i> Awaiting Admin Review</span>`;
+          statusBanner = `
+            <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800 flex items-center gap-2">
+              <i data-lucide="hourglass" class="w-4 h-4 text-amber-600 shrink-0"></i>
+              <span>Submitted on ${formatDateTime(s.submittedAt)}. Currently pending review by the Principal.</span>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="bg-white rounded-2xl border border-brand-warmBorder p-6 shadow-sm space-y-4 hover:shadow-md transition">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+              <div>
+                <span class="text-[11px] font-mono text-slate-400">ID: ${escapeHtml(s.id)}</span>
+                <h4 class="font-serif font-black text-base text-brand-navy mt-0.5">${escapeHtml(s.title)}</h4>
+              </div>
+              <div>${statusBadge}</div>
+            </div>
+
+            ${statusBanner}
+
+            ${s.data && s.data.description ? `
+              <div class="text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100 leading-relaxed">
+                ${escapeHtml(s.data.description)}
+              </div>
+            ` : ''}
+
+            ${s.data && s.data.image ? `
+              <div class="flex items-center gap-3">
+                <img src="${escapeHtml(s.data.image)}" alt="Thumbnail" class="w-12 h-12 object-cover rounded-lg border border-slate-200" onerror="this.style.display='none';" />
+                <span class="text-xs text-slate-500 font-mono">${escapeHtml(s.data.image)}</span>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
     }
 
     // =========================================================================
