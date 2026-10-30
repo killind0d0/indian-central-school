@@ -1,19 +1,5 @@
 [
   {
-    "id": "not-1793357511364",
-    "title": "test 123",
-    "category": "olympiad",
-    "badge": "Notice",
-    "badgeIcon": "award",
-    "badgeColor": "amber",
-    "session": "Session 2026",
-    "description": "test admin post  1",
-    "image": "",
-    "caption": "test 123",
-    "urgent": false,
-    "date": "2026-10-30"
-  },
-  {
     "id": "not-health-camp-2026",
     "title": "Multi-Specialty Health Checkup Camp",
     "category": "parents",
