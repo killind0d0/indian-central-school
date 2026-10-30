@@ -30,6 +30,14 @@
   "pendingSubmissions": [],
   "auditLog": [
     {
+      "id": "log-1793356724042",
+      "timestamp": "2026-10-30T10:38:44.042Z",
+      "actor": "School Administrator",
+      "role": "admin",
+      "action": "Notice Deleted (Admin)",
+      "details": "Notice \"Important Advisory Circular for Parents\" deleted by Administrator"
+    },
+    {
       "id": "log-app-1793343030481",
       "timestamp": "2026-10-30T06:50:30.481Z",
       "actor": "School Administrator",
