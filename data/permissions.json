@@ -30,6 +30,14 @@
   "pendingSubmissions": [],
   "auditLog": [
     {
+      "id": "log-1793357515013",
+      "timestamp": "2026-10-30T10:51:55.013Z",
+      "actor": "School Administrator",
+      "role": "admin",
+      "action": "Notice Published (Admin)",
+      "details": "test 123 [Direct Admin Action]"
+    },
+    {
       "id": "log-1793356724042",
       "timestamp": "2026-10-30T10:38:44.042Z",
       "actor": "School Administrator",
